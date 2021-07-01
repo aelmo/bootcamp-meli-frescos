@@ -46,7 +46,7 @@ public class Batch {
     @OneToMany(targetEntity = Product.class, mappedBy = "batch")
     private Set<Product> product;
 
-    @ManyToOne(targetEntity = WarehouseOrder.class)
+    @ManyToOne(targetEntity = InboundOrder.class)
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
-    private WarehouseOrder warehouseOrder;
+    private InboundOrder inboundOrder;
 }
