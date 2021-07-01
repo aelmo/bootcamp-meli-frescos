@@ -9,11 +9,11 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name="warehouse_order")
+@Table(name="inbound_order")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class WarehouseOrder {
+public class InboundOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +24,7 @@ public class WarehouseOrder {
     @OneToOne()
     private Section section;
 
-    @OneToMany(mappedBy = "warehouseOrder")
+    @OneToMany(mappedBy = "inboundOrder")
     private Set<Batch> batch;
 
     @OneToOne()
