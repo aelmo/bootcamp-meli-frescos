@@ -1,11 +1,9 @@
-package com.mercadolibre.bootcampmelifrescos.dtos;
+package com.mercadolibre.bootcampmelifrescos.dtos.response;
 
+import com.mercadolibre.bootcampmelifrescos.dtos.BatchDTO;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor

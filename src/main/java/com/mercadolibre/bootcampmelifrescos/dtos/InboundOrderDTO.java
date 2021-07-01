@@ -8,22 +8,9 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class InboundOrderRequest {
-    private InboundOrderDTO inboundOrder;
-}
-
-@NoArgsConstructor
-@AllArgsConstructor
-class InboundOrderDTO {
+public class InboundOrderDTO {
     private int orderNumber;
     private LocalDate orderDate;
     private SectionDTO section;
     private List<BatchDTO> batchStock;
-}
-
-@NoArgsConstructor
-@AllArgsConstructor
-class SectionDTO {
-    private Long sectionCode;
-    private Long warehouseCode;
 }
