@@ -11,15 +11,15 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "warehouses")
-public class WarehouseModel {
+@Table(name = "warehouse")
+public class Warehouse {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name="warehouse_name")
     private String warehouseName;
 
-    @OneToMany(targetEntity = SectionModel.class, mappedBy = "warehouse")
-    private Set<SectionModel> sections;
+    @OneToMany(targetEntity = Section.class, mappedBy = "warehouse")
+    private Set<Section> sections;
 }

@@ -9,24 +9,24 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name="order")
+@Table(name="warehouse_order")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderModel {
+public class WarehouseOrder {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "date")
     private LocalDate date;
 
     @OneToOne()
-    private SectionModel section;
+    private Section section;
 
-    @OneToMany(mappedBy = "order")
-    private Set<BatchModel> batch;
+    @OneToMany(mappedBy = "warehouseOrder")
+    private Set<Batch> batch;
 
     @OneToOne()
-    private AgentModel agent;
+    private Agent agent;
 }

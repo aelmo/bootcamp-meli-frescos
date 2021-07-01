@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name="products")
+@Table(name="product")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductModel {
+public class Product {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name="name")
@@ -21,9 +21,9 @@ public class ProductModel {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "seller_id", referencedColumnName = "id")
-    private SellerModel seller;
+    private Seller seller;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "batch_id", referencedColumnName = "id")
-    private BatchModel batch;
+    private Batch batch;
 }

@@ -5,21 +5,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
-@Table(name="sellers")
+@Table(name="section")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SellerModel {
+public class Section {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="name")
-    private String name;
-
-    @OneToMany(mappedBy = "seller")
-    private Set<ProductModel> products;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "warehouse_id", referencedColumnName = "id")
+    private Warehouse warehouse;
 }

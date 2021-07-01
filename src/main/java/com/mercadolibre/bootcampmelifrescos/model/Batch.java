@@ -14,9 +14,9 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BatchModel {
+public class Batch {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "current_temperature")
@@ -43,10 +43,10 @@ public class BatchModel {
     @Column(name="due_date")
     private LocalDate dueDate;
 
-    @OneToMany(targetEntity = ProductModel.class, mappedBy = "batch")
-    private Set<ProductModel> product;
+    @OneToMany(targetEntity = Product.class, mappedBy = "batch")
+    private Set<Product> product;
 
-    @ManyToOne(targetEntity = OrderModel.class)
+    @ManyToOne(targetEntity = WarehouseOrder.class)
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
-    private OrderModel order;
+    private WarehouseOrder warehouseOrder;
 }
