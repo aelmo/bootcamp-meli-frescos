@@ -1,0 +1,52 @@
+package com.mercadolibre.bootcampmelifrescos.service.impl;
+
+import com.mercadolibre.bootcampmelifrescos.dtos.BatchDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.InboundOrderDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.response.InboundOrderResponse;
+import com.mercadolibre.bootcampmelifrescos.model.Batch;
+import com.mercadolibre.bootcampmelifrescos.model.InboundOrder;
+import com.mercadolibre.bootcampmelifrescos.model.Product;
+import com.mercadolibre.bootcampmelifrescos.model.Section;
+import com.mercadolibre.bootcampmelifrescos.repository.InboundOrderRepository;
+import com.mercadolibre.bootcampmelifrescos.repository.ProductRepository;
+import com.mercadolibre.bootcampmelifrescos.repository.SectionRepository;
+import com.mercadolibre.bootcampmelifrescos.service.InboundOrderService;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Service
+@AllArgsConstructor
+public class InboundOrderServiceImpl implements InboundOrderService{
+
+    private final InboundOrderRepository inboundOrderRepository;
+    private final SectionRepository sectionRepository;
+    private final ProductRepository productRepository;
+
+    @Override
+    public InboundOrderResponse createInboundOrder(InboundOrderDTO inboundOrderDTO) {
+        List<BatchDTO> batchDTOList = inboundOrderDTO.getBatchStock();
+        InboundOrderResponse inboundOrderResponse = new InboundOrderResponse(batchDTOList);
+        Set<Batch> batchList = new HashSet<>();
+        Section section = sectionRepository.findById(inboundOrderDTO.getSectionCode()).orElseThrow();
+        for (BatchDTO batchDTO : batchDTOList){
+            Product product = productRepository.findById(batchDTO.getProductId()).orElseThrow();
+            batchList.add(new Batch(batchDTO, product));
+        }
+        InboundOrder inboundOrder = new InboundOrder(inboundOrderDTO, batchList, section);
+        inboundOrderRepository.save(inboundOrder);
+        return inboundOrderResponse;
+    }
+
+    @Override
+    public InboundOrderResponse updateInboundOrder(InboundOrderDTO inboundOrderDTO) {
+        if(!inboundOrderRepository.findById(inboundOrderDTO.getOrderNumber()).isPresent()){
+            return null;
+        }
+        return createInboundOrder(inboundOrderDTO);
+    }
+
+}
