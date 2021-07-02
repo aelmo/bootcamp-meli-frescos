@@ -27,26 +27,35 @@ public class InboundOrderServiceImpl implements InboundOrderService{
     private final ProductRepository productRepository;
 
     @Override
-    public InboundOrderResponse createInboundOrder(InboundOrderDTO inboundOrderDTO) {
+    public InboundOrderResponse createInboundOrder(InboundOrderDTO inboundOrderDTO) throws Exception {
         List<BatchDTO> batchDTOList = inboundOrderDTO.getBatchStock();
         InboundOrderResponse inboundOrderResponse = new InboundOrderResponse(batchDTOList);
-        Set<Batch> batchList = new HashSet<>();
+        Set<Batch> batchSet = new HashSet<>();
         Section section = sectionRepository.findById(inboundOrderDTO.getSectionCode()).orElseThrow();
         for (BatchDTO batchDTO : batchDTOList){
             Product product = productRepository.findById(batchDTO.getProductId()).orElseThrow();
-            batchList.add(new Batch(batchDTO, product));
+            batchSet.add(new Batch(batchDTO, product));
         }
-        InboundOrder inboundOrder = new InboundOrder(inboundOrderDTO, batchList, section);
+        validateCategorySection(section, batchSet);
+        InboundOrder inboundOrder = new InboundOrder(inboundOrderDTO, batchSet, section);
         inboundOrderRepository.save(inboundOrder);
         return inboundOrderResponse;
     }
 
     @Override
-    public InboundOrderResponse updateInboundOrder(InboundOrderDTO inboundOrderDTO) {
+    public InboundOrderResponse updateInboundOrder(InboundOrderDTO inboundOrderDTO) throws Exception {
         if(!inboundOrderRepository.findById(inboundOrderDTO.getOrderNumber()).isPresent()){
             return null;
         }
         return createInboundOrder(inboundOrderDTO);
+    }
+
+    public void validateCategorySection(Section section, Set<Batch> batchList) throws Exception {
+        for (Batch batch : batchList){
+            Product product = batch.getProduct();
+            if(product.getCategory().getId()!=section.getCategory().getId())
+                throw new Exception("Invalid category");
+        }
     }
 
 }

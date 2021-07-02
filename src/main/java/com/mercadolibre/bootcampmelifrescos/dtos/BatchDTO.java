@@ -1,6 +1,5 @@
 package com.mercadolibre.bootcampmelifrescos.dtos;
 
-import com.mercadolibre.bootcampmelifrescos.model.Batch;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
