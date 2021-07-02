@@ -17,12 +17,12 @@ public class InboundOrderController {
 
     @PostMapping
     public ResponseEntity<InboundOrderResponse> createInboundOrder(@RequestBody InboundOrderRequest inboundOrderRequest){
-        return new ResponseEntity<>(inboundOrderService.createInboundOrder(inboundOrderRequest), HttpStatus.CREATED);
+        return new ResponseEntity<>(inboundOrderService.createInboundOrder(inboundOrderRequest.getInboundOrder()), HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<InboundOrderResponse> updateInboundOrder(@RequestBody InboundOrderRequest inboundOrderRequest){
-        return new ResponseEntity<>(inboundOrderService.updateInboundOrder(inboundOrderRequest), HttpStatus.CREATED);
+        return new ResponseEntity<>(inboundOrderService.updateInboundOrder(inboundOrderRequest.getInboundOrder()), HttpStatus.CREATED);
     }
 
 }
