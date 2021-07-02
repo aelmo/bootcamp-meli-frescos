@@ -22,4 +22,10 @@ public class Seller {
 
     @OneToMany(mappedBy = "seller")
     private Set<Product> products;
+
+    @Column(name="email")
+    private String email;
+
+    @Column(name="password")
+    private String password;
 }

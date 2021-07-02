@@ -6,24 +6,19 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Table(name="cart")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "agent")
+@AllArgsConstructor
 @EqualsAndHashCode
-public class Agent {
+public class Cart {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name="email")
-    private String email;
-
-    @Column(name="password")
-    private String password;
+    @OneToMany
+    private Set<Product> products;
 }
