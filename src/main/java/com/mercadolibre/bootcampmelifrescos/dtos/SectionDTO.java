@@ -1,11 +1,13 @@
 package com.mercadolibre.bootcampmelifrescos.dtos;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-class SectionDTO {
+public class SectionDTO {
     private Long sectionCode;
     private Long warehouseCode;
 }

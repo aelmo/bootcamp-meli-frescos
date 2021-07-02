@@ -2,6 +2,7 @@ package com.mercadolibre.bootcampmelifrescos.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "seller")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +25,7 @@ public class Product {
     @JoinColumn(name = "seller_id", referencedColumnName = "id")
     private Seller seller;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "batch_id", referencedColumnName = "id")
-    private Batch batch;
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
 }

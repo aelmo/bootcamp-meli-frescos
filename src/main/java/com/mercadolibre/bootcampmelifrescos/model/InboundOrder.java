@@ -1,7 +1,10 @@
 package com.mercadolibre.bootcampmelifrescos.model;
 
+import com.mercadolibre.bootcampmelifrescos.dtos.InboundOrderDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.request.InboundOrderRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -13,6 +16,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class InboundOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +33,10 @@ public class InboundOrder {
 
     @OneToOne()
     private Agent agent;
+
+    public InboundOrder(InboundOrderDTO inboundOrderDTO, Set<Batch> batchSet, Section section){
+        this.date = inboundOrderDTO.getOrderDate();
+        this.section = section;
+        this.batch = batchSet;
+    }
 }
