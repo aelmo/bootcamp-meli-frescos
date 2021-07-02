@@ -2,6 +2,7 @@ package com.mercadolibre.bootcampmelifrescos.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = "warehouse")
 public class Section {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

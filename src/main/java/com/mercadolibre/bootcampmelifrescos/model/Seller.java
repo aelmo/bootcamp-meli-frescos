@@ -1,8 +1,6 @@
 package com.mercadolibre.bootcampmelifrescos.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -12,6 +10,8 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

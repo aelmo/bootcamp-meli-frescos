@@ -1,7 +1,9 @@
 package com.mercadolibre.bootcampmelifrescos.model;
 
+import com.mercadolibre.bootcampmelifrescos.dtos.BatchDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -14,6 +16,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Batch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,14 +28,11 @@ public class Batch {
     @Column(name = "minimum_temperature")
     private Float minimumTemperature;
 
-    @Column(name = "maximum_temperature")
-    private Float maximumTemperature;
-
     @Column(name = "initial_quantity")
-    private Float initialQuantity;
+    private int initialQuantity;
 
     @Column(name = "current_quantity")
-    private Float currentQuantity;
+    private int currentQuantity;
 
     @Column(name = "manufacturing_date")
     private LocalDate manufacturingDate;
@@ -43,10 +43,21 @@ public class Batch {
     @Column(name="due_date")
     private LocalDate dueDate;
 
-    @OneToMany(targetEntity = Product.class, mappedBy = "batch")
-    private Set<Product> product;
+    @OneToOne
+    private Product product;
 
     @ManyToOne(targetEntity = InboundOrder.class)
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
     private InboundOrder inboundOrder;
+
+    public Batch(BatchDTO batchDTO, Product product){
+        this.currentTemperature = batchDTO.getCurrentTemperature();
+        this.minimumTemperature = batchDTO.getMinimumTemperature();
+        this.initialQuantity = batchDTO.getInitialQuantity();
+        this.currentQuantity = batchDTO.getCurrentQuantity();
+        this.manufacturingDate = batchDTO.getManufacturingDate();
+        this.manufacturingTime = batchDTO.getManufacturingTime();
+        this.dueDate = batchDTO.getDueDate();
+        this.product = product;
+    }
 }
