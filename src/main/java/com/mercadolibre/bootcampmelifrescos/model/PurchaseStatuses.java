@@ -8,22 +8,16 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
+@Table(name="purchase_statuses")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "agent")
+@AllArgsConstructor
 @EqualsAndHashCode
-public class Agent {
+public class PurchaseStatuses {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name="email")
-    private String email;
-
-    @Column(name="password")
-    private String password;
+    @Column(name="title")
+    private String title;
 }
