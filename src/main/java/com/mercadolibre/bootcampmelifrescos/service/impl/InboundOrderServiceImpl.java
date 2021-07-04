@@ -28,18 +28,21 @@ public class InboundOrderServiceImpl implements InboundOrderService{
 
     @Override
     public InboundOrderResponse createInboundOrder(InboundOrderDTO inboundOrderDTO) throws Exception {
-        List<BatchDTO> batchDTOList = inboundOrderDTO.getBatchStock();
-        InboundOrderResponse inboundOrderResponse = new InboundOrderResponse(batchDTOList);
-        Set<Batch> batchSet = new HashSet<>();
         Section section = sectionRepository.findById(inboundOrderDTO.getSectionCode()).orElseThrow();
+        List<BatchDTO> batchDTOList = inboundOrderDTO.getBatchStock();
+        Set<Batch> batchSet = new HashSet<>();
+
         for (BatchDTO batchDTO : batchDTOList){
             Product product = productRepository.findById(batchDTO.getProductId()).orElseThrow();
             batchSet.add(new Batch(batchDTO, product));
         }
+
         validateCategorySection(section, batchSet);
+
         InboundOrder inboundOrder = new InboundOrder(inboundOrderDTO, batchSet, section);
         inboundOrderRepository.save(inboundOrder);
-        return inboundOrderResponse;
+
+        return new InboundOrderResponse(batchDTOList);
     }
 
     @Override
