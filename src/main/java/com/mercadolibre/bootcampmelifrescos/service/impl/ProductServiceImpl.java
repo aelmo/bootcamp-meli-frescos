@@ -17,11 +17,11 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
-    public ResponseEntity<List<ProductDTO>> getAllProducts(){
+    public List<ProductDTO> getAllProducts() throws Exception {
         List<Product> allProductsList = productRepository.findAll();
 
         if(allProductsList.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new Exception("There is no products available");
 
         List<ProductDTO> productsResponseList = new ArrayList<>();
 
@@ -29,6 +29,6 @@ public class ProductServiceImpl implements ProductService {
             productsResponseList.add(new ProductDTO(product));
         }
 
-        return new ResponseEntity<>(productsResponseList, HttpStatus.OK);
+        return productsResponseList;
     }
 }

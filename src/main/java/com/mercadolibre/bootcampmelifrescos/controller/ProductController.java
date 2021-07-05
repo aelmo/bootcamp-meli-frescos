@@ -3,6 +3,7 @@ package com.mercadolibre.bootcampmelifrescos.controller;
 import com.mercadolibre.bootcampmelifrescos.dtos.ProductDTO;
 import com.mercadolibre.bootcampmelifrescos.service.ProductService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> getAllProducts(){
-        return productService.getAllProducts();
+    public ResponseEntity<List<ProductDTO>> getAllProducts() throws Exception {
+        return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
     }
 }
