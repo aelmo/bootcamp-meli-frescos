@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "inboundOrder")
 public class Batch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +46,7 @@ public class Batch {
     private Product product;
 
     @ManyToOne(targetEntity = InboundOrder.class)
-    @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "order_id",referencedColumnName = "id")
     private InboundOrder inboundOrder;
 
     public Batch(BatchDTO batchDTO, Product product){
