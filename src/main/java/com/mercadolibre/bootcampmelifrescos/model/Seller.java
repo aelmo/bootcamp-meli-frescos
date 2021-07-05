@@ -13,6 +13,7 @@ import java.util.Set;
 @EqualsAndHashCode
 @ToString
 public class Seller {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

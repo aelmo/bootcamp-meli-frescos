@@ -12,6 +12,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(exclude = "seller")
 @ToString(exclude = "seller")
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

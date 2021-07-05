@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(exclude = "inboundOrder")
 @ToString(exclude = "inboundOrder")
 public class Batch {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

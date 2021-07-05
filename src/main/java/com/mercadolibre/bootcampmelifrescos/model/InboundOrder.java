@@ -16,6 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class InboundOrder {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
