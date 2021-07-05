@@ -2,6 +2,7 @@ package com.mercadolibre.bootcampmelifrescos.service.impl;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.BatchDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.InboundOrderDTO;
+import com.mercadolibre.bootcampmelifrescos.exceptions.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Batch;
 import com.mercadolibre.bootcampmelifrescos.model.InboundOrder;
 import com.mercadolibre.bootcampmelifrescos.model.Product;
@@ -22,13 +23,21 @@ public class InboundOrderConverterImpl implements InboundOrderConverter {
     private SectionRepository sectionRepository;
     private ProductRepository productRepository;
 
-    public InboundOrder dtoToEntity(InboundOrderDTO inboundOrderDTO) {
-        Section section = sectionRepository.findById(inboundOrderDTO.getSectionCode()).orElseThrow();
+    public InboundOrder dtoToEntity(InboundOrderDTO inboundOrderDTO) throws NotFoundApiException {
+        Long sectionId = inboundOrderDTO.getSectionCode();
+
+        Section section = sectionRepository.findById(sectionId).orElseThrow(
+                () -> new NotFoundApiException("Section with id: " + sectionId + " not found")
+        );
+
         List<BatchDTO> batchDTOList = inboundOrderDTO.getBatchStock();
         Set<Batch> batchSet = new HashSet<>();
 
         for (BatchDTO batchDTO : batchDTOList){
-            Product product = productRepository.findById(batchDTO.getProductId()).orElseThrow();
+            Long productId = batchDTO.getProductId();
+            Product product = productRepository.findById(productId).orElseThrow(
+                    () -> new NotFoundApiException("Product with id: " + productId + " not found")
+            );
             batchSet.add(new Batch(batchDTO, product));
         }
 

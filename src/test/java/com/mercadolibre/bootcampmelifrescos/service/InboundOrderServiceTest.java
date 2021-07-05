@@ -3,6 +3,7 @@ package com.mercadolibre.bootcampmelifrescos.service;
 import com.mercadolibre.bootcampmelifrescos.dtos.BatchDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.InboundOrderDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.SectionDTO;
+import com.mercadolibre.bootcampmelifrescos.exceptions.ApiException;
 import com.mercadolibre.bootcampmelifrescos.model.InboundOrder;
 import com.mercadolibre.bootcampmelifrescos.repository.InboundOrderRepository;
 import com.mercadolibre.bootcampmelifrescos.service.impl.InboundOrderConverterImpl;
@@ -60,9 +61,9 @@ public class InboundOrderServiceTest {
                 LocalDate.of(2020, 1, 8));
         InboundOrderDTO inboundOrderDTO = new InboundOrderDTO(1L, LocalDate.now(), sectionDTO, List.of(batchDTO));
         when(inboundConverter.dtoToEntity(any())).thenReturn(new InboundOrder());
-        doThrow(new Exception()).when(validator).validateCategorySection(any(), any());
+        doThrow(new ApiException()).when(validator).validateCategorySection(any(), any());
 
-        assertThrows(Exception.class, () -> subject.createInboundOrder(any()));
+        assertThrows(ApiException.class, () -> subject.createInboundOrder(any()));
 
         verify(validator, times(1)).validateCategorySection(any(), any());
         verify(inboundOrderRepository, times(0)).save(any());

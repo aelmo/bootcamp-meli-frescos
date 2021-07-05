@@ -1,5 +1,7 @@
 package com.mercadolibre.bootcampmelifrescos.service.impl;
 
+import com.mercadolibre.bootcampmelifrescos.exceptions.ApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.BadRequestApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Batch;
 import com.mercadolibre.bootcampmelifrescos.model.Product;
 import com.mercadolibre.bootcampmelifrescos.model.Section;
@@ -12,11 +14,11 @@ import java.util.Set;
 public class ValidatorImpl implements Validator {
 
     @Override
-    public void validateCategorySection(Section section, Set<Batch> batchSet) throws Exception {
+    public void validateCategorySection(Section section, Set<Batch> batchSet) throws ApiException {
         for (Batch batch : batchSet){
             Product product = batch.getProduct();
-            if(product.getCategory().getId() != section.getCategory().getId())
-                throw new Exception("Invalid category");
+            if(product.getCategory().getCode() != section.getCategory().getCode())
+                throw new BadRequestApiException("Product with id: " + product.getId() + " is in incompatible section");
         }
     }
 }

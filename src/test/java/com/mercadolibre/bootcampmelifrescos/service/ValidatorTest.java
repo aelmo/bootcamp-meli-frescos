@@ -1,6 +1,6 @@
 package com.mercadolibre.bootcampmelifrescos.service;
 
-import com.mercadolibre.bootcampmelifrescos.dtos.BatchDTO;
+import com.mercadolibre.bootcampmelifrescos.exceptions.BadRequestApiException;
 import com.mercadolibre.bootcampmelifrescos.model.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class ValidatorTest {
                 product, new InboundOrder());
         Set<Batch> batchSet = Set.of(batch);
 
-        assertThrows(Exception.class, () -> subject.validateCategorySection(section, batchSet));
+        assertThrows(BadRequestApiException.class, () -> subject.validateCategorySection(section, batchSet));
     }
 
     @Test
