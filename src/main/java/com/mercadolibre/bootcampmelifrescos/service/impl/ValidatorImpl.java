@@ -18,7 +18,7 @@ public class ValidatorImpl implements Validator {
         for (Batch batch : batchSet){
             Product product = batch.getProduct();
             if(product.getCategory().getCode() != section.getCategory().getCode())
-                throw new BadRequestApiException("Product with id: " + product.getId() + " is in incompatible section");
+                throw new BadRequestApiException("Product with id: " + product.getId() + " is in an incompatible section");
         }
     }
 }

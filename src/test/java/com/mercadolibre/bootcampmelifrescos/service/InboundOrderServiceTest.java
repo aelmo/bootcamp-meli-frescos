@@ -91,7 +91,7 @@ public class InboundOrderServiceTest {
     }
 
     @Test
-    void whenUpdating_shouldThrowIfInbouOrderDoesNotExist() throws Exception {
+    void whenUpdating_shouldThrowIfInboundOrderDoesNotExist() throws Exception {
         SectionDTO sectionDTO = new SectionDTO(3L, 1L);
         BatchDTO batchDTO = new BatchDTO( 1L, 1L, 27.3F , 20.7F, 1, 2,  LocalDate.of(2020, 1, 8),
                 LocalDateTime.of(2020, 1, 8, 1, 1, 1),

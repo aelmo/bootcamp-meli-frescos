@@ -9,12 +9,12 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class ApiException extends Exception{
+public class ApiException extends Exception {
     private static final long serialVersionUID = 1L;
 
     private String code;
     private String description;
-    private Integer statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value();;
+    private Integer statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value();
 
     public ApiException() {
         this.code = "INTERNAL_ERROR";
