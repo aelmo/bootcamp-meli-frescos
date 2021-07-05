@@ -13,6 +13,7 @@ import java.util.Set;
 @EqualsAndHashCode
 @Table(name = "warehouse")
 public class Warehouse {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

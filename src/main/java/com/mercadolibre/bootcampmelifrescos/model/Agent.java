@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Table(name = "agent")
 @EqualsAndHashCode
 public class Agent {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
