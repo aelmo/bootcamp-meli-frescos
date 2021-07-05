@@ -7,5 +7,5 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ProductService {
-    ResponseEntity<List<ProductDTO>> getAllProducts();
+    List<ProductDTO> getAllProducts() throws Exception;
 }
