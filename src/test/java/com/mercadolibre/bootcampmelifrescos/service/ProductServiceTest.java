@@ -1,6 +1,7 @@
-package com.mercadolibre.bootcampmelifrescos.services;
+package com.mercadolibre.bootcampmelifrescos.service;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.ProductDTO;
+import com.mercadolibre.bootcampmelifrescos.exceptions.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Category;
 import com.mercadolibre.bootcampmelifrescos.model.Product;
 import com.mercadolibre.bootcampmelifrescos.model.Seller;
@@ -29,7 +30,6 @@ public class ProductServiceTest {
     private ProductRepository productRepository;
 
     @Test
-    @Disabled
     void shouldReturnAllProducts() throws Exception {
         //arrange
         Category category = new Category(1L, "FR", "Frozen");
@@ -54,6 +54,6 @@ public class ProductServiceTest {
     @Test
     void shouldThrownExceptionWhenThereIsNoProducts(){
         when(productRepository.findAll()).thenReturn(List.of());
-        assertThrows(Exception.class,() -> productService.getAllProducts());
+        assertThrows(NotFoundApiException.class,() -> productService.getAllProducts());
     }
 }
