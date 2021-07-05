@@ -15,7 +15,7 @@ import java.util.Set;
 public class PurchaseOrderDTO {
     @NotNull(message = "The purchase date cannot be null")
     private LocalDate date;
-    @NotNull(message="The buyer id cannot be null")
+    @NotNull(message = "The buyer id cannot be null")
     private Long buyerId;
 
     @Valid
