@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  backendservice:
+    image: squad2/bootcamp-meli-frescos
+    container_name: meli-frescos
+    build:
+      context: ../bootcamp-meli-frescos
+      args:
+        - PORT=8080
+    ports:
+      - "8080:8080"
