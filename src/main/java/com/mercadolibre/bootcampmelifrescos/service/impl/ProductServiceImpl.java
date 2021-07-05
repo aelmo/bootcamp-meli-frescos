@@ -1,6 +1,7 @@
 package com.mercadolibre.bootcampmelifrescos.service.impl;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.ProductDTO;
+import com.mercadolibre.bootcampmelifrescos.exceptions.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Product;
 import com.mercadolibre.bootcampmelifrescos.repository.ProductRepository;
 import com.mercadolibre.bootcampmelifrescos.service.ProductService;
@@ -21,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
         List<Product> allProductsList = productRepository.findAll();
 
         if(allProductsList.isEmpty())
-            throw new Exception("There is no products available");
+            throw new NotFoundApiException("There is no products available");
 
         List<ProductDTO> productsResponseList = new ArrayList<>();
 
