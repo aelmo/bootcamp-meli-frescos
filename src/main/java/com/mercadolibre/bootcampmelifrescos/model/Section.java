@@ -14,6 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = "warehouse")
 public class Section {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

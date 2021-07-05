@@ -6,25 +6,28 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+
 
 @Entity
+@Table(name="purchase_order")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "agent")
+@AllArgsConstructor
 @EqualsAndHashCode
-public class Agent {
+public class PurchaseOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name="date")
+    private LocalDate date;
 
-    @Column(name="email")
-    private String email;
+    @OneToOne
+    @JoinColumn(name="status", referencedColumnName = "id")
+    private PurchaseStatuses status;
 
-    @Column(name="password")
-    private String password;
+    @OneToOne
+    private Cart cart;
 }
