@@ -20,6 +20,6 @@ public class Cart {
     @GeneratedValue
     private Long id;
 
-    @OneToMany
+    @ManyToMany
     private Set<Product> products;
 }

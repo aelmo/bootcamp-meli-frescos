@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 
 @Entity
@@ -25,9 +26,11 @@ public class PurchaseOrder {
     private LocalDate date;
 
     @OneToOne
-    @JoinColumn(name="status", referencedColumnName = "id")
     private PurchaseStatuses status;
 
     @OneToOne
     private Cart cart;
+
+    @OneToOne
+    private Buyer buyer;
 }

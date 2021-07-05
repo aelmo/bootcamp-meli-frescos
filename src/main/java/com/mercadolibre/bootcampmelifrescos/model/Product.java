@@ -3,6 +3,7 @@ package com.mercadolibre.bootcampmelifrescos.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="product")
@@ -24,11 +25,15 @@ public class Product {
     @JoinColumn(name = "seller_id", referencedColumnName = "id")
     private Seller seller;
 
+    @Column(name="amount")
+    private Float amount;
+
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-    @ManyToOne
+    @ManyToMany
     @JoinColumn(name="cart_id", referencedColumnName = "id")
-    private Cart cart;
+    private Set<Cart> carts;
+
 }
