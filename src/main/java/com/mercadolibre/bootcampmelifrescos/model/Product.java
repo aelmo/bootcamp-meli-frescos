@@ -1,9 +1,6 @@
 package com.mercadolibre.bootcampmelifrescos.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,6 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "seller")
+@ToString(exclude = "seller")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

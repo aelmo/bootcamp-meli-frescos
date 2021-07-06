@@ -26,13 +26,14 @@ public class InboundOrder {
     @OneToOne()
     private Section section;
 
-    @OneToMany(mappedBy = "inboundOrder",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "inboundOrder", cascade = CascadeType.ALL)
     private Set<Batch> batch;
 
     @OneToOne()
     private Agent agent;
 
     public InboundOrder(InboundOrderDTO inboundOrderDTO, Set<Batch> batchSet, Section section){
+
         this.date = inboundOrderDTO.getOrderDate();
         this.section = section;
         this.batch = batchSet;
