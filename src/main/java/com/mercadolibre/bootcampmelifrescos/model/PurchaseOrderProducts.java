@@ -1,6 +1,5 @@
 package com.mercadolibre.bootcampmelifrescos.model;
 
-import com.mercadolibre.bootcampmelifrescos.embeddables.PurchaseProductPK;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @Entity
 @Table(name="purchase_products")
