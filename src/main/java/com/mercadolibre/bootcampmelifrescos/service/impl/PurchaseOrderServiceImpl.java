@@ -27,46 +27,19 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     @Override
     public PurchaseAmountDTO updatePurchaseOrder(PurchaseOrderDTO purchaseOrderDTO, Long orderId) throws Exception {
-        if (!purchaseOrderRepository.findById(orderId).isPresent())
+        if (purchaseOrderRepository.findById(orderId).isEmpty())
             throw new Exception("Purchase order not found");
-        PurchaseOrder purchaseOrder = purchaseOrderRepository.getOne(orderId);
+        PurchaseOrder purchaseOrder = purchaseOrderRepository.findById(orderId).get();
         List<PurchaseOrderProducts> purchaseOrderProducts = purchaseProductsRepository.findAllByPurchaseOrder(purchaseOrder);
-        Set<PurchaseOrderProducts> purchaseOrderProductsTemporary = new HashSet<>();
+        purchaseProductsRepository.deleteAll(purchaseOrderProducts);
 
-        for (PurchaseRequestProductsDTO product : purchaseOrderDTO.getProducts()) {
-            PurchaseOrderProducts purchaseOrderProductsList = new PurchaseOrderProducts();
-            purchaseOrderProductsList.setPurchaseOrder(purchaseOrder);
-            purchaseOrderProductsList.setProduct(productRepository.getOne(product.getProductId()));
-            purchaseOrderProductsList.setQuantity(product.getQuantity());
-            purchaseOrderProductsTemporary.add(purchaseOrderProductsList);
-        }
+        createPurchaseOrderProductsSet(purchaseOrder, purchaseOrderDTO.getProducts());
 
-        for(PurchaseOrderProducts purchaseOrderProductsToCompare : purchaseOrderProductsTemporary){
-            Product product = purchaseOrderProductsToCompare.getProduct();
-            PurchaseOrderProducts purchaseOrderProducts1 = new PurchaseOrderProducts();
-            for(PurchaseOrderProducts purchaseOrderProducts2 : purchaseOrderProducts){
-                if(purchaseOrderProducts2.getProduct().getId()==product.getId()){
-                    purchaseOrderProducts1=purchaseOrderProducts2;
-                    break;
-                }
-            }
-            Integer productQuantity = purchaseOrderProductsToCompare.getQuantity()-purchaseOrderProducts1.getQuantity();
-            updateProductQuantityFromBatch(product.getId(), productQuantity);
-            purchaseOrderProducts1.setProduct(purchaseOrderProductsToCompare.getProduct());
-            purchaseOrderProducts1.setQuantity(purchaseOrderProductsToCompare.getQuantity());
-            purchaseProductsRepository.save(purchaseOrderProducts1);
-        }
+        purchaseOrder.setDate(purchaseOrderDTO.getDate());
+        purchaseOrder.setStatus(purchaseStatusesRepository.getOne(purchaseOrderDTO.getOrderStatus().getStatusCode()));
+        purchaseOrder.setBuyer(buyerRepository.getOne(purchaseOrderDTO.getBuyerId()));
 
-        //purchaseOrderProducts=purchaseOrderProductsTemporary;
-        //purchaseProductsRepository.saveAll(purchaseOrderProducts);
-
-        PurchaseOrder purchaseOrderToUpdate = new PurchaseOrder();
-        purchaseOrderToUpdate.setPurchaseOrderProducts(Set.copyOf(purchaseOrderProducts));
-        purchaseOrderToUpdate.setDate(purchaseOrderDTO.getDate());
-        purchaseOrderToUpdate.setStatus(purchaseStatusesRepository.getOne(purchaseOrderDTO.getOrderStatus().getStatusCode()));
-        purchaseOrderToUpdate.setBuyer(buyerRepository.getOne(purchaseOrderDTO.getBuyerId()));
-
-        purchaseOrderRepository.save(purchaseOrderToUpdate);
+        purchaseOrderRepository.save(purchaseOrder);
 
         return getAmountOfAnPurchaseOrder(purchaseOrder);
     }
@@ -103,19 +76,19 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         Set<PurchaseOrderProducts> purchaseOrderProductsSet = new HashSet<>();
 
         for(PurchaseRequestProductsDTO product: requestProductsDTO) {
-            updateProductQuantityFromBatch(product.getProductId(), product.getQuantity());
 
             PurchaseOrderProducts purchaseOrderProducts = new PurchaseOrderProducts();
             purchaseOrderProducts.setPurchaseOrder(purchaseOrder);
             purchaseOrderProducts.setProduct(productRepository.getOne(product.getProductId()));
             purchaseOrderProducts.setQuantity(product.getQuantity());
+            purchaseOrderProducts.setBatchId(updateProductQuantityFromBatch(product.getProductId(), product.getQuantity()));
             purchaseOrderProductsSet.add(purchaseProductsRepository.save(purchaseOrderProducts));
         }
 
         return purchaseOrderProductsSet;
     }
 
-    public void updateProductQuantityFromBatch(Long productId, Integer quantity) throws Exception {
+    public Long updateProductQuantityFromBatch(Long productId, Integer quantity) throws Exception {
         try {
             Batch batch = batchRepository.getBatchByProductId(productId);
             if(quantity > batch.getCurrentQuantity()) {
@@ -123,9 +96,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             }
             batch.setCurrentQuantity(batch.getCurrentQuantity() - quantity);
             batchRepository.save(batch);
+            return batch.getId();
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
     }
+
 }

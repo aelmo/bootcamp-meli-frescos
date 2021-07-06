@@ -19,13 +19,18 @@ public class PurchaseOrderProducts implements Serializable {
     private Long id;
 
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(optional = false)
     private Product product;
 
-    @JoinColumn(name = "purchase_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "purchase_order_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne
     private PurchaseOrder purchaseOrder;
 
     @Column(name = "quantity")
     private Integer quantity;
+
+    @Column(name = "batch_id")
+    private Long batchId;
+
+
 }
