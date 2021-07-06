@@ -28,4 +28,7 @@ public class Buyer {
 
     @Column(name="password")
     private String password;
+
+    @OneToMany
+    private Set<PurchaseOrder> purchaseOrderSet;
 }
