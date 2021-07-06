@@ -1,9 +1,11 @@
 package com.mercadolibre.bootcampmelifrescos.repository;
 
-import com.mercadolibre.bootcampmelifrescos.embeddables.CartProductPK;
-import com.mercadolibre.bootcampmelifrescos.model.Cart;
-import com.mercadolibre.bootcampmelifrescos.model.CartProducts;
+import com.mercadolibre.bootcampmelifrescos.model.PurchaseOrder;
+import com.mercadolibre.bootcampmelifrescos.model.PurchaseOrderProducts;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CartProductsRepository extends JpaRepository<CartProducts, CartProductPK> {
+import java.util.List;
+
+public interface PurchaseProductsRepository extends JpaRepository<PurchaseOrderProducts, Long> {
+    List<PurchaseOrderProducts> findAllBypurchaseOrder(PurchaseOrder purchaseOrder);
 }
