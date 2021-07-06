@@ -1,9 +1,6 @@
 package com.mercadolibre.bootcampmelifrescos.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +10,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
+@ToString(exclude = {"product", "purchaseOrder"})
 @EqualsAndHashCode(exclude = {"product","purchaseOrder"})
 public class PurchaseOrderProducts implements Serializable {
 
@@ -21,11 +18,11 @@ public class PurchaseOrderProducts implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @AttributeOverride(name = "id", column = @Column(name = "product_id", nullable = false))
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private Product product;
 
-    @AttributeOverride(name = "id", column = @Column(name = "purchase_id", nullable = false))
+    @JoinColumn(name = "purchase_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL)
     private PurchaseOrder purchaseOrder;
 

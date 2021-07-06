@@ -15,7 +15,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "buyer")
 public class PurchaseOrder {
 
     @Id
@@ -32,5 +32,6 @@ public class PurchaseOrder {
     private Set<PurchaseOrderProducts> purchaseOrderProducts;
 
     @ManyToOne
+    @JoinColumn(name = "buyer_id", referencedColumnName = "id")
     private Buyer buyer;
 }

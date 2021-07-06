@@ -5,6 +5,11 @@ VALUES ("Joao"),
        ("Maria"),
        ("Carlos");
 
+INSERT INTO buyer (name)
+VALUES ("Joao"),
+       ("Maria"),
+       ("Carlos");
+
 INSERT INTO warehouse (name)
 VALUES ("Cajamar Fullfilment"),
        ("Salvador Fullfilment"),

@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PurchaseProductsRepository extends JpaRepository<PurchaseOrderProducts, Long> {
-    List<PurchaseOrderProducts> findAllBypurchaseOrder(PurchaseOrder purchaseOrder);
+    List<PurchaseOrderProducts> findAllByPurchaseOrder(PurchaseOrder purchaseOrder);
 }

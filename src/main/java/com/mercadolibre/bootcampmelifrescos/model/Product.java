@@ -10,8 +10,8 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "seller")
-@ToString(exclude = "seller")
+@EqualsAndHashCode(exclude = {"seller", "purchaseOrderProducts"})
+@ToString(exclude = {"purchaseOrderProducts", "seller"})
 public class Product {
 
     @Id
