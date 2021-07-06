@@ -33,8 +33,6 @@ public class PurchaseOrderServiceTest {
     @Mock
     private PurchaseOrderRepository purchaseOrderRepository;
     @Mock
-    private CartRepository cartRepository;
-    @Mock
     private ProductRepository productRepository;
     @Mock
     private PurchaseStatusesRepository purchaseStatusesRepository;
@@ -50,7 +48,6 @@ public class PurchaseOrderServiceTest {
     private Product sampleProduct = new Product();
     private Product sampleProduct2 = new Product();
     private Product sampleProduct3 = new Product();
-    private Cart sampleCart = new Cart();
     private Seller sampleSeller = new Seller();
     private Set<Product> sampleProducts = new HashSet<>();
     private InboundOrder inboundOrder = new InboundOrder();
@@ -58,8 +55,9 @@ public class PurchaseOrderServiceTest {
     private PurchaseStatuses status = new PurchaseStatuses();
     private PurchaseOrderDTO purchaseOrderDTO = new PurchaseOrderDTO();
     private PurchaseRequestProductsDTO purchaseRequestProductsDTO = new PurchaseRequestProductsDTO();
+    private PurchaseOrderProducts samplePurchaseProduct = new PurchaseOrderProducts();
 
-    @BeforeEach
+    //@BeforeEach
     public void init() {
         //create sample buyer
         sampleBuyer.setName("Sample buyer");
@@ -110,21 +108,20 @@ public class PurchaseOrderServiceTest {
         status.setId(1L);
         status.setTitle("Paid");
 
-        sampleCart.setId(1L);
-        sampleCart.setProducts(sampleProducts);
-
         purchaseRequestProductsDTO.setProductId(1L);
         purchaseRequestProductsDTO.setQuantity(3);
 
         Set<PurchaseRequestProductsDTO> sampleSetPurchaseRequestProductsDTO = new HashSet<>();
         sampleSetPurchaseRequestProductsDTO.add(purchaseRequestProductsDTO);
+        Set<PurchaseOrderProducts> samplePurchaseOrderProductsSet = new HashSet<>();
+        samplePurchaseOrderProductsSet.add(samplePurchaseProduct);
 
         purchaseOrderDTO.setBuyerId(sampleBuyer.getId());
         purchaseOrderDTO.setDate(LocalDate.now());
         purchaseOrderDTO.setProducts(sampleSetPurchaseRequestProductsDTO);
         purchaseOrderDTO.setOrderStatus(new PurchaseOrderStatusDTO(1L));
 
-        purchaseOrder = new PurchaseOrder(1L, LocalDate.now(), status, sampleCart, sampleBuyer);
+        purchaseOrder = new PurchaseOrder(1L, LocalDate.now(), status, samplePurchaseOrderProductsSet, sampleBuyer);
 
         when(productRepository.getOne(notNull())).thenReturn(sampleProduct);
         when(purchaseStatusesRepository.getOne(notNull())).thenReturn(status);
@@ -137,7 +134,7 @@ public class PurchaseOrderServiceTest {
     public void shouldReturnAPurchaseOrderTotalPrice() throws Exception {
         PurchaseAmountDTO expectedResult = new PurchaseAmountDTO(600.0);
         when(purchaseOrderRepository.save(notNull())).thenReturn(expectedResult);
-        PurchaseAmountDTO result = purchaseOrderService.createPurchaseOrder(purchaseOrderDTO);
+        PurchaseAmountDTO result = purchaseOrderService.getAmountOfAnPurchaseOrder(purchaseOrderService.createPurchaseOrder(purchaseOrderDTO));
         assertThat(result).isSameAs(expectedResult);
     }
 }
