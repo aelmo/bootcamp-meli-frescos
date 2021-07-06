@@ -34,10 +34,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public List<ProductDTO> getProductsByCategory(String categoryCode) throws ApiException {
-        List<Product> products = productRepository.findAllByCategoryCode(categoryCode);
-        Category category = categoryRepository.findByCode(categoryCode).orElseThrow(
+        categoryRepository.findByCode(categoryCode).orElseThrow(
                 ()-> new NotFoundApiException("Category " + categoryCode + " not found")
         );
+
+        List<Product> products = productRepository.findAllByCategoryCode(categoryCode);
 
         if(products.isEmpty())
             throw new NotFoundApiException("There is no products available to this category");
