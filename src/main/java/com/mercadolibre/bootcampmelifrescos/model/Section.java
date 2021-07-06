@@ -1,9 +1,6 @@
 package com.mercadolibre.bootcampmelifrescos.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,6 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = "warehouse")
+@ToString(exclude = "warehouse")
 public class Section {
 
     @Id
