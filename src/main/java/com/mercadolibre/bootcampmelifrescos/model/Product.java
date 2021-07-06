@@ -34,8 +34,6 @@ public class Product {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-    @ManyToMany
-    @JoinColumn(name="cart_id", referencedColumnName = "id")
-    private Set<Cart> carts;
-
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<PurchaseOrderProducts> purchaseOrderProducts;
 }
