@@ -28,7 +28,7 @@ public class PurchaseOrder {
     @OneToOne
     private PurchaseStatuses status;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<PurchaseOrderProducts> purchaseOrderProducts;
 
     @ManyToOne
