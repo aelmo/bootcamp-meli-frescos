@@ -5,7 +5,10 @@ import com.mercadolibre.bootcampmelifrescos.dtos.InboundOrderDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.SectionDTO;
 import com.mercadolibre.bootcampmelifrescos.exceptions.ApiException;
 import com.mercadolibre.bootcampmelifrescos.exceptions.NotFoundApiException;
+import com.mercadolibre.bootcampmelifrescos.model.Batch;
 import com.mercadolibre.bootcampmelifrescos.model.InboundOrder;
+import com.mercadolibre.bootcampmelifrescos.model.Product;
+import com.mercadolibre.bootcampmelifrescos.model.Section;
 import com.mercadolibre.bootcampmelifrescos.repository.InboundOrderRepository;
 import com.mercadolibre.bootcampmelifrescos.service.impl.InboundOrderConverterImpl;
 import org.junit.jupiter.api.Test;
@@ -17,6 +20,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static java.util.Optional.empty;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -49,8 +53,15 @@ public class InboundOrderServiceTest {
         BatchDTO batchDTO = new BatchDTO( 1L, 1L, 27.3F , 20.7F, 1, 2,  LocalDate.of(2020, 1, 8),
                 LocalDateTime.of(2020, 1, 8, 1, 1, 1),
                 LocalDate.of(2020, 1, 8));
+        Batch batch = new Batch(batchDTO, new Product());
         InboundOrderDTO inboundOrderDTO = new InboundOrderDTO(1L, LocalDate.now(), sectionDTO, List.of(batchDTO));
-        when(inboundConverter.dtoToEntity(any())).thenReturn(new InboundOrder());
+        InboundOrder inboundOrder = new InboundOrder(1L,
+                LocalDate.of(2021, 06, 27),
+                new Section(),
+                Set.of(batch),
+                null
+        );
+        when(inboundConverter.dtoToEntity(any())).thenReturn(inboundOrder);
 
         subject.createInboundOrder(inboundOrderDTO);
 

@@ -29,10 +29,7 @@ public class InboundOrderServiceImpl implements InboundOrderService{
         InboundOrder inboundOrder = inboundConverter.dtoToEntity(inboundOrderDTO);
         validator.validateCategorySection(inboundOrder.getSection(), inboundOrder.getBatch());
 
-        Set<Batch> batchSet = inboundOrder.getBatch();
-        batchSet.forEach(
-                batch -> batch.setInboundOrder(inboundOrder)
-        );
+        setOrderOnBatchStock(inboundOrder);
 
         inboundOrderRepository.save(inboundOrder);
 
@@ -41,10 +38,31 @@ public class InboundOrderServiceImpl implements InboundOrderService{
 
     @Override
     public InboundOrderResponse updateInboundOrder(InboundOrderDTO inboundOrderDTO) throws ApiException {
-        if(!inboundOrderRepository.findById(inboundOrderDTO.getOrderNumber()).isPresent()){
+        if(inboundOrderRepository.findById(inboundOrderDTO.getOrderNumber()).isEmpty()){
             throw new NotFoundApiException("Inbound order with order number: " + inboundOrderDTO.getOrderNumber() + " not found to update");
         }
 
-        return createInboundOrder(inboundOrderDTO);
+        InboundOrder oldInboundOrder = inboundOrderRepository.findById(inboundOrderDTO.getOrderNumber()).get();
+        InboundOrder newInboundOrder = inboundConverter.dtoToEntity(inboundOrderDTO);
+
+        oldInboundOrder.setBatch(newInboundOrder.getBatch());
+        oldInboundOrder.setDate(newInboundOrder.getDate());
+        oldInboundOrder.setSection(newInboundOrder.getSection());
+        oldInboundOrder.setAgent(oldInboundOrder.getAgent());
+
+        setOrderOnBatchStock(oldInboundOrder);
+
+        inboundOrderRepository.save(oldInboundOrder);
+
+        return new InboundOrderResponse(inboundOrderDTO.getBatchStock());
+
+    }
+
+
+    private void setOrderOnBatchStock(InboundOrder inboundOrder) {
+        Set<Batch> batchSet = inboundOrder.getBatch();
+        batchSet.forEach(
+                batch -> batch.setInboundOrder(inboundOrder)
+        );
     }
 }

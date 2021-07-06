@@ -1,10 +1,7 @@
 package com.mercadolibre.bootcampmelifrescos.model;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.BatchDTO;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = "inboundOrder")
+@ToString(exclude = "inboundOrder")
 public class Batch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +48,7 @@ public class Batch {
     private InboundOrder inboundOrder;
 
     public Batch(BatchDTO batchDTO, Product product){
+        this.id = batchDTO.getBatchNumber();
         this.currentTemperature = batchDTO.getCurrentTemperature();
         this.minimumTemperature = batchDTO.getMinimumTemperature();
         this.initialQuantity = batchDTO.getInitialQuantity();
