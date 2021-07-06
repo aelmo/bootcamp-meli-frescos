@@ -31,7 +31,7 @@ public class PurchaseOrderController {
     @PostMapping("/orders/")
     public ResponseEntity insertNewPurchaseOrder(@Valid @RequestBody PurchaseOrderDTO purchaseOrderDTO) {
         try {
-            return new ResponseEntity(purchaseOrderService.createPurchaseOrder(purchaseOrderDTO), HttpStatus.OK);
+            return new ResponseEntity(purchaseOrderService.getAmountOfAnPurchaseOrder(purchaseOrderService.createPurchaseOrder(purchaseOrderDTO)), HttpStatus.OK);
         } catch(Exception e) {
             e.printStackTrace();
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
