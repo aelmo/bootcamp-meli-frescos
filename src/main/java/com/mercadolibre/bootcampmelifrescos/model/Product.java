@@ -3,6 +3,7 @@ package com.mercadolibre.bootcampmelifrescos.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -34,4 +35,12 @@ public class Product {
 
     @OneToMany(mappedBy = "id")
     private Set<PurchaseOrderProducts> purchaseOrderProducts;
+
+
+    public Product(long id, String name, Seller seller, Category category) {
+        this.id = id;
+        this.name =name;
+        this.seller = seller;
+        this.category = category;
+    }
 }
