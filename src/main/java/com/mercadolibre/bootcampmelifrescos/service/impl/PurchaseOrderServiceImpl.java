@@ -45,8 +45,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         createPurchaseOrderProductsSet(purchaseOrder, purchaseOrderDTO.getProducts());
 
         purchaseOrder.setDate(purchaseOrderDTO.getDate());
-        purchaseOrder.setStatus(purchaseStatusesRepository.getOne(purchaseOrderDTO.getOrderStatus().getStatusCode()));
-        purchaseOrder.setBuyer(buyerRepository.getOne(purchaseOrderDTO.getBuyerId()));
+        purchaseOrder.setStatus(purchaseStatusesRepository.findById(purchaseOrderDTO.getOrderStatus().getStatusCode()).get());
+        purchaseOrder.setBuyer(buyerRepository.findById(purchaseOrderDTO.getBuyerId()).get());
 
         return getAmountOfAnPurchaseOrder(purchaseOrderRepository.save(purchaseOrder));
     }
@@ -54,15 +54,12 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     @Override
     public PurchaseOrder createPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) throws Exception{
         PurchaseOrder purchaseOrderToSave = new PurchaseOrder();
-        Float total = 0.0F;
-
-        Set<Product> products = new HashSet<>();
 
         purchaseOrderToSave = purchaseOrderRepository.save(purchaseOrderToSave);
         purchaseOrderToSave.setPurchaseOrderProducts(createPurchaseOrderProductsSet(purchaseOrderToSave, purchaseOrderDTO.getProducts()));
         purchaseOrderToSave.setDate(purchaseOrderDTO.getDate());
-        purchaseOrderToSave.setStatus(purchaseStatusesRepository.getOne(purchaseOrderDTO.getOrderStatus().getStatusCode()));
-        purchaseOrderToSave.setBuyer(buyerRepository.getOne(purchaseOrderDTO.getBuyerId()));
+        purchaseOrderToSave.setStatus(purchaseStatusesRepository.findById(purchaseOrderDTO.getOrderStatus().getStatusCode()).orElseThrow());
+        purchaseOrderToSave.setBuyer(buyerRepository.findById((purchaseOrderDTO.getBuyerId())).orElseThrow());
 
         return purchaseOrderRepository.save(purchaseOrderToSave);
     }
@@ -86,7 +83,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
             PurchaseOrderProducts purchaseOrderProducts = new PurchaseOrderProducts();
             purchaseOrderProducts.setPurchaseOrder(purchaseOrder);
-            purchaseOrderProducts.setProduct(productRepository.getOne(product.getProductId()));
+            purchaseOrderProducts.setProduct(productRepository.findById(product.getProductId()).orElseThrow());
             purchaseOrderProducts.setQuantity(product.getQuantity());
             purchaseOrderProducts.setBatchId(updateProductQuantityFromBatch(product.getProductId(), product.getQuantity()));
             purchaseOrderProductsSet.add(purchaseProductsRepository.save(purchaseOrderProducts));
@@ -98,12 +95,16 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     public Long updateProductQuantityFromBatch(Long productId, Integer quantity) throws Exception {
         try {
             Batch batch = batchRepository.getBatchByProductId(productId);
+
             if (quantity > batch.getCurrentQuantity()) {
                 throw new Exception();
             }
+
             batch.setLastQuantity(batch.getCurrentQuantity());
             batch.setCurrentQuantity(batch.getCurrentQuantity() - quantity);
+
             batchRepository.save(batch);
+
             return batch.getId();
         } catch (Exception e) {
             e.printStackTrace();
