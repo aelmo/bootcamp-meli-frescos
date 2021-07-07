@@ -4,6 +4,9 @@ import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderStatusDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseRequestProductsDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseAmountDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseOrderProductsResponse;
+import com.mercadolibre.bootcampmelifrescos.exceptions.ApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.*;
 import com.mercadolibre.bootcampmelifrescos.repository.*;
 import com.mercadolibre.bootcampmelifrescos.service.impl.PurchaseOrderServiceImpl;
@@ -12,9 +15,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -175,4 +181,27 @@ public class PurchaseOrderServiceTest {
         PurchaseAmountDTO result = this.purchaseOrderService.updatePurchaseOrder(purchaseOrderDTOToUpdate, 1L);
         assertThat(result).isEqualTo(expectedResult);
     }
+
+    @Test
+    void shouldListAllPurchaseOrderProducts() throws ApiException {
+        Category category = new Category(1L, "FR", "Frozen");
+        sampleProduct.setCategory(category);
+        PurchaseOrderProducts purchaseOrderProducts = samplePurchaseOrderProductsSet.stream().findFirst().get();
+        PurchaseOrderProductsResponse expectedFirstProduct = new PurchaseOrderProductsResponse(sampleProduct,purchaseOrderProducts);
+
+        when(purchaseOrderRepository.findById(1L)).thenReturn(Optional.of(purchaseOrder));
+        when(purchaseProductsRepository.findAllByPurchaseOrder(purchaseOrder)).thenReturn(List.of(purchaseOrderProducts));
+
+        List<PurchaseOrderProductsResponse> result = purchaseOrderService.getPurchaseOrderProducts(2L);
+
+        assertThat(result).contains(expectedFirstProduct);
+        assertThat(result.size()).isEqualTo(1);
+    }
+
+    @Test
+    void shouldThrowNotFoundExceptionWhenThereIsNoPurchaseOrder() {
+        when(purchaseOrderRepository.findById(any())).thenReturn(Optional.empty());
+        assertThrows(NotFoundApiException.class,()-> purchaseOrderService.getPurchaseOrderProducts(1L));
+    }
+
 }
