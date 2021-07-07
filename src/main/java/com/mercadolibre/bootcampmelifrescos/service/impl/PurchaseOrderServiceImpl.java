@@ -1,14 +1,18 @@
 package com.mercadolibre.bootcampmelifrescos.service.impl;
 
+import com.mercadolibre.bootcampmelifrescos.dtos.ProductDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseRequestProductsDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseAmountDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseOrderProductsResponse;
+import com.mercadolibre.bootcampmelifrescos.exceptions.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.*;
 import com.mercadolibre.bootcampmelifrescos.repository.*;
 import com.mercadolibre.bootcampmelifrescos.service.PurchaseOrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -74,6 +78,27 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         }
 
         return new PurchaseAmountDTO(totalAmount);
+    }
+
+    @Override
+    public List<PurchaseOrderProductsResponse> getPurchaseOrderProducts(Long orderId) throws NotFoundApiException {
+        PurchaseOrder purchaseOrder = purchaseOrderRepository.findById(orderId).orElseThrow(
+                () -> new NotFoundApiException("Purchase order not found")
+        );
+
+        List<PurchaseOrderProducts> purchaseOrderProductsList = purchaseProductsRepository.findAllByPurchaseOrder(purchaseOrder);
+        List<PurchaseOrderProductsResponse> productsResponse = createPurchaseOrderProductsResponseList(purchaseOrderProductsList);
+
+        return productsResponse;
+    }
+
+    private List<PurchaseOrderProductsResponse> createPurchaseOrderProductsResponseList(List<PurchaseOrderProducts> purchaseOrderProductsList) {
+        List<PurchaseOrderProductsResponse> productsResponse = new ArrayList<>();
+        for(PurchaseOrderProducts elem: purchaseOrderProductsList){
+            Product product = elem.getProduct();
+            productsResponse.add(new PurchaseOrderProductsResponse(product,elem));
+        }
+        return productsResponse;
     }
 
     public Set<PurchaseOrderProducts> createPurchaseOrderProductsSet(PurchaseOrder purchaseOrder, Set<PurchaseRequestProductsDTO> requestProductsDTO) throws Exception {
