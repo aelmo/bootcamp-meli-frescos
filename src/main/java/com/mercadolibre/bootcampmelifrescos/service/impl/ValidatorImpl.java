@@ -1,7 +1,7 @@
 package com.mercadolibre.bootcampmelifrescos.service.impl;
 
-import com.mercadolibre.bootcampmelifrescos.exceptions.ApiException;
-import com.mercadolibre.bootcampmelifrescos.exceptions.BadRequestApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.BadRequestApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Batch;
 import com.mercadolibre.bootcampmelifrescos.model.Product;
 import com.mercadolibre.bootcampmelifrescos.model.Section;

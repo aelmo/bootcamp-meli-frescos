@@ -2,14 +2,14 @@ package com.mercadolibre.bootcampmelifrescos.service.impl;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.InboundOrderDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.InboundOrderResponse;
-import com.mercadolibre.bootcampmelifrescos.exceptions.ApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Batch;
 import com.mercadolibre.bootcampmelifrescos.model.InboundOrder;
 import com.mercadolibre.bootcampmelifrescos.repository.BatchRepository;
 import com.mercadolibre.bootcampmelifrescos.repository.InboundOrderRepository;
 import com.mercadolibre.bootcampmelifrescos.service.InboundOrderService;
 import com.mercadolibre.bootcampmelifrescos.service.Validator;
-import com.mercadolibre.bootcampmelifrescos.exceptions.NotFoundApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.NotFoundApiException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

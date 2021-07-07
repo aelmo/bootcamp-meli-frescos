@@ -1,6 +1,6 @@
 package com.mercadolibre.bootcampmelifrescos.service;
 
-import com.mercadolibre.bootcampmelifrescos.exceptions.BadRequestApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.BadRequestApiException;
 import com.mercadolibre.bootcampmelifrescos.model.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
