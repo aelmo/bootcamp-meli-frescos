@@ -1,4 +1,4 @@
-package com.mercadolibre.bootcampmelifrescos.exceptions;
+package com.mercadolibre.bootcampmelifrescos.exceptions.api;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

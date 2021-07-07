@@ -1,5 +1,20 @@
 USE meli_fresh_products;
 
+INSERT INTO role (name)
+VALUES ("ROLE_ADMIN"),
+       ("ROLE_AGENT"),
+       ("ROLE_SELLER");
+
+INSERT INTO user (user_name, email, password)
+VALUES ("adminuser", "teste@teste.com", "$2y$12$/Zg./fB6DDZfmXfNaGrkMuCTi6N7AOglucNOqUIj0Xf2L.8i0g7Qa"),
+       ("agentuser", "teste2@teste.com", "$2y$12$/Zg./fB6DDZfmXfNaGrkMuCTi6N7AOglucNOqUIj0Xf2L.8i0g7Qa"),
+       ("selleruser", "teste3@teste.com", "$2y$12$/Zg./fB6DDZfmXfNaGrkMuCTi6N7AOglucNOqUIj0Xf2L.8i0g7Qa");
+
+INSERT INTO users_roles (user_id, role_id)
+VALUES (1, 1), -- User 1 has Admin Access
+       (2, 2), -- User 2 has Agent Access
+       (3, 1); -- User 3 has Seller Access
+
 INSERT INTO seller (id, name)
 VALUES (1,"Joao"),
        (2,"Maria"),
