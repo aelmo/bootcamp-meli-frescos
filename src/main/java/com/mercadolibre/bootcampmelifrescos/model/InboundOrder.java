@@ -39,4 +39,8 @@ public class InboundOrder {
         this.section = section;
         this.batch = batchSet;
     }
+
+    public Long getWarehouseId(){
+        return section.getWarehouseId();
+    }
 }
