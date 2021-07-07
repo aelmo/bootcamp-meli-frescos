@@ -32,6 +32,9 @@ public class Batch {
     @Column(name = "current_quantity")
     private int currentQuantity;
 
+    @Column(name = "last_quantity")
+    private int lastQuantity;
+
     @Column(name = "manufacturing_date")
     private LocalDate manufacturingDate;
 
@@ -58,5 +61,18 @@ public class Batch {
         this.manufacturingTime = batchDTO.getManufacturingTime();
         this.dueDate = batchDTO.getDueDate();
         this.product = product;
+    }
+
+    public Batch(long id, float currentTemperature, float minimumTemperature, int initialQuantity, int currentQuantity, LocalDate manufacturingDate, LocalDateTime manufacturingTime, LocalDate dueDate, Product product, InboundOrder inboundOrder) {
+        this.id = id;
+        this.currentTemperature = currentTemperature;
+        this.minimumTemperature = minimumTemperature;
+        this.initialQuantity = initialQuantity;
+        this.currentQuantity = currentQuantity;
+        this.lastQuantity = currentQuantity;
+        this.manufacturingDate = manufacturingDate;
+        this.manufacturingTime = manufacturingTime;
+        this.dueDate = dueDate;
+        this.inboundOrder = inboundOrder;
     }
 }

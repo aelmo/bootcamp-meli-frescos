@@ -3,14 +3,16 @@ package com.mercadolibre.bootcampmelifrescos.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="product")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "seller")
-@ToString(exclude = "seller")
+@EqualsAndHashCode(exclude = {"seller", "purchaseOrderProducts"})
+@ToString(exclude = {"purchaseOrderProducts", "seller"})
 public class Product {
 
     @Id
@@ -24,11 +26,21 @@ public class Product {
     @JoinColumn(name = "seller_id", referencedColumnName = "id")
     private Seller seller;
 
+    @Column(name="amount")
+    private Float amount;
+
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-    @ManyToOne
-    @JoinColumn(name="cart_id", referencedColumnName = "id")
-    private Cart cart;
+    @OneToMany(mappedBy = "id")
+    private Set<PurchaseOrderProducts> purchaseOrderProducts;
+
+
+    public Product(long id, String name, Seller seller, Category category) {
+        this.id = id;
+        this.name =name;
+        this.seller = seller;
+        this.category = category;
+    }
 }

@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="buyer")
@@ -27,4 +28,7 @@ public class Buyer {
 
     @Column(name="password")
     private String password;
+
+    @OneToMany
+    private Set<PurchaseOrder> purchaseOrderSet;
 }

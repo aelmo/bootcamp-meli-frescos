@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 
 @Entity
@@ -14,7 +15,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "buyer")
 public class PurchaseOrder {
 
     @Id
@@ -25,9 +26,12 @@ public class PurchaseOrder {
     private LocalDate date;
 
     @OneToOne
-    @JoinColumn(name="status", referencedColumnName = "id")
     private PurchaseStatuses status;
 
-    @OneToOne
-    private Cart cart;
+    @OneToMany(mappedBy = "id")
+    private Set<PurchaseOrderProducts> purchaseOrderProducts;
+
+    @ManyToOne
+    @JoinColumn(name = "buyer_id", referencedColumnName = "id")
+    private Buyer buyer;
 }
