@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "731e6f0b-6422-4d58-adc0-be526786bb20",
+		"_postman_id": "9f11eec5-398f-43d4-97c0-f84efdc2404b",
 		"name": "MELI - Frescos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -63,6 +63,74 @@
 								"fresh-products",
 								"inboundorder",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Purchase Order - New Purchase Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"date\":\"2021-01-01\",\n\t\t\"buyerId\":1,\n\t\t\"orderStatus\":{\n\t\t\t\"statusCode\":1\n\t\t},\n\t\t\"products\":[\n\t\t\t{\n\t\t\t\t\"productId\":1,\n\t\t\t\t\"quantity\":1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\":2,\n\t\t\t\t\"quantity\":1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\":3,\n\t\t\t\t\"quantity\":1\n\t\t\t}\n\t\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/fresh-products/orders/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"fresh-products",
+								"orders",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Purchase Order - Update Purchase Order",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"date\":\"2021-01-01\",\n\t\t\"buyerId\":1,\n\t\t\"orderStatus\":{\n\t\t\t\"statusCode\":1\n\t\t},\n\t\t\"products\":[\n\t\t\t{\n\t\t\t\t\"productId\":1,\n\t\t\t\t\"quantity\":10\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\":2,\n\t\t\t\t\"quantity\":2\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\":3,\n\t\t\t\t\"quantity\":2\n\t\t\t}\n\t\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/fresh-products/orders/?idOrder=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"fresh-products",
+								"orders",
+								""
+							],
+							"query": [
+								{
+									"key": "idOrder",
+									"value": "1"
+								}
 							]
 						}
 					},
