@@ -1,4 +1,4 @@
-package com.mercadolibre.bootcampmelifrescos.unit;
+package com.mercadolibre.bootcampmelifrescos.service;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderStatusDTO;
@@ -6,18 +6,12 @@ import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseRequestProducts
 import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseAmountDTO;
 import com.mercadolibre.bootcampmelifrescos.model.*;
 import com.mercadolibre.bootcampmelifrescos.repository.*;
-import com.mercadolibre.bootcampmelifrescos.service.PurchaseOrderService;
 import com.mercadolibre.bootcampmelifrescos.service.impl.PurchaseOrderServiceImpl;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.*;
@@ -49,7 +43,7 @@ public class PurchaseOrderServiceTest {
     private PurchaseOrderServiceImpl purchaseOrderService;
 
     private PurchaseOrder purchaseOrder = new PurchaseOrder();
-    private PurchaseOrder purchaseOrder2 = new PurchaseOrder();
+    private PurchaseOrder purchaseOrderToUpdate = new PurchaseOrder();
     private Batch batchSampleProduct = new Batch();
     private Product sampleProduct = new Product();
     private Product sampleProduct2 = new Product();
@@ -61,19 +55,22 @@ public class PurchaseOrderServiceTest {
     private PurchaseStatuses status = new PurchaseStatuses();
     private PurchaseStatuses status2 = new PurchaseStatuses();
     private PurchaseOrderDTO purchaseOrderDTO = new PurchaseOrderDTO();
-    private PurchaseOrderDTO purchaseOrderDTO2 = new PurchaseOrderDTO();
+    private PurchaseOrderDTO purchaseOrderDTOToUpdate = new PurchaseOrderDTO();
     private PurchaseRequestProductsDTO purchaseRequestProductsDTO = new PurchaseRequestProductsDTO();
-    private PurchaseRequestProductsDTO purchaseRequestProductsDTO2 = new PurchaseRequestProductsDTO();
-    private PurchaseOrderProducts samplePurchaseProduct = new PurchaseOrderProducts();
-    private PurchaseOrderProducts samplePurchaseProduct2 = new PurchaseOrderProducts();
+    private PurchaseRequestProductsDTO purchaseRequestProductsDTOToUpdate = new PurchaseRequestProductsDTO();
+    private final Set<PurchaseRequestProductsDTO> sampleSetPurchaseRequestProductsDTO = new HashSet<>();
+    private final Set<PurchaseRequestProductsDTO> sampleSetPurchaseRequestProductsDTOToUpdate = new HashSet<>();
+    private final Set<PurchaseOrderProducts> samplePurchaseOrderProductsSet = new HashSet<>();
+    private final Set<PurchaseOrderProducts> samplePurchaseOrderProductsSetToUpdate = new HashSet<>();
 
     @BeforeEach
     public void init() {
         //create sample buyer
         sampleBuyer.setName("Sample buyer");
-        sampleBuyer.setEmail("sample.buyer@email.com");
+        sampleBuyer.setEmail("");
         sampleBuyer.setPassword("123456");
         sampleBuyer.setId(1L);
+
 
         //create sample seller
         sampleSeller.setId(1L);
@@ -125,54 +122,57 @@ public class PurchaseOrderServiceTest {
         purchaseRequestProductsDTO.setProductId(1L);
         purchaseRequestProductsDTO.setQuantity(3);
 
-        purchaseRequestProductsDTO2.setProductId(1L);
-        purchaseRequestProductsDTO2.setQuantity(4);
+        sampleSetPurchaseRequestProductsDTO.add(new PurchaseRequestProductsDTO(1L, 3));
 
-        Set<PurchaseRequestProductsDTO> sampleSetPurchaseRequestProductsDTO = new HashSet<>();
-        Set<PurchaseRequestProductsDTO> sampleSetPurchaseRequestProductsDTO2 = new HashSet<>();
-        sampleSetPurchaseRequestProductsDTO.add(purchaseRequestProductsDTO);
-        sampleSetPurchaseRequestProductsDTO2.add(purchaseRequestProductsDTO2);
-        Set<PurchaseOrderProducts> samplePurchaseOrderProductsSet = new HashSet<>();
-        Set<PurchaseOrderProducts> samplePurchaseOrderProductsSet2 = new HashSet<>();
-        samplePurchaseOrderProductsSet.add(samplePurchaseProduct);
-        samplePurchaseOrderProductsSet2.add(new PurchaseOrderProducts(1L, sampleProduct, purchaseOrder, 1, 1L));
+        samplePurchaseOrderProductsSet.add(new PurchaseOrderProducts(1L, sampleProduct, purchaseOrder, 3, 1L));
 
         purchaseOrderDTO.setBuyerId(sampleBuyer.getId());
         purchaseOrderDTO.setDate(LocalDate.now());
         purchaseOrderDTO.setProducts(sampleSetPurchaseRequestProductsDTO);
         purchaseOrderDTO.setOrderStatus(new PurchaseOrderStatusDTO(1L));
 
-        purchaseOrderDTO2.setBuyerId(sampleBuyer.getId());
-        purchaseOrderDTO2.setDate(LocalDate.of(2021,06,28));
-        purchaseOrderDTO2.setProducts(sampleSetPurchaseRequestProductsDTO2);
-        purchaseOrderDTO2.setOrderStatus(new PurchaseOrderStatusDTO(2L));
-
         purchaseOrder = new PurchaseOrder(1L, LocalDate.now(), status, samplePurchaseOrderProductsSet, sampleBuyer);
-        purchaseOrder2 = new PurchaseOrder(1L, LocalDate.of(2021,06,28), status2, samplePurchaseOrderProductsSet2, sampleBuyer);
 
-        when(productRepository.getOne(notNull())).thenReturn(sampleProduct);
-        when(purchaseStatusesRepository.getOne(notNull())).thenReturn(status);
+        this.samplePurchaseOrderProductsSetToUpdate.add(new PurchaseOrderProducts(1L, sampleProduct, purchaseOrder, 4, 1L));
+        this.sampleSetPurchaseRequestProductsDTOToUpdate.add(new PurchaseRequestProductsDTO(1L, 4));
+
+        this.purchaseOrderDTOToUpdate.setBuyerId(sampleBuyer.getId());
+        this.purchaseOrderDTOToUpdate.setDate(LocalDate.of(2021,06,28));
+        this.purchaseOrderDTOToUpdate.setProducts(sampleSetPurchaseRequestProductsDTOToUpdate);
+        this.purchaseOrderDTOToUpdate.setOrderStatus(new PurchaseOrderStatusDTO(2L));
+
+        this.purchaseOrderToUpdate = new PurchaseOrder(1L, LocalDate.of(2021,04,28), status, samplePurchaseOrderProductsSetToUpdate, sampleBuyer);
+
+        when(productRepository.findById(notNull())).thenReturn(Optional.ofNullable(sampleProduct));
+        when(purchaseStatusesRepository.findById(notNull())).thenReturn(Optional.ofNullable(status));
+
         when(batchRepository.save(notNull())).thenReturn(batchSampleProduct);
         when(batchRepository.getBatchByProductId(notNull())).thenReturn(batchSampleProduct);
-        when(purchaseOrderRepository.findById(notNull())).thenReturn(java.util.Optional.ofNullable(purchaseOrder));
-        when(purchaseProductsRepository.findAllByPurchaseOrder(notNull())).thenReturn(new ArrayList<>(samplePurchaseOrderProductsSet2));
-        when(purchaseOrderRepository.save(notNull())).thenReturn(purchaseOrder2);
-        when(buyerRepository.getOne(notNull())).thenReturn(sampleBuyer);
         when(batchRepository.findById(notNull())).thenReturn(Optional.ofNullable(batchSampleProduct));
+
+        when(purchaseOrderRepository.findById(notNull())).thenReturn(Optional.ofNullable(purchaseOrder));
+        when(purchaseOrderRepository.save(notNull())).thenReturn(purchaseOrder);
+
         doNothing().when(purchaseProductsRepository).deleteAll(notNull());
+
+        when(buyerRepository.findById(notNull())).thenReturn(Optional.ofNullable(sampleBuyer));
+
     }
 
     @Test
     public void shouldReturnAPurchaseOrderTotalPrice() throws Exception {
-        PurchaseAmountDTO expectedResult = new PurchaseAmountDTO(600.0);
+        PurchaseAmountDTO expectedResult = new PurchaseAmountDTO(300.0);
+        when(purchaseProductsRepository.findAllByPurchaseOrder(notNull())).thenReturn(new ArrayList<>(samplePurchaseOrderProductsSet));
         PurchaseAmountDTO result = purchaseOrderService.getAmountOfAnPurchaseOrder(purchaseOrderService.createPurchaseOrder(purchaseOrderDTO));
         assertThat(result).isEqualTo(expectedResult);
     }
 
     @Test
     public void shouldUpdateAPurchaseOrder() throws Exception {
+
         PurchaseAmountDTO expectedResult = new PurchaseAmountDTO(400.0);
-        PurchaseAmountDTO result = purchaseOrderService.updatePurchaseOrder(purchaseOrderDTO2, 1L);
+        when(purchaseProductsRepository.findAllByPurchaseOrder(notNull())).thenReturn(new ArrayList<>(samplePurchaseOrderProductsSetToUpdate));
+        PurchaseAmountDTO result = this.purchaseOrderService.updatePurchaseOrder(purchaseOrderDTOToUpdate, 1L);
         assertThat(result).isEqualTo(expectedResult);
     }
 }
