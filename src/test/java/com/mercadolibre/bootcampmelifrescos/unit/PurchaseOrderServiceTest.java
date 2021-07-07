@@ -11,6 +11,8 @@ import com.mercadolibre.bootcampmelifrescos.service.impl.PurchaseOrderServiceImp
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -23,8 +25,8 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -36,14 +38,18 @@ public class PurchaseOrderServiceTest {
     private ProductRepository productRepository;
     @Mock
     private PurchaseStatusesRepository purchaseStatusesRepository;
-
+    @Mock
+    private PurchaseProductsRepository purchaseProductsRepository;
     @Mock
     private BatchRepository batchRepository;
+    @Mock
+    private BuyerRepository buyerRepository;
 
     @InjectMocks
     private PurchaseOrderServiceImpl purchaseOrderService;
 
     private PurchaseOrder purchaseOrder = new PurchaseOrder();
+    private PurchaseOrder purchaseOrder2 = new PurchaseOrder();
     private Batch batchSampleProduct = new Batch();
     private Product sampleProduct = new Product();
     private Product sampleProduct2 = new Product();
@@ -53,11 +59,15 @@ public class PurchaseOrderServiceTest {
     private InboundOrder inboundOrder = new InboundOrder();
     private Buyer sampleBuyer = new Buyer();
     private PurchaseStatuses status = new PurchaseStatuses();
+    private PurchaseStatuses status2 = new PurchaseStatuses();
     private PurchaseOrderDTO purchaseOrderDTO = new PurchaseOrderDTO();
+    private PurchaseOrderDTO purchaseOrderDTO2 = new PurchaseOrderDTO();
     private PurchaseRequestProductsDTO purchaseRequestProductsDTO = new PurchaseRequestProductsDTO();
+    private PurchaseRequestProductsDTO purchaseRequestProductsDTO2 = new PurchaseRequestProductsDTO();
     private PurchaseOrderProducts samplePurchaseProduct = new PurchaseOrderProducts();
+    private PurchaseOrderProducts samplePurchaseProduct2 = new PurchaseOrderProducts();
 
-    //@BeforeEach
+    @BeforeEach
     public void init() {
         //create sample buyer
         sampleBuyer.setName("Sample buyer");
@@ -98,6 +108,7 @@ public class PurchaseOrderServiceTest {
         batchSampleProduct.setId(1L);
         batchSampleProduct.setInboundOrder(inboundOrder);
         batchSampleProduct.setCurrentQuantity(50);
+        batchSampleProduct.setLastQuantity(50);
         batchSampleProduct.setCurrentTemperature(10.0F);
         batchSampleProduct.setDueDate(LocalDate.of(2021, 01, 01));
         batchSampleProduct.setInitialQuantity(51);
@@ -108,33 +119,60 @@ public class PurchaseOrderServiceTest {
         status.setId(1L);
         status.setTitle("Paid");
 
+        status2.setId(2L);
+        status2.setTitle("In process");
+
         purchaseRequestProductsDTO.setProductId(1L);
         purchaseRequestProductsDTO.setQuantity(3);
 
+        purchaseRequestProductsDTO2.setProductId(1L);
+        purchaseRequestProductsDTO2.setQuantity(4);
+
         Set<PurchaseRequestProductsDTO> sampleSetPurchaseRequestProductsDTO = new HashSet<>();
+        Set<PurchaseRequestProductsDTO> sampleSetPurchaseRequestProductsDTO2 = new HashSet<>();
         sampleSetPurchaseRequestProductsDTO.add(purchaseRequestProductsDTO);
+        sampleSetPurchaseRequestProductsDTO2.add(purchaseRequestProductsDTO2);
         Set<PurchaseOrderProducts> samplePurchaseOrderProductsSet = new HashSet<>();
+        Set<PurchaseOrderProducts> samplePurchaseOrderProductsSet2 = new HashSet<>();
         samplePurchaseOrderProductsSet.add(samplePurchaseProduct);
+        samplePurchaseOrderProductsSet2.add(new PurchaseOrderProducts(1L, sampleProduct, purchaseOrder, 1, 1L));
 
         purchaseOrderDTO.setBuyerId(sampleBuyer.getId());
         purchaseOrderDTO.setDate(LocalDate.now());
         purchaseOrderDTO.setProducts(sampleSetPurchaseRequestProductsDTO);
         purchaseOrderDTO.setOrderStatus(new PurchaseOrderStatusDTO(1L));
 
+        purchaseOrderDTO2.setBuyerId(sampleBuyer.getId());
+        purchaseOrderDTO2.setDate(LocalDate.of(2021,06,28));
+        purchaseOrderDTO2.setProducts(sampleSetPurchaseRequestProductsDTO2);
+        purchaseOrderDTO2.setOrderStatus(new PurchaseOrderStatusDTO(2L));
+
         purchaseOrder = new PurchaseOrder(1L, LocalDate.now(), status, samplePurchaseOrderProductsSet, sampleBuyer);
+        purchaseOrder2 = new PurchaseOrder(1L, LocalDate.of(2021,06,28), status2, samplePurchaseOrderProductsSet2, sampleBuyer);
 
         when(productRepository.getOne(notNull())).thenReturn(sampleProduct);
         when(purchaseStatusesRepository.getOne(notNull())).thenReturn(status);
         when(batchRepository.save(notNull())).thenReturn(batchSampleProduct);
         when(batchRepository.getBatchByProductId(notNull())).thenReturn(batchSampleProduct);
-
+        when(purchaseOrderRepository.findById(notNull())).thenReturn(java.util.Optional.ofNullable(purchaseOrder));
+        when(purchaseProductsRepository.findAllByPurchaseOrder(notNull())).thenReturn(new ArrayList<>(samplePurchaseOrderProductsSet2));
+        when(purchaseOrderRepository.save(notNull())).thenReturn(purchaseOrder2);
+        when(buyerRepository.getOne(notNull())).thenReturn(sampleBuyer);
+        when(batchRepository.findById(notNull())).thenReturn(Optional.ofNullable(batchSampleProduct));
+        doNothing().when(purchaseProductsRepository).deleteAll(notNull());
     }
 
     @Test
     public void shouldReturnAPurchaseOrderTotalPrice() throws Exception {
         PurchaseAmountDTO expectedResult = new PurchaseAmountDTO(600.0);
-        when(purchaseOrderRepository.save(notNull())).thenReturn(expectedResult);
         PurchaseAmountDTO result = purchaseOrderService.getAmountOfAnPurchaseOrder(purchaseOrderService.createPurchaseOrder(purchaseOrderDTO));
-        assertThat(result).isSameAs(expectedResult);
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
+    @Test
+    public void shouldUpdateAPurchaseOrder() throws Exception {
+        PurchaseAmountDTO expectedResult = new PurchaseAmountDTO(400.0);
+        PurchaseAmountDTO result = purchaseOrderService.updatePurchaseOrder(purchaseOrderDTO2, 1L);
+        assertThat(result).isEqualTo(expectedResult);
     }
 }

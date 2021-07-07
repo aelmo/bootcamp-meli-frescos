@@ -9,7 +9,6 @@ import com.mercadolibre.bootcampmelifrescos.service.PurchaseOrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,6 +30,16 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             throw new Exception("Purchase order not found");
         PurchaseOrder purchaseOrder = purchaseOrderRepository.findById(orderId).get();
         List<PurchaseOrderProducts> purchaseOrderProducts = purchaseProductsRepository.findAllByPurchaseOrder(purchaseOrder);
+
+        for (PurchaseOrderProducts purchaseOrderProducts1: purchaseOrderProducts) {
+            if(batchRepository.findById(purchaseOrderProducts1.getBatchId()).isEmpty()){
+                throw new Exception("Batch not found");
+            }
+            Batch batch = batchRepository.findById(purchaseOrderProducts1.getBatchId()).get();
+            batch.setCurrentQuantity(batch.getLastQuantity());
+            batchRepository.save(batch);
+        }
+
         purchaseProductsRepository.deleteAll(purchaseOrderProducts);
 
         createPurchaseOrderProductsSet(purchaseOrder, purchaseOrderDTO.getProducts());
@@ -39,9 +48,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         purchaseOrder.setStatus(purchaseStatusesRepository.getOne(purchaseOrderDTO.getOrderStatus().getStatusCode()));
         purchaseOrder.setBuyer(buyerRepository.getOne(purchaseOrderDTO.getBuyerId()));
 
-        purchaseOrderRepository.save(purchaseOrder);
-
-        return getAmountOfAnPurchaseOrder(purchaseOrder);
+        return getAmountOfAnPurchaseOrder(purchaseOrderRepository.save(purchaseOrder));
     }
 
     @Override
@@ -91,9 +98,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     public Long updateProductQuantityFromBatch(Long productId, Integer quantity) throws Exception {
         try {
             Batch batch = batchRepository.getBatchByProductId(productId);
-            if(quantity > batch.getCurrentQuantity()) {
+            if (quantity > batch.getCurrentQuantity()) {
                 throw new Exception();
             }
+            batch.setLastQuantity(batch.getCurrentQuantity());
             batch.setCurrentQuantity(batch.getCurrentQuantity() - quantity);
             batchRepository.save(batch);
             return batch.getId();
@@ -101,6 +109,6 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             e.printStackTrace();
             throw e;
         }
-    }
 
+    }
 }

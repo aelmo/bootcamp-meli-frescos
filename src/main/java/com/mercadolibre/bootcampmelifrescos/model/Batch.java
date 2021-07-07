@@ -32,6 +32,9 @@ public class Batch {
     @Column(name = "current_quantity")
     private int currentQuantity;
 
+    @Column(name = "last_quantity")
+    private int lastQuantity;
+
     @Column(name = "manufacturing_date")
     private LocalDate manufacturingDate;
 
