@@ -8,6 +8,8 @@ import com.mercadolibre.bootcampmelifrescos.model.Section;
 import com.mercadolibre.bootcampmelifrescos.service.Validator;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Set;
 
 @Service
@@ -20,5 +22,10 @@ public class ValidatorImpl implements Validator {
             if(product.getCategory().getCode() != section.getCategory().getCode())
                 throw new BadRequestApiException("Product with id: " + product.getId() + " is in an incompatible section");
         }
+    }
+
+    @Override
+    public boolean hasDueDateEqualOrGreaterThanThreeWeeks(Batch batch) {
+        return ChronoUnit.DAYS.between(LocalDate.now(), batch.getDueDate()) >= 21;
     }
 }
