@@ -33,4 +33,13 @@ public class ProductController {
     public ResponseEntity getProductsBatch(@RequestParam Long productId, @RequestParam(required = false) String orderParam) throws ApiException {
         return new ResponseEntity<>(batchService.getAllBatches(productId, orderParam), HttpStatus.OK);
     }
+
+    @GetMapping("/due-date/list")
+    public ResponseEntity getBatchByDaysBeforeDueDate(
+            @RequestParam int days,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false, defaultValue = "asc") String orderByDueDate
+    ) throws ApiException {
+        return new ResponseEntity<>(batchService.getByDaysBeforeDueDateAndCategory(days, category, orderByDueDate), HttpStatus.OK);
+    }
 }
