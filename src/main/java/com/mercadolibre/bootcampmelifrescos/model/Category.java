@@ -14,6 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

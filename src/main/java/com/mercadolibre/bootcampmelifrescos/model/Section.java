@@ -12,6 +12,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(exclude = "warehouse")
 @ToString(exclude = "warehouse")
 public class Section {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
