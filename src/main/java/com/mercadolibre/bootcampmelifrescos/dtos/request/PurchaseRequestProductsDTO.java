@@ -4,15 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PurchaseRequestProductsDTO {
-    @NotNull(message = "The product id cannot be null")
+
+    @NotBlank(message = "The product id cannot be null")
+    @Positive
     private Long productId;
 
-    @NotNull(message = "The product quantity cannot be null")
+    @NotBlank(message = "The product quantity cannot be null")
+    @Positive
     private Integer quantity;
 }

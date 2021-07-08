@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BatchWithDueDateResponse {
+
     private Long batchNumber;
     private Long productId;
     private String productTypeId;
