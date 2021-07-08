@@ -1,5 +1,8 @@
 # Change Log
 
+### [0.5.0] - 08/07/2021
+- [@squad2] Finaliza US05 - Batch by Due Date
+
 ### [0.4.0] - 08/07/2021
 - [@squad2] Finaliza US04 - Product quantity by Warehouse
 
