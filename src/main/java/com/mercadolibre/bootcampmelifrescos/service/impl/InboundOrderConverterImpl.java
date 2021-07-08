@@ -2,6 +2,7 @@ package com.mercadolibre.bootcampmelifrescos.service.impl;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.BatchDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.InboundOrderDTO;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Batch;
 import com.mercadolibre.bootcampmelifrescos.model.InboundOrder;
@@ -9,7 +10,9 @@ import com.mercadolibre.bootcampmelifrescos.model.Product;
 import com.mercadolibre.bootcampmelifrescos.model.Section;
 import com.mercadolibre.bootcampmelifrescos.repository.ProductRepository;
 import com.mercadolibre.bootcampmelifrescos.repository.SectionRepository;
+import com.mercadolibre.bootcampmelifrescos.repository.WarehouseRepository;
 import com.mercadolibre.bootcampmelifrescos.service.InboundOrderConverter;
+import com.mercadolibre.bootcampmelifrescos.service.Validator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +25,18 @@ import java.util.Set;
 public class InboundOrderConverterImpl implements InboundOrderConverter {
     private SectionRepository sectionRepository;
     private ProductRepository productRepository;
+    private WarehouseRepository warehouseRepository;
+    private final Validator validator;
 
-    public InboundOrder dtoToEntity(InboundOrderDTO inboundOrderDTO) throws NotFoundApiException {
+    public InboundOrder dtoToEntity(InboundOrderDTO inboundOrderDTO) throws ApiException {
         Long sectionId = inboundOrderDTO.getSectionCode();
+        Long warehouseId = inboundOrderDTO.getSection().getWarehouseCode();
 
         Section section = sectionRepository.findById(sectionId).orElseThrow(
-                () -> new NotFoundApiException("Section with id: " + sectionId + " not found")
+                () -> new NotFoundApiException("Section with id " + sectionId + " not found")
         );
+
+        validator.validateWarehouseSection(sectionId, warehouseId, section);
 
         List<BatchDTO> batchDTOList = inboundOrderDTO.getBatchStock();
         Set<Batch> batchSet = new HashSet<>();
