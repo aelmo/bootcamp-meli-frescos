@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "731e6f0b-6422-4d58-adc0-be526786bb20",
+		"_postman_id": "8a75bb87-dfc4-4d52-a960-fe269af576a7",
 		"name": "MELI - Frescos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,64 +9,169 @@
 			"name": "v1",
 			"item": [
 				{
-					"name": "Order - New Inbound Order",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n   \"inboundOrder\": {\n      \"orderNumber\": 1,\n      \"orderDate\": \"2021-06-27\",\n      \"section\": {\n        \"sectionCode\": 1,\n        \"warehouseCode\": 1\n        },\n      \"batchStock\": [\n            {\n            \"batchNumber\": 1,\n            \"productId\": 1,\n            \"currentTemperature\": 27.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12: 59: 11.332\",\n            \"dueDate\": \"2021-06-30\"\n            },\n            {\n            \"batchNumber\": 1,\n            \"productId\": 2,\n            \"currentTemperature\": 27.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12: 59: 11.332\",\n            \"dueDate\": \"2021-06-30\"\n            }\n        ]\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "US01",
+					"item": [
+						{
+							"name": "Order - New Inbound Order",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"inboundOrder\": {\n      \"orderNumber\": 1,\n      \"orderDate\": \"2021-06-27\",\n      \"section\": {\n        \"sectionCode\": 1,\n        \"warehouseCode\": 1\n        },\n      \"batchStock\": [\n            {\n            \"batchNumber\": 1,\n            \"productId\": 1,\n            \"currentTemperature\": 27.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12: 59: 11.332\",\n            \"dueDate\": \"2021-06-30\"\n            },\n            {\n            \"batchNumber\": 1,\n            \"productId\": 2,\n            \"currentTemperature\": 27.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12: 59: 11.332\",\n            \"dueDate\": \"2021-06-30\"\n            }\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localhost}}/api/v1/fresh-products/inboundorder/",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"inboundorder",
+										""
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{localhost}}/api/v1/fresh-products/inboundorder/",
-							"host": [
-								"{{localhost}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"fresh-products",
-								"inboundorder",
-								""
-							]
+						{
+							"name": "Order - Update Inbound Order",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"inboundOrder\": {\n      \"orderNumber\": 1,\n      \"orderDate\": \"2021-06-27\",\n      \"section\": {\n        \"sectionCode\": 1,\n        \"warehouseCode\": 1\n        },\n      \"batchStock\": [\n            {\n            \"batchNumber\": 1,\n            \"productId\": 1,\n            \"currentTemperature\": 27.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12: 59: 11.332\",\n            \"dueDate\": \"2021-06-30\"\n            },\n            {\n            \"batchNumber\": 1,\n            \"productId\": 2,\n            \"currentTemperature\": 27.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12: 59: 11.332\",\n            \"dueDate\": \"2021-06-30\"\n            }\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{localhost}}/api/v1/fresh-products/inboundorder/",
+									"host": [
+										"{{localhost}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"inboundorder",
+										""
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "Order - Update Inbound Order",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n   \"inboundOrder\": {\n      \"orderNumber\": 1,\n      \"orderDate\": \"2021-06-27\",\n      \"section\": {\n        \"sectionCode\": 1,\n        \"warehouseCode\": 1\n        },\n      \"batchStock\": [\n            {\n            \"batchNumber\": 1,\n            \"productId\": 1,\n            \"currentTemperature\": 27.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12: 59: 11.332\",\n            \"dueDate\": \"2021-06-30\"\n            },\n            {\n            \"batchNumber\": 1,\n            \"productId\": 2,\n            \"currentTemperature\": 27.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12: 59: 11.332\",\n            \"dueDate\": \"2021-06-30\"\n            }\n        ]\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "US02",
+					"item": [
+						{
+							"name": "Purchase Order - New Purchase Order",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"date\":\"2021-01-01\",\n\t\t\"buyerId\":1,\n\t\t\"orderStatus\":{\n\t\t\t\"statusCode\":1\n\t\t},\n\t\t\"products\":[\n\t\t\t{\n\t\t\t\t\"productId\":1,\n\t\t\t\t\"quantity\":1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\":2,\n\t\t\t\t\"quantity\":1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\":3,\n\t\t\t\t\"quantity\":1\n\t\t\t}\n\t\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/fresh-products/orders/",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"orders",
+										""
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{localhost}}/api/v1/fresh-products/inboundorder/",
-							"host": [
-								"{{localhost}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"fresh-products",
-								"inboundorder",
-								""
-							]
+						{
+							"name": "Purchase Order - Update Purchase Order",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"date\":\"2021-01-01\",\n\t\t\"buyerId\":1,\n\t\t\"orderStatus\":{\n\t\t\t\"statusCode\":1\n\t\t},\n\t\t\"products\":[\n\t\t\t{\n\t\t\t\t\"productId\":1,\n\t\t\t\t\"quantity\":10\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\":2,\n\t\t\t\t\"quantity\":2\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\":3,\n\t\t\t\t\"quantity\":2\n\t\t\t}\n\t\t]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/v1/fresh-products/orders/?idOrder=1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"orders",
+										""
+									],
+									"query": [
+										{
+											"key": "idOrder",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Purchase Order - Get Purchase Order Products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Products - Get Products By Section",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "Products - Get All Products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				}
 			]
 		}

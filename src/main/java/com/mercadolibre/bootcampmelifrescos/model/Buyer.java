@@ -6,20 +6,21 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Table(name="buyer")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "agent")
+@AllArgsConstructor
 @EqualsAndHashCode
-public class Agent {
+public class Buyer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name="name")
     private String name;
 
     @Column(name="email")
@@ -27,4 +28,7 @@ public class Agent {
 
     @Column(name="password")
     private String password;
+
+    @OneToMany
+    private Set<PurchaseOrder> purchaseOrderSet;
 }
