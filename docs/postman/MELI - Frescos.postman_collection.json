@@ -18,7 +18,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n   \"inboundOrder\": {\n      \"orderNumber\": 1,\n      \"orderDate\": \"2021-06-27\",\n      \"section\": {\n        \"sectionCode\": 1,\n        \"warehouseCode\": 1\n        },\n      \"batchStock\": [\n            {\n            \"batchNumber\": 1,\n            \"productId\": 1,\n            \"currentTemperature\": 27.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12: 59: 11.332\",\n            \"dueDate\": \"2021-06-30\"\n            },\n            {\n            \"batchNumber\": 1,\n            \"productId\": 2,\n            \"currentTemperature\": 27.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12: 59: 11.332\",\n            \"dueDate\": \"2021-06-30\"\n            }\n        ]\n    }\n}",
+									"raw": "{\n   \"inboundOrder\": {\n      \"orderDate\": \"2021-06-27\",\n      \"section\": {\n        \"sectionCode\": 3,\n        \"warehouseCode\": 1\n        },\n      \"batchStock\": [\n            {\n            \"productId\": 1,\n            \"currentTemperature\": 27.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12:59:11.332\",\n            \"dueDate\": \"2021-06-30\"\n            },\n            {\n            \"productId\": 1,\n            \"currentTemperature\": 20.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12:59:11.332\",\n            \"dueDate\": \"2021-06-30\"\n            }\n        ]\n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -26,10 +26,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{localhost}}/api/v1/fresh-products/inboundorder/",
+									"raw": "http://localhost:8080/api/v1/fresh-products/inboundorder/",
+									"protocol": "http",
 									"host": [
-										"{{localhost}}"
+										"localhost"
 									],
+									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -48,7 +50,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n   \"inboundOrder\": {\n      \"orderNumber\": 1,\n      \"orderDate\": \"2021-06-27\",\n      \"section\": {\n        \"sectionCode\": 1,\n        \"warehouseCode\": 1\n        },\n      \"batchStock\": [\n            {\n            \"batchNumber\": 1,\n            \"productId\": 1,\n            \"currentTemperature\": 27.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12: 59: 11.332\",\n            \"dueDate\": \"2021-06-30\"\n            },\n            {\n            \"batchNumber\": 1,\n            \"productId\": 2,\n            \"currentTemperature\": 27.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12: 59: 11.332\",\n            \"dueDate\": \"2021-06-30\"\n            }\n        ]\n    }\n}",
+									"raw": "{\n   \"inboundOrder\": {\n      \"orderNumber\": 2,\n      \"orderDate\": \"2021-05-20\",\n      \"section\": {\n        \"sectionCode\": 3,\n        \"warehouseCode\": 1\n        },\n      \"batchStock\": [\n            {\n            \"batchNumber\": 1,\n            \"productId\": 1,\n            \"currentTemperature\": 27.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12:59:11.332\",\n            \"dueDate\": \"2021-06-30\"\n            },\n            {\n            \"batchNumber\": 2,\n            \"productId\": 1,\n            \"currentTemperature\": 20.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12:59:11.332\",\n            \"dueDate\": \"2021-06-30\"\n            }\n        ]\n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -56,10 +58,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{localhost}}/api/v1/fresh-products/inboundorder/",
+									"raw": "http://localhost:8080/api/v1/fresh-products/inboundorder/",
+									"protocol": "http",
 									"host": [
-										"{{localhost}}"
+										"localhost"
 									],
+									"port": "8080",
 									"path": [
 										"api",
 										"v1",
@@ -83,7 +87,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"date\":\"2021-01-01\",\n\t\t\"buyerId\":1,\n\t\t\"orderStatus\":{\n\t\t\t\"statusCode\":1\n\t\t},\n\t\t\"products\":[\n\t\t\t{\n\t\t\t\t\"productId\":1,\n\t\t\t\t\"quantity\":1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\":2,\n\t\t\t\t\"quantity\":1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\":3,\n\t\t\t\t\"quantity\":1\n\t\t\t}\n\t\t]\n}",
+									"raw": "{\n\t\"date\":\"2021-01-01\",\n\t\t\"buyerId\":1,\n\t\t\"orderStatus\": {\n\t\t\t\"statusCode\": 1\n\t\t},\n\t\t\"products\":[\n\t\t\t{\n\t\t\t\t\"productId\": 1,\n\t\t\t\t\"quantity\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\": 2,\n\t\t\t\t\"quantity\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\": 3,\n\t\t\t\t\"quantity\": 1\n\t\t\t}\n\t\t]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -91,7 +95,8 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/api/v1/fresh-products/orders/",
+									"raw": "http://localhost:8080/api/v1/fresh-products/orders/",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
@@ -114,7 +119,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"date\":\"2021-01-01\",\n\t\t\"buyerId\":1,\n\t\t\"orderStatus\":{\n\t\t\t\"statusCode\":1\n\t\t},\n\t\t\"products\":[\n\t\t\t{\n\t\t\t\t\"productId\":1,\n\t\t\t\t\"quantity\":10\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\":2,\n\t\t\t\t\"quantity\":2\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\":3,\n\t\t\t\t\"quantity\":2\n\t\t\t}\n\t\t]\n}",
+									"raw": "{\n\t\"date\":\"2021-01-01\",\n\t\t\"buyerId\":1,\n\t\t\"orderStatus\": {\n\t\t\t\"statusCode\": 1\n\t\t},\n\t\t\"products\":[\n\t\t\t{\n\t\t\t\t\"productId\": 1,\n\t\t\t\t\"quantity\": 10\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\": 2,\n\t\t\t\t\"quantity\": 2\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"productId\": 3,\n\t\t\t\t\"quantity\": 2\n\t\t\t}\n\t\t]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -122,7 +127,8 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/api/v1/fresh-products/orders/?idOrder=1",
+									"raw": "http://localhost:8080/api/v1/fresh-products/orders/?idOrder=1",
+									"protocol": "http",
 									"host": [
 										"localhost"
 									],
@@ -149,7 +155,27 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": null
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/orders/?idOrder=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"orders",
+										""
+									],
+									"query": [
+										{
+											"key": "idOrder",
+											"value": "1"
+										}
+									]
+								}
 							},
 							"response": []
 						},
@@ -158,7 +184,26 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": null
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/list?category=rf",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"list"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "rf"
+										}
+									]
+								}
 							},
 							"response": []
 						},
@@ -167,7 +212,87 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": null
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "US03",
+					"item": [
+						{
+							"name": "Products - Get Products By Batch",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/list/batches?productId=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"list",
+										"batches"
+									],
+									"query": [
+										{
+											"key": "productId",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Products - Get Products By Batch (With Order Param)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/list/batches?productId=2&orderParam=C",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"list",
+										"batches"
+									],
+									"query": [
+										{
+											"key": "productId",
+											"value": "2"
+										},
+										{
+											"key": "orderParam",
+											"value": "C"
+										}
+									]
+								}
 							},
 							"response": []
 						}
