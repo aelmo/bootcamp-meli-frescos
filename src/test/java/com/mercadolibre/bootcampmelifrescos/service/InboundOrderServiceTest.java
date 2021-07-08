@@ -9,6 +9,7 @@ import com.mercadolibre.bootcampmelifrescos.model.Batch;
 import com.mercadolibre.bootcampmelifrescos.model.InboundOrder;
 import com.mercadolibre.bootcampmelifrescos.model.Product;
 import com.mercadolibre.bootcampmelifrescos.model.Section;
+import com.mercadolibre.bootcampmelifrescos.model.*;
 import com.mercadolibre.bootcampmelifrescos.repository.InboundOrderRepository;
 import com.mercadolibre.bootcampmelifrescos.service.impl.InboundOrderConverterImpl;
 import org.junit.jupiter.api.Test;
@@ -85,7 +86,6 @@ public class InboundOrderServiceTest {
         verify(inboundOrderRepository, times(0)).save(any());
     }
 
-    //To-do: this test is returning a null pointer exception
     @Test
     void whenUpdating_shouldUpdateIfInboundOrderExists() throws Exception {
         SectionDTO sectionDTO = new SectionDTO(3L, 1L);
@@ -93,7 +93,11 @@ public class InboundOrderServiceTest {
                 LocalDateTime.of(2020, 1, 8, 1, 1, 1),
                 LocalDate.of(2020, 1, 8));
         InboundOrderDTO inboundOrderDTO = new InboundOrderDTO(1L, LocalDate.now(), sectionDTO, List.of(batchDTO));
-        InboundOrder inboundOrder = new InboundOrder();
+        Batch batch = new Batch(batchDTO, new Product());
+        Category category = new Category(1L, "RR", "Refrigerated");
+        Section section = new Section(1L, new Warehouse(), category);
+        InboundOrder inboundOrder = new InboundOrder(inboundOrderDTO,Set.of(batch),section);
+
         when(inboundConverter.dtoToEntity(any())).thenReturn(inboundOrder);
         when(inboundOrderRepository.findById(anyLong())).thenReturn(Optional.of(inboundOrder));
 
