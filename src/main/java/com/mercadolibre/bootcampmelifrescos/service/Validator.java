@@ -8,4 +8,5 @@ import java.util.Set;
 
 public interface Validator {
     void validateCategorySection(Section section, Set<Batch> batchSet) throws ApiException;
+    boolean hasDueDateEqualOrGreaterThanThreeWeeks(Batch batch);
 }
