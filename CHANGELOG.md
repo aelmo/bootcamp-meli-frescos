@@ -1,5 +1,7 @@
 # Change Log
 
+### [0.3.0] - UNRELEASED
+
 ### [0.2.0] - 08/07/2021
 - [@squad2] Finaliza US02 - Products to Cart
 
