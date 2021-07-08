@@ -129,7 +129,7 @@ public class BatchServiceTest {
     }
 
     @Test
-    void shouldFindBatchesWithCorrectCategoryDueDateAndSortingParameter() throws Exception {
+    void shouldFindBatchesWithCorrectCategoryAndDueDateAndSortingParameter() throws Exception {
         Category category = new Category();
         when(categoryRepository.findByCode("FF")).thenReturn(Optional.of(category));
 
