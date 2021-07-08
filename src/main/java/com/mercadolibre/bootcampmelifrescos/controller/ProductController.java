@@ -2,14 +2,12 @@ package com.mercadolibre.bootcampmelifrescos.controller;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.ProductDTO;
 import com.mercadolibre.bootcampmelifrescos.exceptions.ApiException;
+import com.mercadolibre.bootcampmelifrescos.service.BatchService;
 import com.mercadolibre.bootcampmelifrescos.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +17,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final BatchService batchService;
 
     @GetMapping
     public ResponseEntity<List<ProductDTO>> getAllProducts() throws ApiException {
@@ -28,5 +27,10 @@ public class ProductController {
     @GetMapping("/list")
     public ResponseEntity<List<ProductDTO>> getProductsByCategory(@RequestParam(name = "category") String categoryCode) throws ApiException {
         return new ResponseEntity<>(productService.getProductsByCategory(categoryCode), HttpStatus.OK);
+    }
+
+    @GetMapping("/list/batches")
+    public ResponseEntity getProductsBatch(@RequestParam Long productId, @RequestParam(required = false) String orderParam) throws ApiException {
+        return new ResponseEntity<>(batchService.getAllBatches(productId, orderParam), HttpStatus.OK);
     }
 }
