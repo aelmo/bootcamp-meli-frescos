@@ -73,6 +73,7 @@ public class Batch {
         this.manufacturingDate = manufacturingDate;
         this.manufacturingTime = manufacturingTime;
         this.dueDate = dueDate;
+        this.product = product;
         this.inboundOrder = inboundOrder;
     }
 }
