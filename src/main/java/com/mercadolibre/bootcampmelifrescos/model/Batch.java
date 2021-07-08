@@ -75,4 +75,8 @@ public class Batch {
         this.dueDate = dueDate;
         this.inboundOrder = inboundOrder;
     }
+
+    public Long getWarehouseId(){
+        return inboundOrder.getSection().getWarehouseId();
+    }
 }
