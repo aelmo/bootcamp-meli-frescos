@@ -40,6 +40,7 @@ public class WarehouseBatchServiceTest {
 
     private Batch batchSampleProduct = new Batch();
     private Batch secondBatchSampleProduct = new Batch();
+    private Batch firstBatchSampleProduct = new Batch();
     private Product firstProduct = new Product();
     private InboundOrder inboundOrder = new InboundOrder();
     private InboundOrder secondInboundOrder = new InboundOrder();
@@ -65,10 +66,12 @@ public class WarehouseBatchServiceTest {
         firstProduct = new Product(3L, "sample", new Seller(), new Category());
         batchSampleProduct = new Batch(1L, 10F, 10F, 10, 10, LocalDate.now(), LocalDateTime.of(2021, 01, 10, 01, 00), LocalDate.now(), firstProduct, inboundOrder);
         secondBatchSampleProduct = new Batch(2L, 10F, 10F, 10, 7, LocalDate.now(), LocalDateTime.of(2021, 01, 10, 01, 00), LocalDate.now(), firstProduct, secondInboundOrder);
+        firstBatchSampleProduct = new Batch(3L, 10F, 10F, 10, 7, LocalDate.now(), LocalDateTime.of(2021, 01, 10, 01, 00), LocalDate.now(), firstProduct, secondInboundOrder);
         batchList.add(batchSampleProduct);
         batchList.add(secondBatchSampleProduct);
+        batchList.add(firstBatchSampleProduct);
         WarehouseBatchDTO firstWarehouseBatchDTO = new WarehouseBatchDTO(1L, 10);
-        WarehouseBatchDTO secondWarehouseBatchDTO = new WarehouseBatchDTO(2L, 7);
+        WarehouseBatchDTO secondWarehouseBatchDTO = new WarehouseBatchDTO(2L, 14);
         warehouseBatchDTOList.add(firstWarehouseBatchDTO);
         warehouseBatchDTOList.add(secondWarehouseBatchDTO);
         warehouseBatchResponse = new WarehouseBatchResponse(1L, warehouseBatchDTOList);
@@ -79,7 +82,7 @@ public class WarehouseBatchServiceTest {
     public void shouldReturnWarehouseBatchTotalQuantityByProduct() throws Exception {
         WarehouseBatchResponse expectedResult = warehouseBatchResponse;
         when(productRepository.findById(notNull())).thenReturn(java.util.Optional.ofNullable(firstProduct));
-        when(batchRepository.findAllByProduct(notNull())).thenReturn(batchList);
+        when(batchRepository.findAllByProductOrderByInboundOrder(notNull())).thenReturn(batchList);
         WarehouseBatchResponse result = warehouseBatchService.getWarehouseBatchQuantityByProduct(1L);
         assertThat(result).isEqualTo(expectedResult);
     }

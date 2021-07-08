@@ -27,8 +27,8 @@ VALUES ("FS", "Fresh"),
 
 INSERT INTO section (warehouse_id, category_id)
 VALUES (1, 2),
-       (1, 3),
-       (1, 1);
+       (2, 3),
+       (3, 1);
 
 INSERT INTO inbound_order (date, section_id, agent_id)
 VALUES ("2021-07-01", 1, 2),
@@ -52,13 +52,23 @@ VALUES ('Refused');
 
 INSERT INTO batch (current_temperature,minimum_temperature,initial_quantity,current_quantity, last_quantity, manufacturing_date,manufacturing_time,due_date,order_id, product_id)
 VALUES (18.0,8.5,10,8,8,"2021-06-27","2021-06-27 5:00:00","2021-06-30",2, 2),
-       (18.0,8.5,10,18,18,"2021-06-27","2021-06-27 1:00:00","2021-06-30",2, 2),
-       (20.2,10.2,10,28,28,"2021-06-25","2021-06-25 16:00:00","2021-06-30",2, 2);
+       (18.0,8.5,10,18,18,"2021-06-27","2021-06-27 1:00:00","2021-06-30",1, 2),
+       (20.2,10.2,10,28,28,"2021-06-25","2021-06-25 16:00:00","2021-06-30",3, 2);
 
 INSERT INTO batch (current_temperature,minimum_temperature,initial_quantity,current_quantity,last_quantity, manufacturing_date,manufacturing_time,due_date,order_id, product_id)
-VALUES (18.0,8.5,10,8,8,"2021-06-27","2021-06-27 5:00:00","2021-06-30",2, 2),
+VALUES (18.0,8.5,10,8,8,"2021-06-27","2021-06-27 5:00:00","2021-06-30",1, 2),
        (18.0,8.5,10,25,18,"2021-06-27","2021-06-27 1:00:00","2021-07-25",2, 2),
-       (20.2,10.2,10,28,28,"2021-06-25","2021-06-25 16:00:00","2021-06-30",2, 2);
+       (20.2,10.2,10,28,28,"2021-06-25","2021-06-25 16:00:00","2021-06-30",1, 2);
+
+INSERT INTO batch (current_temperature,minimum_temperature,initial_quantity,current_quantity,last_quantity, manufacturing_date,manufacturing_time,due_date,order_id, product_id)
+VALUES (18.0,8.5,10,8,8,"2021-06-27","2021-06-27 5:00:00","2021-06-30",3, 2),
+       (18.0,8.5,10,25,18,"2021-06-27","2021-06-27 1:00:00","2021-07-25",2, 2),
+       (20.2,10.2,10,28,28,"2021-06-25","2021-06-25 16:00:00","2021-06-30",1, 2);
+
+INSERT INTO batch (current_temperature,minimum_temperature,initial_quantity,current_quantity,last_quantity, manufacturing_date,manufacturing_time,due_date,order_id, product_id)
+VALUES (18.0,8.5,10,8,8,"2021-06-27","2021-06-27 5:00:00","2021-06-30",1, 2),
+       (18.0,8.5,10,25,18,"2021-06-27","2021-06-27 1:00:00","2021-07-25",1, 2),
+       (20.2,10.2,10,28,28,"2021-06-25","2021-06-25 16:00:00","2021-06-30",1, 2);
 
 INSERT INTO batch (current_temperature,minimum_temperature,initial_quantity,current_quantity,last_quantity, manufacturing_date,manufacturing_time,due_date,order_id, product_id)
 VALUES (18.0,8.5,10,8,8,"2021-06-27","2021-06-27 5:00:00","2021-06-30",2, 3),
