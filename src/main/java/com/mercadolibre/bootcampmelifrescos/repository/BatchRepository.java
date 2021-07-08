@@ -3,6 +3,7 @@ package com.mercadolibre.bootcampmelifrescos.repository;
 import com.mercadolibre.bootcampmelifrescos.model.Batch;
 import com.mercadolibre.bootcampmelifrescos.model.Category;
 import org.springframework.data.domain.Sort;
+import com.mercadolibre.bootcampmelifrescos.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,4 +25,7 @@ public interface BatchRepository extends JpaRepository<Batch,Long> {
             Optional<Category> category,
             Sort sort
     );
+
+    List<Batch> findAllByProductOrderByInboundOrder(Product product);
 }
+

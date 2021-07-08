@@ -76,4 +76,8 @@ public class Batch {
         this.product = product;
         this.inboundOrder = inboundOrder;
     }
+
+    public Long getWarehouseId(){
+        return inboundOrder.getSection().getWarehouseId();
+    }
 }

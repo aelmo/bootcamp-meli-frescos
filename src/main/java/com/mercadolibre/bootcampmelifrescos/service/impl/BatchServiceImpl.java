@@ -87,12 +87,14 @@ public class BatchServiceImpl implements BatchService {
     }
 
     private void setBatchResponseListOrder(List<BatchResponse> batchResponseList, String orderParam) {
-        if(orderParam.equalsIgnoreCase("C")) {
-            batchResponseList.sort(Comparator.comparing(BatchResponse::getCurrentQuantity));
-        }
+        if (orderParam != null) {
+            if (orderParam.equalsIgnoreCase("C")) {
+                batchResponseList.sort(Comparator.comparing(BatchResponse::getCurrentQuantity));
+            }
 
-        if(orderParam.equalsIgnoreCase("F")) {
-            batchResponseList.sort(Comparator.comparing(BatchResponse::getDueDate));
+            if (orderParam.equalsIgnoreCase("F")) {
+                batchResponseList.sort(Comparator.comparing(BatchResponse::getDueDate));
+            }
         }
     }
 
