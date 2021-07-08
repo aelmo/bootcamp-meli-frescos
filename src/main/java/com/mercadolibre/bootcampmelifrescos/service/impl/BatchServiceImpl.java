@@ -2,27 +2,64 @@ package com.mercadolibre.bootcampmelifrescos.service.impl;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.SectionDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.BatchResponse;
+import com.mercadolibre.bootcampmelifrescos.dtos.response.BatchStockResponse;
+import com.mercadolibre.bootcampmelifrescos.dtos.response.BatchWithDueDateResponse;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.ProductBatchResponse;
 import com.mercadolibre.bootcampmelifrescos.exceptions.ApiException;
 import com.mercadolibre.bootcampmelifrescos.exceptions.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Batch;
 
+import com.mercadolibre.bootcampmelifrescos.model.Category;
 import com.mercadolibre.bootcampmelifrescos.model.Section;
 import com.mercadolibre.bootcampmelifrescos.repository.BatchRepository;
+import com.mercadolibre.bootcampmelifrescos.repository.CategoryRepository;
 import com.mercadolibre.bootcampmelifrescos.service.BatchService;
 import com.mercadolibre.bootcampmelifrescos.service.Validator;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
 public class BatchServiceImpl implements BatchService {
     private final BatchRepository batchRepository;
+    private final CategoryRepository categoryRepository;
     private final Validator validator;
+
+    public BatchStockResponse getByDaysBeforeDueDateAndCategory(
+            int days,
+            String categoryCode,
+            String orderByDate
+    ) throws ApiException {
+        LocalDate date = LocalDate.now().plusDays(days);
+        Optional<Category> category = categoryRepository.findByCode(categoryCode);
+        Sort sortByDueDate = orderByDate.equalsIgnoreCase("asc") ?
+                Sort.by(Sort.Direction.ASC, "dueDate") : Sort.by(Sort.Direction.DESC, "dueDate");
+
+        List<Batch> batches = batchRepository.findAllByDueDateIsLessThanEqualAndOptionalProductCategoryOrderByDueDate(
+                    date,
+                    category,
+                    sortByDueDate
+        );
+
+        return buildBatchStockResponse(batches);
+    }
+
+    private BatchStockResponse buildBatchStockResponse(List<Batch> batches) {
+        List<BatchWithDueDateResponse> batchResponseList =  new ArrayList<>();
+
+        for(Batch batch : batches) {
+            batchResponseList.add(new BatchWithDueDateResponse(batch));
+        }
+
+        return new BatchStockResponse(batchResponseList);
+    }
 
     public ProductBatchResponse getAllBatches(Long productId, String orderParam) throws ApiException {
         List<Batch> batches = batchRepository.findAllByProductId(productId);

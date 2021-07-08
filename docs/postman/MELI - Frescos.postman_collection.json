@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b360a3fb-e7eb-4c1f-9ec9-03e8bccfd57b",
+		"_postman_id": "ac26c8d4-d605-4f06-879a-f59de6be48b5",
 		"name": "MELI - Frescos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -319,6 +319,49 @@
 										"fresh-products",
 										"warehouse",
 										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "US05",
+					"item": [
+						{
+							"name": "Batch - Get Batch By Due Date",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/due-date/list/?days=1&orderByDueDate=asc&category=FZ",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"due-date",
+										"list",
+										""
+									],
+									"query": [
+										{
+											"key": "days",
+											"value": "1"
+										},
+										{
+											"key": "orderByDueDate",
+											"value": "asc"
+										},
+										{
+											"key": "category",
+											"value": "FZ"
+										}
 									]
 								}
 							},
