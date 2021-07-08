@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.mercadolibre</groupId>
 	<artifactId>bootcamp-meli-frescos</artifactId>
-	<version>0.2.0</version>
+	<version>0.3.0</version>
 	<name>bootcamp-meli-frescos</name>
 	<description>Final project for Meli Bootcamp.</description>
 	<properties>
