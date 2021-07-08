@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductBatchResponse {
+
     private SectionDTO section;
     private Long productId;
     private List<BatchResponse> batchStock;
