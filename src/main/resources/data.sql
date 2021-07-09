@@ -30,11 +30,6 @@ VALUES ("Cajamar Fullfilment"),
        ("Salvador Fullfilment"),
        ("Florianopolis Fullfilment");
 
-INSERT INTO agent (name)
-VALUES ("Amanda Rodrigues"),
-       ("Daniela Santos"),
-       ("Carla Flores");
-
 INSERT INTO category (code, description)
 VALUES ("FS", "Fresh"),
        ("RF", "Refrigerated"),
@@ -45,7 +40,7 @@ VALUES (1, 2),
        (2, 3),
        (3, 1);
 
-INSERT INTO inbound_order (date, section_id, agent_id)
+INSERT INTO inbound_order (date, section_id, user_id)
 VALUES ("2021-07-01", 1, 2),
        ("2021-06-30", 2, 3),
        ("2021-06-29", 3, 1);

@@ -31,13 +31,13 @@ public class InboundOrder {
     private Set<Batch> batch;
 
     @OneToOne()
-    private Agent agent;
+    private User user;
 
-    public InboundOrder(InboundOrderDTO inboundOrderDTO, Set<Batch> batchSet, Section section){
-
+    public InboundOrder(InboundOrderDTO inboundOrderDTO, Set<Batch> batchSet, Section section, User user){
         this.date = inboundOrderDTO.getOrderDate();
         this.section = section;
         this.batch = batchSet;
+        this.user = user;
     }
 
     public Long getWarehouseId(){

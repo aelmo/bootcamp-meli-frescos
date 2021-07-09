@@ -9,13 +9,19 @@ import com.mercadolibre.bootcampmelifrescos.model.Category;
 import com.mercadolibre.bootcampmelifrescos.model.Product;
 import com.mercadolibre.bootcampmelifrescos.model.Section;
 import com.mercadolibre.bootcampmelifrescos.model.Warehouse;
+import com.mercadolibre.bootcampmelifrescos.service.impl.ValidatorImpl;
+import com.mercadolibre.bootcampmelifrescos.model.User;
 import com.mercadolibre.bootcampmelifrescos.repository.ProductRepository;
 import com.mercadolibre.bootcampmelifrescos.repository.SectionRepository;
-import com.mercadolibre.bootcampmelifrescos.service.impl.ValidatorImpl;
+import com.mercadolibre.bootcampmelifrescos.repository.UserRepository;
+import com.mercadolibre.bootcampmelifrescos.security.AuthenticationFacade;
+import com.mercadolibre.bootcampmelifrescos.util.MyUserDetails;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -41,6 +47,18 @@ public class InboundOrderConverterTest {
 
     @MockBean
     ValidatorImpl validator;
+  
+    AuthenticationFacade authenticationFacade;
+
+    @MockBean()
+    UserRepository userRepository;
+
+    @BeforeEach
+    void setup() {
+        User user = new User();
+        when(authenticationFacade.getUserDetails()).thenReturn(new MyUserDetails(user));
+        when(userRepository.findByUserName(any())).thenReturn(user);
+    }
 
     @Test
     void shouldThrowExceptionIfSectionDoesNotExist() {
@@ -51,6 +69,7 @@ public class InboundOrderConverterTest {
         InboundOrderDTO inboundOrderDTO = new InboundOrderDTO(1L, LocalDate.now(), sectionDTO, List.of(batchDTO));
         when(productRepository.findById(any())).thenReturn(Optional.of(new Product()));
         when(sectionRepository.findById(any())).thenReturn(empty());
+
 
         assertThrows(NotFoundApiException.class, () -> subject.dtoToEntity(inboundOrderDTO));
     }
