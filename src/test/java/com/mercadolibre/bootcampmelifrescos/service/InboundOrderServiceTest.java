@@ -96,7 +96,8 @@ public class InboundOrderServiceTest {
         Batch batch = new Batch(batchDTO, new Product());
         Category category = new Category(1L, "RR", "Refrigerated");
         Section section = new Section(1L, new Warehouse(), category);
-        InboundOrder inboundOrder = new InboundOrder(inboundOrderDTO,Set.of(batch),section);
+        InboundOrder inboundOrder = new InboundOrder();
+        inboundOrder.setBatch(Set.of(new Batch()));
 
         when(inboundConverter.dtoToEntity(any())).thenReturn(inboundOrder);
         when(inboundOrderRepository.findById(anyLong())).thenReturn(Optional.of(inboundOrder));

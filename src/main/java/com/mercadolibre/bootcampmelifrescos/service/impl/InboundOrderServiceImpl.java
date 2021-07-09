@@ -48,7 +48,7 @@ public class InboundOrderServiceImpl implements InboundOrderService{
         oldInboundOrder.setBatch(newInboundOrder.getBatch());
         oldInboundOrder.setDate(newInboundOrder.getDate());
         oldInboundOrder.setSection(newInboundOrder.getSection());
-        oldInboundOrder.setAgent(oldInboundOrder.getAgent());
+        oldInboundOrder.setUser(oldInboundOrder.getUser());
 
         setOrderOnBatchStock(oldInboundOrder);
 
