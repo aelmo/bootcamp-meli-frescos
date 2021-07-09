@@ -11,9 +11,9 @@ import javax.validation.constraints.Positive;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PurchaseOrderStatusDTO {
+public class PurchaseOrderStatusRequest {
 
-    @NotBlank(message = "The status code cannot be null")
-    @Positive
+    @NotNull(message = "The status code cannot be null")
+    @Positive(message = "The status code must be a positive number")
     private Long statusCode;
 }

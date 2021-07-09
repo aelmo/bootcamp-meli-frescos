@@ -1,8 +1,8 @@
 package com.mercadolibre.bootcampmelifrescos.service.impl;
 
-import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderDTO;
-import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseRequestProductsDTO;
-import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseAmountDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderRequest;
+import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseRequestProductsRequest;
+import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseAmountResponse;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseOrderProductsResponse;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.BadRequestApiException;
@@ -33,7 +33,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
 
     @Override
-    public PurchaseAmountDTO updatePurchaseOrder(PurchaseOrderDTO purchaseOrderDTO, Long orderId) throws ApiException {
+    public PurchaseAmountResponse updatePurchaseOrder(PurchaseOrderRequest purchaseOrderRequest, Long orderId) throws ApiException {
         if (purchaseOrderRepository.findById(orderId).isEmpty())
             throw new NotFoundApiException("Purchase order not found");
         PurchaseOrder purchaseOrder = purchaseOrderRepository.findById(orderId).orElseThrow(
@@ -54,13 +54,13 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
         purchaseProductsRepository.deleteAll(purchaseOrderProducts);
 
-        createPurchaseOrderProductsSet(purchaseOrder, purchaseOrderDTO.getProducts());
+        createPurchaseOrderProductsSet(purchaseOrder, purchaseOrderRequest.getProducts());
 
-        purchaseOrder.setDate(purchaseOrderDTO.getDate());
-        purchaseOrder.setStatus(purchaseStatusesRepository.findById(purchaseOrderDTO.getOrderStatus().getStatusCode()).orElseThrow(
+        purchaseOrder.setDate(purchaseOrderRequest.getDate());
+        purchaseOrder.setStatus(purchaseStatusesRepository.findById(purchaseOrderRequest.getOrderStatus().getStatusCode()).orElseThrow(
                 () -> new NotFoundApiException("Status not found")
         ));
-        purchaseOrder.setBuyer(buyerRepository.findById(purchaseOrderDTO.getBuyerId()).orElseThrow(
+        purchaseOrder.setBuyer(buyerRepository.findById(purchaseOrderRequest.getBuyerId()).orElseThrow(
                 () -> new NotFoundApiException("Buyer not found")
         ));
 
@@ -68,16 +68,16 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     }
 
     @Override
-    public PurchaseOrder createPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) throws ApiException{
+    public PurchaseOrder createPurchaseOrder(PurchaseOrderRequest purchaseOrderRequest) throws ApiException{
         PurchaseOrder purchaseOrderToSave = new PurchaseOrder();
 
         purchaseOrderToSave = purchaseOrderRepository.save(purchaseOrderToSave);
-        purchaseOrderToSave.setPurchaseOrderProducts(createPurchaseOrderProductsSet(purchaseOrderToSave, purchaseOrderDTO.getProducts()));
-        purchaseOrderToSave.setDate(purchaseOrderDTO.getDate());
-        purchaseOrderToSave.setStatus(purchaseStatusesRepository.findById(purchaseOrderDTO.getOrderStatus().getStatusCode()).orElseThrow(
+        purchaseOrderToSave.setPurchaseOrderProducts(createPurchaseOrderProductsSet(purchaseOrderToSave, purchaseOrderRequest.getProducts()));
+        purchaseOrderToSave.setDate(purchaseOrderRequest.getDate());
+        purchaseOrderToSave.setStatus(purchaseStatusesRepository.findById(purchaseOrderRequest.getOrderStatus().getStatusCode()).orElseThrow(
                 () -> new NotFoundApiException("Status not found")
         ));
-        purchaseOrderToSave.setBuyer(buyerRepository.findById((purchaseOrderDTO.getBuyerId())).orElseThrow(
+        purchaseOrderToSave.setBuyer(buyerRepository.findById((purchaseOrderRequest.getBuyerId())).orElseThrow(
                 () -> new NotFoundApiException("Buyer not found")
         ));
 
@@ -85,7 +85,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     }
 
     @Override
-    public PurchaseAmountDTO getAmountOfAnPurchaseOrder(PurchaseOrder purchaseOrder) {
+    public PurchaseAmountResponse getAmountOfAnPurchaseOrder(PurchaseOrder purchaseOrder) {
         List<PurchaseOrderProducts> purchaseOrderProducts =  purchaseProductsRepository.findAllByPurchaseOrder(purchaseOrder);
         Double totalAmount = 0.0;
 
@@ -93,7 +93,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             totalAmount = totalAmount + purchaseOrderProduct.getProduct().getAmount() * purchaseOrderProduct.getQuantity();
         }
 
-        return new PurchaseAmountDTO(totalAmount);
+        return new PurchaseAmountResponse(totalAmount);
     }
 
     @Override
@@ -117,10 +117,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         return productsResponse;
     }
 
-    public Set<PurchaseOrderProducts> createPurchaseOrderProductsSet(PurchaseOrder purchaseOrder, Set<PurchaseRequestProductsDTO> requestProductsDTO) throws ApiException {
+    public Set<PurchaseOrderProducts> createPurchaseOrderProductsSet(PurchaseOrder purchaseOrder, Set<PurchaseRequestProductsRequest> requestProductsDTO) throws ApiException {
         Set<PurchaseOrderProducts> purchaseOrderProductsSet = new HashSet<>();
 
-        for (PurchaseRequestProductsDTO product: requestProductsDTO) {
+        for (PurchaseRequestProductsRequest product: requestProductsDTO) {
             PurchaseOrderProducts purchaseOrderProducts = new PurchaseOrderProducts();
             purchaseOrderProducts.setPurchaseOrder(purchaseOrder);
             purchaseOrderProducts.setProduct(productRepository.findById(product.getProductId()).orElseThrow(

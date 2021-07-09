@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Data
@@ -12,11 +13,11 @@ import javax.validation.constraints.Positive;
 @NoArgsConstructor
 public class WarehouseBatchDTO {
 
-    @Positive
-    @NotBlank(message = "The warehouse code can't be empty")
+    @Positive(message = "The warehouse code must be a positive number")
+    @NotNull(message = "The warehouse code can't be empty")
     private Long warehouseCode;
 
-    @Positive
-    @NotBlank(message = "The total quantity can't be empty")
+    @Positive(message = "The total quantity must be a positive number")
+    @NotNull(message = "The total quantity can't be empty")
     private int totalQuantity;
 }

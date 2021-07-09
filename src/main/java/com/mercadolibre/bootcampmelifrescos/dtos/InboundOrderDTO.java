@@ -5,8 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,10 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 public class InboundOrderDTO {
 
-    @NotBlank(message = "The order number can't be empty")
     private Long orderNumber;
 
-    @NotBlank(message = "The order date can't be empty")
+    @NotNull(message = "The order date can't be empty")
     private LocalDate orderDate;
 
     @Valid
