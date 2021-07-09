@@ -1,5 +1,8 @@
 # Change Log
 
+### [0.5.1] - 09/07/2021
+- [@squad2] Adds auth
+
 ### [0.5.0] - 08/07/2021
 - [@squad2] Finaliza US05 - Batch by Due Date
 
