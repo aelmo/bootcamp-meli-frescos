@@ -24,6 +24,8 @@ public class Section {
     @OneToOne
     private Category category;
 
+    private int availableSpace;
+
     public Long getWarehouseId(){
         return warehouse.getId();
     }

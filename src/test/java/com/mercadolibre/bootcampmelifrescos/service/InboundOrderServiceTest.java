@@ -12,6 +12,8 @@ import com.mercadolibre.bootcampmelifrescos.model.Section;
 import com.mercadolibre.bootcampmelifrescos.model.*;
 import com.mercadolibre.bootcampmelifrescos.repository.InboundOrderRepository;
 import com.mercadolibre.bootcampmelifrescos.service.impl.InboundOrderConverterImpl;
+import com.mercadolibre.bootcampmelifrescos.service.impl.SectionServiceImpl;
+import com.mercadolibre.bootcampmelifrescos.service.impl.ValidatorImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,12 +28,8 @@ import java.util.Set;
 import static java.util.Optional.empty;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.times;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class InboundOrderServiceTest {
@@ -40,13 +38,16 @@ public class InboundOrderServiceTest {
     private InboundOrderService subject;
 
     @MockBean
-    Validator validator;
-
-    @MockBean
     InboundOrderRepository inboundOrderRepository;
 
     @MockBean
     InboundOrderConverterImpl inboundConverter;
+
+    @MockBean
+    SectionServiceImpl sectionServiceImpl;
+
+    @MockBean
+    ValidatorImpl validator;
 
     @Test
     void whenCreating_shouldValidateCategoryAndSaveInboundOrder() throws Exception {
@@ -63,6 +64,8 @@ public class InboundOrderServiceTest {
                 null
         );
         when(inboundConverter.dtoToEntity(any())).thenReturn(inboundOrder);
+        when(validator.hasAvailableSpaceOnSection(notNull())).thenReturn(true);
+        doNothing().when(sectionServiceImpl).updateAvailableSpace(any(),anyInt());
 
         subject.createInboundOrder(inboundOrderDTO);
 
@@ -95,9 +98,9 @@ public class InboundOrderServiceTest {
         InboundOrderDTO inboundOrderDTO = new InboundOrderDTO(1L, LocalDate.now(), sectionDTO, List.of(batchDTO));
         Batch batch = new Batch(batchDTO, new Product());
         Category category = new Category(1L, "RR", "Refrigerated");
-        Section section = new Section(1L, new Warehouse(), category);
+        Section section = new Section(1L, new Warehouse(), category, 100);
         InboundOrder inboundOrder = new InboundOrder();
-        inboundOrder.setBatch(Set.of(new Batch()));
+        inboundOrder.setBatch(Set.of(batch));
 
         when(inboundConverter.dtoToEntity(any())).thenReturn(inboundOrder);
         when(inboundOrderRepository.findById(anyLong())).thenReturn(Optional.of(inboundOrder));

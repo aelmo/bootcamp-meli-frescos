@@ -3,11 +3,14 @@ package com.mercadolibre.bootcampmelifrescos.service.impl;
 import com.mercadolibre.bootcampmelifrescos.dtos.InboundOrderDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.InboundOrderResponse;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.BadRequestApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Batch;
 import com.mercadolibre.bootcampmelifrescos.model.InboundOrder;
+import com.mercadolibre.bootcampmelifrescos.model.Section;
 import com.mercadolibre.bootcampmelifrescos.repository.BatchRepository;
 import com.mercadolibre.bootcampmelifrescos.repository.InboundOrderRepository;
 import com.mercadolibre.bootcampmelifrescos.service.InboundOrderService;
+import com.mercadolibre.bootcampmelifrescos.service.SectionService;
 import com.mercadolibre.bootcampmelifrescos.service.Validator;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.NotFoundApiException;
 import lombok.AllArgsConstructor;
@@ -22,14 +25,21 @@ public class InboundOrderServiceImpl implements InboundOrderService{
     private final InboundOrderRepository inboundOrderRepository;
     private final InboundOrderConverterImpl inboundConverter;
     private final Validator validator;
-    private final BatchRepository batchRepository;
+    private final SectionService sectionService;
 
     @Override
     public InboundOrderResponse createInboundOrder(InboundOrderDTO inboundOrderDTO) throws ApiException {
         InboundOrder inboundOrder = inboundConverter.dtoToEntity(inboundOrderDTO);
+        Section section = inboundOrder.getSection();
         validator.validateCategorySection(inboundOrder.getSection(), inboundOrder.getBatch());
 
+        if(!validator.hasAvailableSpaceOnSection(inboundOrderDTO))
+            throw new BadRequestApiException("Section doesn't have available space");
+
         setOrderOnBatchStock(inboundOrder);
+
+        int quantityOfBatches = inboundOrderDTO.getBatchStock().size();
+        sectionService.updateAvailableSpace(section,quantityOfBatches);
 
         inboundOrderRepository.save(inboundOrder);
 

@@ -59,8 +59,8 @@ public class WarehouseBatchServiceTest {
     public void init() {
         warehouse = new Warehouse(1L, "Floripa", sectionsSet);
         secondWarehouse = new Warehouse(2L, "SP", sectionsSet);
-        section = new Section(1L, warehouse, new Category());
-        secondSection = new Section(2L, secondWarehouse, new Category());
+        section = new Section(1L, warehouse, new Category(), 100);
+        secondSection = new Section(2L, secondWarehouse, new Category(), 100);
         inboundOrder = new InboundOrder(1L, LocalDate.now(), section, batchSet, user);
         secondInboundOrder = new InboundOrder(2L, LocalDate.now(), secondSection, batchSet, user);
         firstProduct = new Product(3L, "sample", new Seller(), new Category());

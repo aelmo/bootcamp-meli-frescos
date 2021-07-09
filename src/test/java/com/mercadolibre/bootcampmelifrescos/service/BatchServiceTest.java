@@ -42,7 +42,7 @@ public class BatchServiceTest {
     void setup() {
         Category category = new Category(1L, "FF", "FF" );
         Product product = new Product(1L,  "product", new Seller(), category);
-        Section section = new Section(1L, new Warehouse(), new Category());
+        Section section = new Section(1L, new Warehouse(), new Category(),100);
 
         Batch batch1 = new Batch(
                 1L,
