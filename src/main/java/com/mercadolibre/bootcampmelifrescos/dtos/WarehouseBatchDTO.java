@@ -13,10 +13,10 @@ import javax.validation.constraints.Positive;
 public class WarehouseBatchDTO {
 
     @Positive
-    @NotBlank
+    @NotBlank(message = "The warehouse code can't be empty")
     private Long warehouseCode;
 
     @Positive
-    @NotBlank
+    @NotBlank(message = "The total quantity can't be empty")
     private int totalQuantity;
 }

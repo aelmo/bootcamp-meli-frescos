@@ -13,10 +13,10 @@ import javax.validation.constraints.Positive;
 public class SectionDTO {
 
     @Positive
-    @NotBlank
+    @NotBlank(message = "The section can't be empty")
     private Long sectionCode;
 
     @Positive
-    @NotBlank
+    @NotBlank(message = "The warehouse code can't be empty")
     private Long warehouseCode;
 }
