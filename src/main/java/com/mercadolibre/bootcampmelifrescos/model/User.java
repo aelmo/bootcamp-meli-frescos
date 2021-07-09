@@ -33,4 +33,5 @@ public class User {
                 name = "role_id", referencedColumnName = "id"
         ))
     private Set<Role> roles;
+
 }

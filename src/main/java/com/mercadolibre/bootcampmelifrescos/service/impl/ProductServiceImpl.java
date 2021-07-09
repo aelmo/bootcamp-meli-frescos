@@ -1,16 +1,13 @@
 package com.mercadolibre.bootcampmelifrescos.service.impl;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.ProductDTO;
-import com.mercadolibre.bootcampmelifrescos.exceptions.ApiException;
-import com.mercadolibre.bootcampmelifrescos.exceptions.NotFoundApiException;
-import com.mercadolibre.bootcampmelifrescos.model.Category;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Product;
 import com.mercadolibre.bootcampmelifrescos.repository.CategoryRepository;
 import com.mercadolibre.bootcampmelifrescos.repository.ProductRepository;
 import com.mercadolibre.bootcampmelifrescos.service.ProductService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

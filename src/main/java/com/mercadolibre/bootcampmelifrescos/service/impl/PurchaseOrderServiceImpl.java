@@ -5,7 +5,7 @@ import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseRequestProductsDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseAmountDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseOrderProductsResponse;
-import com.mercadolibre.bootcampmelifrescos.exceptions.NotFoundApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.*;
 import com.mercadolibre.bootcampmelifrescos.repository.*;
 import com.mercadolibre.bootcampmelifrescos.service.PurchaseOrderService;
