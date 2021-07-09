@@ -6,6 +6,7 @@ import com.mercadolibre.bootcampmelifrescos.service.WarehouseBatchService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ public class WarehouseBatchController {
     private final WarehouseBatchService warehouseBatchService;
 
     @GetMapping("/{productId}")
+    @PreAuthorize("hasRole('ROLE_AGENT')")
     public ResponseEntity<WarehouseBatchResponse> getWarehouseBatchQuantityByProduct(@PathVariable("productId") Long productId) throws Exception {
         return new ResponseEntity<>(warehouseBatchService.getWarehouseBatchQuantityByProduct(productId), HttpStatus.OK);
     }

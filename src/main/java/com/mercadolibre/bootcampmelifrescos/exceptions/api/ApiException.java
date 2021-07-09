@@ -1,4 +1,4 @@
-package com.mercadolibre.bootcampmelifrescos.exceptions;
+package com.mercadolibre.bootcampmelifrescos.exceptions.api;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,6 +28,7 @@ public class InboundOrderController {
             @ApiResponse(code = 400, message = "Bad request")
     })
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_AGENT')")
     public ResponseEntity<InboundOrderResponse> createInboundOrder(@ApiParam(value = "Object for creating a new inbound order", required = true)
                                                                        @Valid @RequestBody InboundOrderRequest inboundOrderRequest) throws Exception {
         return new ResponseEntity<>(inboundOrderService.createInboundOrder(inboundOrderRequest.getInboundOrder()), HttpStatus.CREATED);
@@ -38,6 +40,7 @@ public class InboundOrderController {
             @ApiResponse(code = 400, message = "Bad request")
     })
     @PutMapping
+    @PreAuthorize("hasRole('ROLE_AGENT')")
     public ResponseEntity<InboundOrderResponse> updateInboundOrder(@ApiParam(value = "Object for update an inbound order", required = true)
                                                                        @Valid @RequestBody InboundOrderRequest inboundOrderRequest) throws Exception {
         return new ResponseEntity<>(inboundOrderService.updateInboundOrder(inboundOrderRequest.getInboundOrder()), HttpStatus.CREATED);
