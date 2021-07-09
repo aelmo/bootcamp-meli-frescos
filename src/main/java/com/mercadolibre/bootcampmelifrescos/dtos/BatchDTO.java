@@ -19,33 +19,33 @@ public class BatchDTO {
 
     @JsonInclude(Include.NON_NULL)
     @Positive
-    @NotBlank
+    @NotBlank(message = "The batch number can't be empty")
     private Long batchNumber;
 
     @Positive
-    @NotBlank
+    @NotBlank(message = "The product id can't be empty")
     private Long productId;
 
-    @NotBlank
+    @NotBlank(message = "The current temperature can't be empty")
     private Float currentTemperature;
 
-    @NotBlank
+    @NotBlank(message = "The minimum temperature can't be empty")
     private Float minimumTemperature;
 
     @Positive
-    @NotBlank
+    @NotBlank(message = "The initial quantity can't be empty")
     private int initialQuantity;
 
     @Positive
-    @NotBlank
+    @NotBlank(message = "The current quantity can't be empty")
     private int currentQuantity;
 
-    @NotBlank
+    @NotBlank(message = "The manufacturing date can't be empty")
     private LocalDate manufacturingDate;
 
-    @NotBlank
+    @NotBlank(message = "The manufacturing time can't be empty")
     private LocalDateTime manufacturingTime;
 
-    @NotBlank
+    @NotBlank(message = "The due date can't be empty")
     private LocalDate dueDate;
 }
