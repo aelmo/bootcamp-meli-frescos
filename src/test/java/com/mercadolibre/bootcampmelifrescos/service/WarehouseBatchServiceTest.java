@@ -46,7 +46,7 @@ public class WarehouseBatchServiceTest {
     private InboundOrder secondInboundOrder = new InboundOrder();
     private Section section = new Section();
     private Section secondSection = new Section();
-    private Agent agent = new Agent();
+    private User user = new User();
     private Warehouse warehouse = new Warehouse();
     private Warehouse secondWarehouse = new Warehouse();
     List<WarehouseBatchDTO> warehouseBatchDTOList = new ArrayList<>();
@@ -61,8 +61,8 @@ public class WarehouseBatchServiceTest {
         secondWarehouse = new Warehouse(2L, "SP", sectionsSet);
         section = new Section(1L, warehouse, new Category());
         secondSection = new Section(2L, secondWarehouse, new Category());
-        inboundOrder = new InboundOrder(1L, LocalDate.now(), section, batchSet, agent);
-        secondInboundOrder = new InboundOrder(2L, LocalDate.now(), secondSection, batchSet, agent);
+        inboundOrder = new InboundOrder(1L, LocalDate.now(), section, batchSet, user);
+        secondInboundOrder = new InboundOrder(2L, LocalDate.now(), secondSection, batchSet, user);
         firstProduct = new Product(3L, "sample", new Seller(), new Category());
         batchSampleProduct = new Batch(1L, 10F, 10F, 10, 10, LocalDate.now(), LocalDateTime.of(2021, 01, 10, 01, 00), LocalDate.now(), firstProduct, inboundOrder);
         secondBatchSampleProduct = new Batch(2L, 10F, 10F, 10, 7, LocalDate.now(), LocalDateTime.of(2021, 01, 10, 01, 00), LocalDate.now(), firstProduct, secondInboundOrder);
