@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "25636a85-ab81-4f4c-a88f-4c6b0c099d73",
-		"name": "MELI - Frescos Copy",
+		"name": "MELI - Frescos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -542,6 +542,53 @@
 				{
 					"name": "US01",
 					"item": [
+						{
+							"name": "Verify if section has available space",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "agentuser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"inboundOrder\": {\n      \"orderDate\": \"2021-06-27\",\n      \"section\": {\n        \"sectionCode\": 2,\n        \"warehouseCode\": 2\n        },\n      \"batchStock\": [\n            {\n            \"productId\": 3,\n            \"currentTemperature\": 27.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12:59:11.332\",\n            \"dueDate\": \"2021-06-30\"\n            },\n            {\n            \"productId\": 3,\n            \"currentTemperature\": 20.3,\n            \"minimumTemperature\": 20.7,\n            \"initialQuantity\": 1,\n            \"currentQuantity\": 2,\n            \"manufacturingDate\": \"2021-06-25\",\n            \"manufacturingTime\": \"2018-02-05T12:59:11.332\",\n            \"dueDate\": \"2021-06-30\"\n            }\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/inboundorder/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"inboundorder",
+										""
+									]
+								}
+							},
+							"response": []
+						},
 						{
 							"name": "Verify if the section belongs to requestes warehouse",
 							"request": {

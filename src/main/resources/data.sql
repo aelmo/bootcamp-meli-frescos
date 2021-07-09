@@ -35,10 +35,11 @@ VALUES ("FS", "Fresh"),
        ("RF", "Refrigerated"),
        ("FZ", "Frozen");
 
-INSERT INTO section (warehouse_id, category_id)
-VALUES (1, 2),
-       (2, 3),
-       (3, 1);
+INSERT INTO section (warehouse_id, category_id, available_space)
+VALUES (1, 2, 100),
+       (2, 3, 1),
+       (3, 1, 200);
+
 
 INSERT INTO inbound_order (date, section_id, user_id)
 VALUES ("2021-07-01", 1, 2),
