@@ -5,8 +5,8 @@ import com.mercadolibre.bootcampmelifrescos.dtos.response.BatchResponse;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.BatchStockResponse;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.BatchWithDueDateResponse;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.ProductBatchResponse;
-import com.mercadolibre.bootcampmelifrescos.exceptions.ApiException;
-import com.mercadolibre.bootcampmelifrescos.exceptions.NotFoundApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Batch;
 
 import com.mercadolibre.bootcampmelifrescos.model.Category;

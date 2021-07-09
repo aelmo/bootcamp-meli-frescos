@@ -2,7 +2,7 @@ package com.mercadolibre.bootcampmelifrescos.service;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.response.BatchStockResponse;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.ProductBatchResponse;
-import com.mercadolibre.bootcampmelifrescos.exceptions.ApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
 
 public interface BatchService {
 
