@@ -6,6 +6,7 @@ import com.mercadolibre.bootcampmelifrescos.dtos.response.BatchStockResponse;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.BatchWithDueDateResponse;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.ProductBatchResponse;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.BadRequestApiException;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Batch;
 
@@ -38,6 +39,9 @@ public class BatchServiceImpl implements BatchService {
             String categoryCode,
             String orderByDate
     ) throws ApiException {
+        if (days<0)
+            throw new BadRequestApiException("You have to insert a positive number of days");
+
         LocalDate date = LocalDate.now().plusDays(days);
         Optional<Category> category = categoryRepository.findByCode(categoryCode);
         Sort sortByDueDate = orderByDate.equalsIgnoreCase("asc") ?
