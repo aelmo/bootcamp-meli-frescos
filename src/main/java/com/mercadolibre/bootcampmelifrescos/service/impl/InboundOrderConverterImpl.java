@@ -2,7 +2,7 @@ package com.mercadolibre.bootcampmelifrescos.service.impl;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.BatchDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.InboundOrderDTO;
-import com.mercadolibre.bootcampmelifrescos.exceptions.NotFoundApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Batch;
 import com.mercadolibre.bootcampmelifrescos.model.InboundOrder;
 import com.mercadolibre.bootcampmelifrescos.model.Product;

@@ -1,4 +1,4 @@
-package com.mercadolibre.bootcampmelifrescos.exceptions;
+package com.mercadolibre.bootcampmelifrescos.exceptions.api;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,12 +23,5 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
         String responseBody = ex.toJson();
 
         return handleExceptionInternal(ex, responseBody, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
-    }
-
-    @ExceptionHandler(value = { Exception.class })
-    protected ResponseEntity<Object> handleDefault(Exception ex, WebRequest request) {
-        String responseBody = ex.getMessage() != null ? ex.getMessage() : "An unhandled error occurred. Please contact the support team";
-
-        return handleExceptionInternal(ex, responseBody, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 }

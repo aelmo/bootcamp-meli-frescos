@@ -14,6 +14,21 @@
 						{
 							"name": "Order - New Inbound Order",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "agentuser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -46,6 +61,21 @@
 						{
 							"name": "Order - Update Inbound Order",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "agentuser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [],
 								"body": {
@@ -83,6 +113,21 @@
 						{
 							"name": "Purchase Order - New Purchase Order",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "buyeruser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
@@ -115,6 +160,21 @@
 						{
 							"name": "Purchase Order - Update Purchase Order",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "buyeruser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [],
 								"body": {
@@ -153,6 +213,21 @@
 						{
 							"name": "Purchase Order - Get Purchase Order Products",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "buyeruser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -182,6 +257,21 @@
 						{
 							"name": "Products - Get Products By Section",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "buyeruser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -210,6 +300,21 @@
 						{
 							"name": "Products - Get All Products",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "buyeruser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -237,6 +342,21 @@
 						{
 							"name": "Products - Get Products By Batch",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "agentuser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -266,6 +386,21 @@
 						{
 							"name": "Products - Get Products By Batch (With Order Param)",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "agentuser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -304,6 +439,21 @@
 						{
 							"name": "Product - Quantity By Warehouse",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "agentuser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -332,6 +482,21 @@
 						{
 							"name": "Batch - Get Batch By Due Date",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "agentuser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
