@@ -49,4 +49,12 @@ public class ErrorHandler {
         }
         return ex.getAllErrors().get(0);
     }
+
+    /*@ExceptionHandler(value = { MethodArgumentNotValidException.class})
+    protected ResponseEntity<Object> handleException(MethodArgumentNotValidException ex) {
+        var responseBody = new ErrorResponseDTO();
+        responseBody.setMessage(ex.getFieldError().getDefaultMessage());
+        responseBody.setCause(ex.getFieldError().getField());
+        return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+    }*/
 }
