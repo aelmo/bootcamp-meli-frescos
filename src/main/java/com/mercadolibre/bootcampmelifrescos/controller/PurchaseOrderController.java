@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,6 +30,7 @@ public class PurchaseOrderController {
             @ApiResponse(code = 400, message = "Bad request")
     })
     @PostMapping("/orders/")
+    @PreAuthorize("hasRole('ROLE_BUYER')")
     public ResponseEntity insertNewPurchaseOrder(@Valid @RequestBody PurchaseOrderRequest purchaseOrderRequest) throws ApiException {
         return new ResponseEntity(purchaseOrderService.getAmountOfAnPurchaseOrder(purchaseOrderService.createPurchaseOrder(purchaseOrderRequest)), HttpStatus.CREATED);
     }
@@ -39,6 +41,7 @@ public class PurchaseOrderController {
             @ApiResponse(code = 400, message = "Bad request")
     })
     @PutMapping("/orders/")
+    @PreAuthorize("hasRole('ROLE_BUYER')")
     public ResponseEntity<PurchaseAmountResponse> updatePurchaseOrder(@Valid @RequestBody PurchaseOrderRequest purchaseOrderRequest,
                                                                       @RequestParam(name = "idOrder",
                                                                          defaultValue = "")
@@ -47,6 +50,7 @@ public class PurchaseOrderController {
     }
 
     @GetMapping("/orders")
+    @PreAuthorize("hasRole('ROLE_BUYER')")
     public ResponseEntity<List<PurchaseOrderProductsResponse>> getPurchaseOrderProducts(@RequestParam(name = "idOrder") Long idOrder) throws ApiException {
         return new ResponseEntity<>(purchaseOrderService.getPurchaseOrderProducts(idOrder),HttpStatus.OK);
     }
