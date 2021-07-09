@@ -36,14 +36,18 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     public PurchaseAmountDTO updatePurchaseOrder(PurchaseOrderDTO purchaseOrderDTO, Long orderId) throws ApiException {
         if (purchaseOrderRepository.findById(orderId).isEmpty())
             throw new NotFoundApiException("Purchase order not found");
-        PurchaseOrder purchaseOrder = purchaseOrderRepository.findById(orderId).get();
+        PurchaseOrder purchaseOrder = purchaseOrderRepository.findById(orderId).orElseThrow(
+                () -> new NotFoundApiException("Purchase order not found")
+        );
         List<PurchaseOrderProducts> purchaseOrderProducts = purchaseProductsRepository.findAllByPurchaseOrder(purchaseOrder);
 
         for (PurchaseOrderProducts purchaseOrderProducts1: purchaseOrderProducts) {
             if (batchRepository.findById(purchaseOrderProducts1.getBatchId()).isEmpty()) {
                 throw new NotFoundApiException("Batch not found");
             }
-            Batch batch = batchRepository.findById(purchaseOrderProducts1.getBatchId()).get();
+            Batch batch = batchRepository.findById(purchaseOrderProducts1.getBatchId()).orElseThrow(
+                    () -> new NotFoundApiException("Batch not found")
+            );
             batch.setCurrentQuantity(batch.getLastQuantity());
             batchRepository.save(batch);
         }
@@ -53,8 +57,12 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         createPurchaseOrderProductsSet(purchaseOrder, purchaseOrderDTO.getProducts());
 
         purchaseOrder.setDate(purchaseOrderDTO.getDate());
-        purchaseOrder.setStatus(purchaseStatusesRepository.findById(purchaseOrderDTO.getOrderStatus().getStatusCode()).get());
-        purchaseOrder.setBuyer(buyerRepository.findById(purchaseOrderDTO.getBuyerId()).get());
+        purchaseOrder.setStatus(purchaseStatusesRepository.findById(purchaseOrderDTO.getOrderStatus().getStatusCode()).orElseThrow(
+                () -> new NotFoundApiException("Status not found")
+        ));
+        purchaseOrder.setBuyer(buyerRepository.findById(purchaseOrderDTO.getBuyerId()).orElseThrow(
+                () -> new NotFoundApiException("Buyer not found")
+        ));
 
         return getAmountOfAnPurchaseOrder(purchaseOrderRepository.save(purchaseOrder));
     }
@@ -66,8 +74,12 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         purchaseOrderToSave = purchaseOrderRepository.save(purchaseOrderToSave);
         purchaseOrderToSave.setPurchaseOrderProducts(createPurchaseOrderProductsSet(purchaseOrderToSave, purchaseOrderDTO.getProducts()));
         purchaseOrderToSave.setDate(purchaseOrderDTO.getDate());
-        purchaseOrderToSave.setStatus(purchaseStatusesRepository.findById(purchaseOrderDTO.getOrderStatus().getStatusCode()).orElseThrow());
-        purchaseOrderToSave.setBuyer(buyerRepository.findById((purchaseOrderDTO.getBuyerId())).orElseThrow());
+        purchaseOrderToSave.setStatus(purchaseStatusesRepository.findById(purchaseOrderDTO.getOrderStatus().getStatusCode()).orElseThrow(
+                () -> new NotFoundApiException("Status not found")
+        ));
+        purchaseOrderToSave.setBuyer(buyerRepository.findById((purchaseOrderDTO.getBuyerId())).orElseThrow(
+                () -> new NotFoundApiException("Buyer not found")
+        ));
 
         return purchaseOrderRepository.save(purchaseOrderToSave);
     }
@@ -111,7 +123,9 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         for (PurchaseRequestProductsDTO product: requestProductsDTO) {
             PurchaseOrderProducts purchaseOrderProducts = new PurchaseOrderProducts();
             purchaseOrderProducts.setPurchaseOrder(purchaseOrder);
-            purchaseOrderProducts.setProduct(productRepository.findById(product.getProductId()).orElseThrow());
+            purchaseOrderProducts.setProduct(productRepository.findById(product.getProductId()).orElseThrow(
+                    () -> new NotFoundApiException("Product not found")
+            ));
             purchaseOrderProducts.setQuantity(product.getQuantity());
             purchaseOrderProducts.setBatchId(updateProductQuantityFromBatch(product.getProductId(), product.getQuantity()));
             purchaseOrderProductsSet.add(purchaseProductsRepository.save(purchaseOrderProducts));
