@@ -16,16 +16,15 @@ import java.util.List;
 public class InboundOrderDTO {
 
     @NotBlank(message = "The order number can't be empty")
-    @Positive
     private Long orderNumber;
 
     @NotBlank(message = "The order date can't be empty")
     private LocalDate orderDate;
 
-    @NotBlank(message = "The section can't be empty")
+    @Valid
     private SectionDTO section;
 
-    @NotBlank(message = "The batch can't be empty")
+    @Valid
     private List<BatchDTO> batchStock;
 
     public Long getSectionCode(){

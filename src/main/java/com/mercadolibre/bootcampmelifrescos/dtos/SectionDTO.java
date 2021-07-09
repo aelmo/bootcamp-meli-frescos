@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Data
@@ -12,8 +13,7 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 public class SectionDTO {
 
-    @Positive
-    @NotBlank(message = "The section can't be empty")
+    @NotNull(message = "The section can't be empty")
     private Long sectionCode;
 
     @Positive
