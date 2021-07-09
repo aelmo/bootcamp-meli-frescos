@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class InboundOrderRequest {
 
-    @NotBlank(message = "The inbound order cannot be null")
+    @Valid
     private InboundOrderDTO inboundOrder;
 
     public List<BatchDTO> getBatchDTOList(){
