@@ -10,6 +10,7 @@ import java.util.Map;
 @Getter
 @Setter
 public class ApiException extends Exception {
+
     private static final long serialVersionUID = 1L;
 
     private String code;
@@ -40,7 +41,6 @@ public class ApiException extends Exception {
         super(cause);
         this.code = code;
         this.description = description;
-        this.statusCode = statusCode;
     }
 
     public String toJson() {
