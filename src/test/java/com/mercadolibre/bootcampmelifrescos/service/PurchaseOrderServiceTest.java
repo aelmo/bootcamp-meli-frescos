@@ -11,13 +11,12 @@ import com.mercadolibre.bootcampmelifrescos.model.*;
 import com.mercadolibre.bootcampmelifrescos.repository.*;
 import com.mercadolibre.bootcampmelifrescos.service.impl.PurchaseOrderServiceImpl;
 
+import com.mercadolibre.bootcampmelifrescos.service.impl.ValidatorImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -44,6 +43,8 @@ public class PurchaseOrderServiceTest {
     private BatchRepository batchRepository;
     @Mock
     private BuyerRepository buyerRepository;
+    @Mock
+    private ValidatorImpl validator;
 
     @InjectMocks
     private PurchaseOrderServiceImpl purchaseOrderService;
@@ -169,6 +170,7 @@ public class PurchaseOrderServiceTest {
     public void shouldReturnAPurchaseOrderTotalPrice() throws Exception {
         PurchaseAmountDTO expectedResult = new PurchaseAmountDTO(300.0);
         when(purchaseProductsRepository.findAllByPurchaseOrder(notNull())).thenReturn(new ArrayList<>(samplePurchaseOrderProductsSet));
+        when(validator.hasDueDateEqualOrGreaterThanThreeWeeks(notNull())).thenReturn(true);
         PurchaseAmountDTO result = purchaseOrderService.getAmountOfAnPurchaseOrder(purchaseOrderService.createPurchaseOrder(purchaseOrderDTO));
         assertThat(result).isEqualTo(expectedResult);
     }
@@ -178,6 +180,7 @@ public class PurchaseOrderServiceTest {
 
         PurchaseAmountDTO expectedResult = new PurchaseAmountDTO(400.0);
         when(purchaseProductsRepository.findAllByPurchaseOrder(notNull())).thenReturn(new ArrayList<>(samplePurchaseOrderProductsSetToUpdate));
+        when(validator.hasDueDateEqualOrGreaterThanThreeWeeks(notNull())).thenReturn(true);
         PurchaseAmountDTO result = this.purchaseOrderService.updatePurchaseOrder(purchaseOrderDTOToUpdate, 1L);
         assertThat(result).isEqualTo(expectedResult);
     }

@@ -3,11 +3,15 @@ package com.mercadolibre.bootcampmelifrescos.service;
 import com.mercadolibre.bootcampmelifrescos.dtos.BatchDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.InboundOrderDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.SectionDTO;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.NotFoundApiException;
+import com.mercadolibre.bootcampmelifrescos.model.Category;
 import com.mercadolibre.bootcampmelifrescos.model.Product;
 import com.mercadolibre.bootcampmelifrescos.model.Section;
+import com.mercadolibre.bootcampmelifrescos.model.Warehouse;
 import com.mercadolibre.bootcampmelifrescos.repository.ProductRepository;
 import com.mercadolibre.bootcampmelifrescos.repository.SectionRepository;
+import com.mercadolibre.bootcampmelifrescos.service.impl.ValidatorImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,8 +24,8 @@ import java.util.Optional;
 
 import static java.util.Optional.empty;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
+import static org.mockito.ArgumentMatchers.notNull;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class InboundOrderConverterTest {
@@ -34,6 +38,9 @@ public class InboundOrderConverterTest {
 
     @MockBean
     ProductRepository productRepository;
+
+    @MockBean
+    ValidatorImpl validator;
 
     @Test
     void shouldThrowExceptionIfSectionDoesNotExist() {
@@ -49,12 +56,13 @@ public class InboundOrderConverterTest {
     }
 
     @Test
-    void shouldThrowExceptionIfProductDoesNotExist() {
+    void shouldThrowExceptionIfProductDoesNotExist() throws ApiException {
         SectionDTO sectionDTO = new SectionDTO(3L, 1L);
         BatchDTO batchDTO = new BatchDTO( 1L, 1L, 27.3F , 20.7F, 1, 2,  LocalDate.of(2020, 1, 8),
                 LocalDateTime.of(2020, 1, 8, 1, 1, 1),
                 LocalDate.of(2020, 1, 8));
         InboundOrderDTO inboundOrderDTO = new InboundOrderDTO(1L, LocalDate.now(), sectionDTO, List.of(batchDTO));
+        doNothing().when(validator).validateCategorySection(notNull(), any());
         when(productRepository.findById(any())).thenReturn(empty());
         when(sectionRepository.findById(any())).thenReturn(Optional.of(new Section()));
 
