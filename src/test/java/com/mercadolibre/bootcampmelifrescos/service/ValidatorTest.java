@@ -26,7 +26,7 @@ public class ValidatorTest {
         Category differentCategory = new Category();
         Section section = new Section(1L, new Warehouse(), category);
         Product product = new Product(1L, "Product", new Seller(), differentCategory);
-        Batch batch = new Batch(1L, 27.3F, 20.7F, 1, 2, LocalDate.of(2020, 1, 8),
+        Batch batch = new Batch( 1L, 27.3F , 20.7F, 1,1, 2,  LocalDate.of(2020, 1, 8),
                 LocalDateTime.of(2020, 1, 8, 1, 1, 1),
                 LocalDate.of(2020, 1, 8),
                 product, new InboundOrder());
@@ -40,7 +40,7 @@ public class ValidatorTest {
         Category category = new Category(1L, "RR", "Refrigerated");
         Section section = new Section(1L, new Warehouse(), category);
         Product product = new Product(1L, "Product", new Seller(), category);
-        Batch batch = new Batch(1L, 27.3F, 20.7F, 1, 2, LocalDate.of(2020, 1, 8),
+        Batch batch = new Batch( 1L, 27.3F , 20.7F, 1,1, 2,  LocalDate.of(2020, 1, 8),
                 LocalDateTime.of(2020, 1, 8, 1, 1, 1),
                 LocalDate.of(2020, 1, 8),
                 product, new InboundOrder());
