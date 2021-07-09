@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,34 +19,32 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class BatchDTO {
 
     @JsonInclude(Include.NON_NULL)
-    @Positive
-    @NotBlank(message = "The batch number can't be empty")
     private Long batchNumber;
 
-    @Positive
-    @NotBlank(message = "The product id can't be empty")
+    @Positive(message = "The product id must be a positive number")
+    @NotNull(message = "The product id can't be empty")
     private Long productId;
 
-    @NotBlank(message = "The current temperature can't be empty")
+    @NotNull(message = "The current temperature can't be empty")
     private Float currentTemperature;
 
-    @NotBlank(message = "The minimum temperature can't be empty")
+    @NotNull(message = "The minimum temperature can't be empty")
     private Float minimumTemperature;
 
-    @Positive
-    @NotBlank(message = "The initial quantity can't be empty")
+    @Positive(message = "The initial quantity must be a positive number")
+    @NotNull(message = "The initial quantity can't be empty")
     private int initialQuantity;
 
-    @Positive
-    @NotBlank(message = "The current quantity can't be empty")
+    @Positive(message = "The current quantity must be a positive number")
+    @NotNull(message = "The current quantity can't be empty")
     private int currentQuantity;
 
-    @NotBlank(message = "The manufacturing date can't be empty")
+    @NotNull(message = "The manufacturing date can't be empty")
     private LocalDate manufacturingDate;
 
-    @NotBlank(message = "The manufacturing time can't be empty")
+    @NotNull(message = "The manufacturing time can't be empty")
     private LocalDateTime manufacturingTime;
 
-    @NotBlank(message = "The due date can't be empty")
+    @NotNull(message = "The due date can't be empty")
     private LocalDate dueDate;
 }

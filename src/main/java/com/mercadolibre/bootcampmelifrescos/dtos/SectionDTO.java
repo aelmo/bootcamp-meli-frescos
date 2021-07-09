@@ -16,7 +16,7 @@ public class SectionDTO {
     @NotNull(message = "The section can't be empty")
     private Long sectionCode;
 
-    @Positive
-    @NotBlank(message = "The warehouse code can't be empty")
+    @Positive(message = "The warehouse code must be a positive number")
+    @NotNull(message = "The warehouse code can't be empty")
     private Long warehouseCode;
 }

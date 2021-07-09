@@ -1,7 +1,7 @@
 package com.mercadolibre.bootcampmelifrescos.controller;
 
-import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderDTO;
-import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseAmountDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderRequest;
+import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseAmountResponse;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseOrderProductsResponse;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
 import com.mercadolibre.bootcampmelifrescos.service.PurchaseOrderService;
@@ -29,8 +29,8 @@ public class PurchaseOrderController {
             @ApiResponse(code = 400, message = "Bad request")
     })
     @PostMapping("/orders/")
-    public ResponseEntity insertNewPurchaseOrder(@Valid @RequestBody PurchaseOrderDTO purchaseOrderDTO) throws ApiException {
-        return new ResponseEntity(purchaseOrderService.getAmountOfAnPurchaseOrder(purchaseOrderService.createPurchaseOrder(purchaseOrderDTO)), HttpStatus.CREATED);
+    public ResponseEntity insertNewPurchaseOrder(@Valid @RequestBody PurchaseOrderRequest purchaseOrderRequest) throws ApiException {
+        return new ResponseEntity(purchaseOrderService.getAmountOfAnPurchaseOrder(purchaseOrderService.createPurchaseOrder(purchaseOrderRequest)), HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Update a purchase order")
@@ -39,11 +39,11 @@ public class PurchaseOrderController {
             @ApiResponse(code = 400, message = "Bad request")
     })
     @PutMapping("/orders/")
-    public ResponseEntity<PurchaseAmountDTO> updatePurchaseOrder(@Valid @RequestBody PurchaseOrderDTO purchaseOrderDTO,
-                                                             @RequestParam(name = "idOrder",
+    public ResponseEntity<PurchaseAmountResponse> updatePurchaseOrder(@Valid @RequestBody PurchaseOrderRequest purchaseOrderRequest,
+                                                                      @RequestParam(name = "idOrder",
                                                                          defaultValue = "")
                                                                          Long idOrder) throws Exception {
-        return new ResponseEntity<>(purchaseOrderService.updatePurchaseOrder(purchaseOrderDTO, idOrder), HttpStatus.OK);
+        return new ResponseEntity<>(purchaseOrderService.updatePurchaseOrder(purchaseOrderRequest, idOrder), HttpStatus.OK);
     }
 
     @GetMapping("/orders")

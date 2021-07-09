@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
@@ -14,18 +13,18 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PurchaseOrderDTO {
+public class PurchaseOrderRequest {
 
-    @NotBlank(message = "The purchase date cannot be null")
+    @NotNull(message = "The purchase date cannot be null")
     private LocalDate date;
 
-    @NotBlank(message = "The buyer id cannot be null")
-    @Positive
+    @NotNull(message = "The buyer id cannot be null")
+    @Positive(message = "The buyer id must be a positive number")
     private Long buyerId;
 
     @Valid
-    private PurchaseOrderStatusDTO orderStatus;
+    private PurchaseOrderStatusRequest orderStatus;
 
     @Valid
-    private Set<PurchaseRequestProductsDTO> products;
+    private Set<PurchaseRequestProductsRequest> products;
 }
