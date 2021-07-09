@@ -3,6 +3,7 @@ package com.mercadolibre.bootcampmelifrescos.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -12,6 +13,7 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "users")
 public class Role {
 
     @Id
