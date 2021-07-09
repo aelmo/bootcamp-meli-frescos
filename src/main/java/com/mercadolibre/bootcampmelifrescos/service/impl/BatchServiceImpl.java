@@ -28,6 +28,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Service
 public class BatchServiceImpl implements BatchService {
+
     private final BatchRepository batchRepository;
     private final CategoryRepository categoryRepository;
     private final Validator validator;
@@ -54,7 +55,7 @@ public class BatchServiceImpl implements BatchService {
     private BatchStockResponse buildBatchStockResponse(List<Batch> batches) {
         List<BatchWithDueDateResponse> batchResponseList =  new ArrayList<>();
 
-        for(Batch batch : batches) {
+        for (Batch batch : batches) {
             batchResponseList.add(new BatchWithDueDateResponse(batch));
         }
 
@@ -64,7 +65,7 @@ public class BatchServiceImpl implements BatchService {
     public ProductBatchResponse getAllBatches(Long productId, String orderParam) throws ApiException {
         List<Batch> batches = batchRepository.findAllByProductId(productId);
 
-        if(batches.isEmpty()) {
+        if (batches.isEmpty()) {
             throw new NotFoundApiException("No batches found for product with id: " + productId);
         }
 
@@ -76,8 +77,8 @@ public class BatchServiceImpl implements BatchService {
 
     private List<BatchResponse> getOrderedBatchResponseList(List<Batch> batches, String orderParam) {
         List<BatchResponse> batchResponseList =  new ArrayList<>();
-        for(Batch batch : batches) {
-            if(validator.hasDueDateEqualOrGreaterThanThreeWeeks(batch)) {
+        for (Batch batch : batches) {
+            if (validator.hasDueDateEqualOrGreaterThanThreeWeeks(batch)) {
                 batchResponseList.add(new BatchResponse(batch));
             }
         }

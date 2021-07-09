@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BatchRepository extends JpaRepository<Batch,Long> {
+
     List<Batch> findAllByProductId(Long productId);
 
     @Query(value = "SELECT * FROM batch WHERE batch.product_id = :product_id AND batch.current_quantity > 0 ORDER BY batch.current_quantity DESC LIMIT 1", nativeQuery = true)

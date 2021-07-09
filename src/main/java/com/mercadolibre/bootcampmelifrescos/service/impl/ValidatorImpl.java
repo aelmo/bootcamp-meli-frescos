@@ -19,13 +19,14 @@ import java.util.Set;
 @Service
 @AllArgsConstructor
 public class ValidatorImpl implements Validator {
+
     private WarehouseRepository warehouseRepository;
 
     @Override
     public void validateCategorySection(Section section, Set<Batch> batchSet) throws ApiException {
-        for (Batch batch : batchSet){
+        for (Batch batch : batchSet) {
             Product product = batch.getProduct();
-            if(product.getCategory().getCode() != section.getCategory().getCode())
+            if (product.getCategory().getCode() != section.getCategory().getCode())
                 throw new BadRequestApiException("Product with id: " + product.getId() + " is in an incompatible section");
         }
     }
@@ -41,8 +42,7 @@ public class ValidatorImpl implements Validator {
                 () -> new NotFoundApiException("Warehouse with id " + warehouseId + " not found")
         );
 
-        if(!warehouse.getSections().contains(section))
+        if (!warehouse.getSections().contains(section))
             throw new BadRequestApiException("Section " + sectionId + " don't belong to warehouse " + warehouseId);
     }
-
 }

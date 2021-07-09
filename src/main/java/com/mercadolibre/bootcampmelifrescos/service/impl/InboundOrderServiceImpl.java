@@ -38,7 +38,7 @@ public class InboundOrderServiceImpl implements InboundOrderService{
 
     @Override
     public InboundOrderResponse updateInboundOrder(InboundOrderDTO inboundOrderDTO) throws ApiException {
-        if(inboundOrderRepository.findById(inboundOrderDTO.getOrderNumber()).isEmpty()){
+        if (inboundOrderRepository.findById(inboundOrderDTO.getOrderNumber()).isEmpty()) {
             throw new NotFoundApiException("Inbound order with order number: " + inboundOrderDTO.getOrderNumber() + " not found to update");
         }
 

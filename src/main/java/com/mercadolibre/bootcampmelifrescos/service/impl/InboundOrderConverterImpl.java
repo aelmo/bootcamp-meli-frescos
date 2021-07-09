@@ -23,6 +23,7 @@ import java.util.Set;
 @Service
 @AllArgsConstructor
 public class InboundOrderConverterImpl implements InboundOrderConverter {
+
     private SectionRepository sectionRepository;
     private ProductRepository productRepository;
     private WarehouseRepository warehouseRepository;
