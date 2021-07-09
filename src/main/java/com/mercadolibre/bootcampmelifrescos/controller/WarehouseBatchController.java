@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/fresh-products/warehouse")
 @AllArgsConstructor
 public class WarehouseBatchController {
+
     private final WarehouseBatchService warehouseBatchService;
 
     @GetMapping("/{productId}")

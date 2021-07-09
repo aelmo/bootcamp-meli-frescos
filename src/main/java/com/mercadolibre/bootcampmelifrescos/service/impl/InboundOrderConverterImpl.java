@@ -38,7 +38,7 @@ public class InboundOrderConverterImpl implements InboundOrderConverter {
         User user = userRepository.findByUserName(userDetails.getUsername());
 
         Section section = sectionRepository.findById(sectionId).orElseThrow(
-                () -> new NotFoundApiException("Section with id: " + sectionId + " not found")
+                () -> new NotFoundApiException("Section with id " + sectionId + " not found")
         );
 
         validator.validateWarehouseSection(sectionId, warehouseId, section);
