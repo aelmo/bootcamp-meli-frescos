@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BatchResponse {
+
     private Long batchNumber;
     private int currentQuantity;
     private LocalDate dueDate;

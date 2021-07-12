@@ -6,6 +6,7 @@ import com.mercadolibre.bootcampmelifrescos.dtos.response.BatchStockResponse;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.BatchWithDueDateResponse;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.ProductBatchResponse;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.BadRequestApiException;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Batch;
 
@@ -28,6 +29,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Service
 public class BatchServiceImpl implements BatchService {
+
     private final BatchRepository batchRepository;
     private final CategoryRepository categoryRepository;
     private final Validator validator;
@@ -37,6 +39,9 @@ public class BatchServiceImpl implements BatchService {
             String categoryCode,
             String orderByDate
     ) throws ApiException {
+        if (days<0)
+            throw new BadRequestApiException("You have to insert a positive number of days");
+
         LocalDate date = LocalDate.now().plusDays(days);
         Optional<Category> category = categoryRepository.findByCode(categoryCode);
         Sort sortByDueDate = orderByDate.equalsIgnoreCase("asc") ?
@@ -54,7 +59,7 @@ public class BatchServiceImpl implements BatchService {
     private BatchStockResponse buildBatchStockResponse(List<Batch> batches) {
         List<BatchWithDueDateResponse> batchResponseList =  new ArrayList<>();
 
-        for(Batch batch : batches) {
+        for (Batch batch : batches) {
             batchResponseList.add(new BatchWithDueDateResponse(batch));
         }
 
@@ -64,7 +69,7 @@ public class BatchServiceImpl implements BatchService {
     public ProductBatchResponse getAllBatches(Long productId, String orderParam) throws ApiException {
         List<Batch> batches = batchRepository.findAllByProductId(productId);
 
-        if(batches.isEmpty()) {
+        if (batches.isEmpty()) {
             throw new NotFoundApiException("No batches found for product with id: " + productId);
         }
 
@@ -76,8 +81,8 @@ public class BatchServiceImpl implements BatchService {
 
     private List<BatchResponse> getOrderedBatchResponseList(List<Batch> batches, String orderParam) {
         List<BatchResponse> batchResponseList =  new ArrayList<>();
-        for(Batch batch : batches) {
-            if(validator.hasDueDateEqualOrGreaterThanThreeWeeks(batch)) {
+        for (Batch batch : batches) {
+            if (validator.hasDueDateEqualOrGreaterThanThreeWeeks(batch)) {
                 batchResponseList.add(new BatchResponse(batch));
             }
         }

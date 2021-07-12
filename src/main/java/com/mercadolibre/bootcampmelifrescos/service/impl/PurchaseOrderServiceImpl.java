@@ -1,14 +1,16 @@
 package com.mercadolibre.bootcampmelifrescos.service.impl;
 
-import com.mercadolibre.bootcampmelifrescos.dtos.ProductDTO;
-import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderDTO;
-import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseRequestProductsDTO;
-import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseAmountDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderRequest;
+import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseRequestProductsRequest;
+import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseAmountResponse;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseOrderProductsResponse;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
+import com.mercadolibre.bootcampmelifrescos.exceptions.api.BadRequestApiException;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.*;
 import com.mercadolibre.bootcampmelifrescos.repository.*;
 import com.mercadolibre.bootcampmelifrescos.service.PurchaseOrderService;
+import com.mercadolibre.bootcampmelifrescos.service.Validator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,56 +22,70 @@ import java.util.Set;
 @Service
 @AllArgsConstructor
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
+
     private final PurchaseOrderRepository purchaseOrderRepository;
     private final PurchaseStatusesRepository purchaseStatusesRepository;
     private final ProductRepository productRepository;
     private final BatchRepository batchRepository;
     private final BuyerRepository buyerRepository;
     private final PurchaseProductsRepository purchaseProductsRepository;
+    private final Validator validator;
 
 
     @Override
-    public PurchaseAmountDTO updatePurchaseOrder(PurchaseOrderDTO purchaseOrderDTO, Long orderId) throws Exception {
+    public PurchaseAmountResponse updatePurchaseOrder(PurchaseOrderRequest purchaseOrderRequest, Long orderId) throws ApiException {
         if (purchaseOrderRepository.findById(orderId).isEmpty())
-            throw new Exception("Purchase order not found");
-        PurchaseOrder purchaseOrder = purchaseOrderRepository.findById(orderId).get();
+            throw new NotFoundApiException("Purchase order not found");
+        PurchaseOrder purchaseOrder = purchaseOrderRepository.findById(orderId).orElseThrow(
+                () -> new NotFoundApiException("Purchase order not found")
+        );
         List<PurchaseOrderProducts> purchaseOrderProducts = purchaseProductsRepository.findAllByPurchaseOrder(purchaseOrder);
 
         for (PurchaseOrderProducts purchaseOrderProducts1: purchaseOrderProducts) {
-            if(batchRepository.findById(purchaseOrderProducts1.getBatchId()).isEmpty()){
-                throw new Exception("Batch not found");
+            if (batchRepository.findById(purchaseOrderProducts1.getBatchId()).isEmpty()) {
+                throw new NotFoundApiException("Batch not found");
             }
-            Batch batch = batchRepository.findById(purchaseOrderProducts1.getBatchId()).get();
+            Batch batch = batchRepository.findById(purchaseOrderProducts1.getBatchId()).orElseThrow(
+                    () -> new NotFoundApiException("Batch not found")
+            );
             batch.setCurrentQuantity(batch.getLastQuantity());
             batchRepository.save(batch);
         }
 
         purchaseProductsRepository.deleteAll(purchaseOrderProducts);
 
-        createPurchaseOrderProductsSet(purchaseOrder, purchaseOrderDTO.getProducts());
+        createPurchaseOrderProductsSet(purchaseOrder, purchaseOrderRequest.getProducts());
 
-        purchaseOrder.setDate(purchaseOrderDTO.getDate());
-        purchaseOrder.setStatus(purchaseStatusesRepository.findById(purchaseOrderDTO.getOrderStatus().getStatusCode()).get());
-        purchaseOrder.setBuyer(buyerRepository.findById(purchaseOrderDTO.getBuyerId()).get());
+        purchaseOrder.setDate(purchaseOrderRequest.getDate());
+        purchaseOrder.setStatus(purchaseStatusesRepository.findById(purchaseOrderRequest.getOrderStatus().getStatusCode()).orElseThrow(
+                () -> new NotFoundApiException("Status not found")
+        ));
+        purchaseOrder.setBuyer(buyerRepository.findById(purchaseOrderRequest.getBuyerId()).orElseThrow(
+                () -> new NotFoundApiException("Buyer not found")
+        ));
 
         return getAmountOfAnPurchaseOrder(purchaseOrderRepository.save(purchaseOrder));
     }
 
     @Override
-    public PurchaseOrder createPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) throws Exception{
+    public PurchaseOrder createPurchaseOrder(PurchaseOrderRequest purchaseOrderRequest) throws ApiException{
         PurchaseOrder purchaseOrderToSave = new PurchaseOrder();
 
         purchaseOrderToSave = purchaseOrderRepository.save(purchaseOrderToSave);
-        purchaseOrderToSave.setPurchaseOrderProducts(createPurchaseOrderProductsSet(purchaseOrderToSave, purchaseOrderDTO.getProducts()));
-        purchaseOrderToSave.setDate(purchaseOrderDTO.getDate());
-        purchaseOrderToSave.setStatus(purchaseStatusesRepository.findById(purchaseOrderDTO.getOrderStatus().getStatusCode()).orElseThrow());
-        purchaseOrderToSave.setBuyer(buyerRepository.findById((purchaseOrderDTO.getBuyerId())).orElseThrow());
+        purchaseOrderToSave.setPurchaseOrderProducts(createPurchaseOrderProductsSet(purchaseOrderToSave, purchaseOrderRequest.getProducts()));
+        purchaseOrderToSave.setDate(purchaseOrderRequest.getDate());
+        purchaseOrderToSave.setStatus(purchaseStatusesRepository.findById(purchaseOrderRequest.getOrderStatus().getStatusCode()).orElseThrow(
+                () -> new NotFoundApiException("Status not found")
+        ));
+        purchaseOrderToSave.setBuyer(buyerRepository.findById((purchaseOrderRequest.getBuyerId())).orElseThrow(
+                () -> new NotFoundApiException("Buyer not found")
+        ));
 
         return purchaseOrderRepository.save(purchaseOrderToSave);
     }
 
     @Override
-    public PurchaseAmountDTO getAmountOfAnPurchaseOrder(PurchaseOrder purchaseOrder) {
+    public PurchaseAmountResponse getAmountOfAnPurchaseOrder(PurchaseOrder purchaseOrder) {
         List<PurchaseOrderProducts> purchaseOrderProducts =  purchaseProductsRepository.findAllByPurchaseOrder(purchaseOrder);
         Double totalAmount = 0.0;
 
@@ -77,7 +93,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             totalAmount = totalAmount + purchaseOrderProduct.getProduct().getAmount() * purchaseOrderProduct.getQuantity();
         }
 
-        return new PurchaseAmountDTO(totalAmount);
+        return new PurchaseAmountResponse(totalAmount);
     }
 
     @Override
@@ -94,21 +110,22 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     private List<PurchaseOrderProductsResponse> createPurchaseOrderProductsResponseList(List<PurchaseOrderProducts> purchaseOrderProductsList) {
         List<PurchaseOrderProductsResponse> productsResponse = new ArrayList<>();
-        for(PurchaseOrderProducts elem: purchaseOrderProductsList){
+        for (PurchaseOrderProducts elem: purchaseOrderProductsList) {
             Product product = elem.getProduct();
             productsResponse.add(new PurchaseOrderProductsResponse(product,elem));
         }
         return productsResponse;
     }
 
-    public Set<PurchaseOrderProducts> createPurchaseOrderProductsSet(PurchaseOrder purchaseOrder, Set<PurchaseRequestProductsDTO> requestProductsDTO) throws Exception {
+    public Set<PurchaseOrderProducts> createPurchaseOrderProductsSet(PurchaseOrder purchaseOrder, Set<PurchaseRequestProductsRequest> requestProductsDTO) throws ApiException {
         Set<PurchaseOrderProducts> purchaseOrderProductsSet = new HashSet<>();
 
-        for(PurchaseRequestProductsDTO product: requestProductsDTO) {
-
+        for (PurchaseRequestProductsRequest product: requestProductsDTO) {
             PurchaseOrderProducts purchaseOrderProducts = new PurchaseOrderProducts();
             purchaseOrderProducts.setPurchaseOrder(purchaseOrder);
-            purchaseOrderProducts.setProduct(productRepository.findById(product.getProductId()).orElseThrow());
+            purchaseOrderProducts.setProduct(productRepository.findById(product.getProductId()).orElseThrow(
+                    () -> new NotFoundApiException("Product not found")
+            ));
             purchaseOrderProducts.setQuantity(product.getQuantity());
             purchaseOrderProducts.setBatchId(updateProductQuantityFromBatch(product.getProductId(), product.getQuantity()));
             purchaseOrderProductsSet.add(purchaseProductsRepository.save(purchaseOrderProducts));
@@ -117,24 +134,21 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         return purchaseOrderProductsSet;
     }
 
-    public Long updateProductQuantityFromBatch(Long productId, Integer quantity) throws Exception {
-        try {
-            Batch batch = batchRepository.getBatchByProductId(productId);
+    public Long updateProductQuantityFromBatch(Long productId, Integer quantity) throws BadRequestApiException {
 
-            if (quantity > batch.getCurrentQuantity()) {
-                throw new Exception();
-            }
+        Batch batch = batchRepository.getBatchByProductId(productId);
 
-            batch.setLastQuantity(batch.getCurrentQuantity());
-            batch.setCurrentQuantity(batch.getCurrentQuantity() - quantity);
+        if (!validator.hasDueDateEqualOrGreaterThanThreeWeeks(batch))
+            throw new BadRequestApiException("Product due date less than three weeks");
 
-            batchRepository.save(batch);
+        if (quantity > batch.getCurrentQuantity())
+            throw new BadRequestApiException("No products left");
 
-            return batch.getId();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
+        batch.setLastQuantity(batch.getCurrentQuantity());
+        batch.setCurrentQuantity(batch.getCurrentQuantity() - quantity);
 
+        batchRepository.save(batch);
+
+        return batch.getId();
     }
 }

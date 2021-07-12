@@ -16,13 +16,14 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 public class ProductServiceImpl implements ProductService {
+
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
 
     public List<ProductDTO> getAllProducts() throws ApiException {
         List<Product> products = productRepository.findAll();
 
-        if(products.isEmpty())
+        if (products.isEmpty())
             throw new NotFoundApiException("There is no products available");
 
         List<ProductDTO> productsResponseList = convertProductListToResponseList(products);
@@ -37,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
 
         List<Product> products = productRepository.findAllByCategoryCode(categoryCode);
 
-        if(products.isEmpty())
+        if (products.isEmpty())
             throw new NotFoundApiException("There is no products available to this category");
 
         List<ProductDTO> productResponseList = convertProductListToResponseList(products);
@@ -48,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
     private List<ProductDTO> convertProductListToResponseList(List<Product> productList) {
         List<ProductDTO> productsResponseList = new ArrayList<>();
 
-        for(Product product : productList){
+        for (Product product : productList) {
             productsResponseList.add(new ProductDTO(product));
         }
         return productsResponseList;
