@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class GetDashBoardDTO {
 
+
     @NotNull(message="The start date cannot be null")
     private LocalDate startDate;
 
