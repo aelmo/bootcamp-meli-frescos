@@ -1661,7 +1661,7 @@
 									"basic": [
 										{
 											"key": "username",
-											"value": "agentuser",
+											"value": "buyeruser",
 											"type": "string"
 										},
 										{
@@ -1699,7 +1699,7 @@
 									"basic": [
 										{
 											"key": "username",
-											"value": "buyeruser",
+											"value": "agentuser",
 											"type": "string"
 										},
 										{
