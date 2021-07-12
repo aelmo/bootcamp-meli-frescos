@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0ab17d23-ee22-48c6-8ded-9e5e0214a60c",
+		"_postman_id": "7440f6a3-fa32-4f85-a725-5229e5857ed2",
 		"name": "MELI - Frescos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -558,7 +558,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/fresh-products/list?category=rf",
+									"raw": "http://localhost:8080/api/v1/fresh-products/amount?order=asc",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -568,12 +568,12 @@
 										"api",
 										"v1",
 										"fresh-products",
-										"list"
+										"amount"
 									],
 									"query": [
 										{
-											"key": "category",
-											"value": "rf"
+											"key": "order",
+											"value": "asc"
 										}
 									]
 								}
@@ -601,7 +601,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/fresh-products/list?category=rf",
+									"raw": "http://localhost:8080/api/v1/fresh-products/amount?order=desc",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -611,12 +611,12 @@
 										"api",
 										"v1",
 										"fresh-products",
-										"list"
+										"amount"
 									],
 									"query": [
 										{
-											"key": "category",
-											"value": "rf"
+											"key": "order",
+											"value": "desc"
 										}
 									]
 								}
@@ -644,7 +644,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/fresh-products/",
+									"raw": "http://localhost:8080/api/v1/fresh-products/list/amount?category=rf&order=asc",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -654,7 +654,18 @@
 										"api",
 										"v1",
 										"fresh-products",
-										""
+										"list",
+										"amount"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "rf"
+										},
+										{
+											"key": "order",
+											"value": "asc"
+										}
 									]
 								}
 							},
@@ -681,7 +692,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/fresh-products/",
+									"raw": "http://localhost:8080/api/v1/fresh-products/list/amount?category=rf&order=desc",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -691,7 +702,18 @@
 										"api",
 										"v1",
 										"fresh-products",
-										""
+										"list",
+										"amount"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "rf"
+										},
+										{
+											"key": "order",
+											"value": "desc"
+										}
 									]
 								}
 							},
@@ -1654,44 +1676,6 @@
 					"name": "US06",
 					"item": [
 						{
-							"name": "Verify if category exists",
-							"request": {
-								"auth": {
-									"type": "basic",
-									"basic": [
-										{
-											"key": "username",
-											"value": "buyeruser",
-											"type": "string"
-										},
-										{
-											"key": "password",
-											"value": "12345678",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/api/v1/fresh-products/warehouse/200",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"v1",
-										"fresh-products",
-										"warehouse",
-										"200"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "Auth user",
 							"request": {
 								"auth": {
@@ -1712,7 +1696,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8080/api/v1/fresh-products/warehouse/2",
+									"raw": "http://localhost:8080/api/v1/fresh-products/list/amount?category=rf&order=asc",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1722,8 +1706,66 @@
 										"api",
 										"v1",
 										"fresh-products",
-										"warehouse",
-										"2"
+										"list",
+										"amount"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "rf"
+										},
+										{
+											"key": "order",
+											"value": "asc"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify if category exists",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "buyeruser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/list/amount?category=dshgf&order=asc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"list",
+										"amount"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "dshgf"
+										},
+										{
+											"key": "order",
+											"value": "asc"
+										}
 									]
 								}
 							},
