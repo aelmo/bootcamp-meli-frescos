@@ -48,9 +48,9 @@ VALUES ("2021-07-01", 1, 2),
 
 INSERT INTO product (name, seller_id, category_id, amount)
 VALUES ("Banana", 2, 1, 10),
-       ("Apple", 3, 2, 10),
-       ("Potato", 1, 3, 10),
-       ("Strawberry",1,2,10);
+       ("Apple", 3, 2, 8),
+       ("Potato", 1, 3, 9),
+       ("Strawberry",1,2,6);
 
 INSERT INTO purchase_statuses (title)
 VALUES ('Paid');
