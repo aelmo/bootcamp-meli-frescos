@@ -1,5 +1,8 @@
 # Change Log
 
+### [0.6.0-aelmo] - 12/07/2021
+- [@aelmo] Finaliza US06 - Products By Seller
+
 ### [0.5.1] - 09/07/2021
 - [@squad2] Adds auth
 

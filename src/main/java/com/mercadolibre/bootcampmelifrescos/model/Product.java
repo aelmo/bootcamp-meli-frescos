@@ -36,7 +36,6 @@ public class Product {
     @OneToMany(mappedBy = "id")
     private Set<PurchaseOrderProducts> purchaseOrderProducts;
 
-
     public Product(long id, String name, Seller seller, Category category) {
         this.id = id;
         this.name =name;

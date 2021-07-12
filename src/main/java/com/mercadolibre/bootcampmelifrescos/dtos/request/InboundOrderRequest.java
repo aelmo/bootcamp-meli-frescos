@@ -23,12 +23,4 @@ public class InboundOrderRequest {
     public List<BatchDTO> getBatchDTOList(){
         return inboundOrder.getBatchStock();
     }
-
-    public LocalDate getOrderDate(){
-        return inboundOrder.getOrderDate();
-    }
-
-    public SectionDTO getSectionOrder(){
-        return inboundOrder.getSection();
-    }
 }

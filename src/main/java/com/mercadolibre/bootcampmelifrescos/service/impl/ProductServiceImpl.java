@@ -6,6 +6,7 @@ import com.mercadolibre.bootcampmelifrescos.exceptions.api.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Product;
 import com.mercadolibre.bootcampmelifrescos.repository.CategoryRepository;
 import com.mercadolibre.bootcampmelifrescos.repository.ProductRepository;
+import com.mercadolibre.bootcampmelifrescos.repository.SellerRepository;
 import com.mercadolibre.bootcampmelifrescos.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final SellerRepository sellerRepository;
 
     public List<ProductDTO> getAllProducts() throws ApiException {
         List<Product> products = productRepository.findAll();
@@ -41,9 +43,21 @@ public class ProductServiceImpl implements ProductService {
         if (products.isEmpty())
             throw new NotFoundApiException("There is no products available to this category");
 
-        List<ProductDTO> productResponseList = convertProductListToResponseList(products);
+        return convertProductListToResponseList(products);
+    }
 
-        return productResponseList;
+    @Override
+    public List<ProductDTO> getProductsBySeller(final Long sellerId) throws ApiException {
+        sellerRepository.findById(sellerId).orElseThrow(
+                () -> new NotFoundApiException("Seller " + sellerId + " not found.")
+        );
+
+        List<Product> products = productRepository.findAllBySeller(sellerRepository.getById(sellerId));
+
+        if (products.isEmpty())
+            throw new NotFoundApiException("There are no products for this seller.");
+
+        return convertProductListToResponseList(products);
     }
 
     private List<ProductDTO> convertProductListToResponseList(List<Product> productList) {

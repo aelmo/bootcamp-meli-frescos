@@ -32,6 +32,13 @@ public class ProductController {
         return new ResponseEntity<>(productService.getProductsByCategory(categoryCode), HttpStatus.OK);
     }
 
+    @GetMapping("/list/seller")
+    @PreAuthorize("hasRole('ROLE_BUYER')")
+    public ResponseEntity<List<ProductDTO>> getProductsBySeller(@RequestParam(name = "sellerId") Long sellerId) throws ApiException {
+        return new ResponseEntity<>(productService.getProductsBySeller(sellerId), HttpStatus.OK);
+    }
+
+
     @GetMapping("/list/batches")
     @PreAuthorize("hasRole('ROLE_AGENT')")
     public ResponseEntity getProductsBatch(@RequestParam Long productId, @RequestParam(required = false) String orderParam) throws ApiException {

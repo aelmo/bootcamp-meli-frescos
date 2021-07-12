@@ -38,7 +38,7 @@ public class SwaggerConfig {
                 .groupName("rest-meliFrescos-api-1.0")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.mercadolibre.bootcampmelifrescos.controller"))
-                .paths(PathSelectors.ant("/v1/**"))
+                .paths(PathSelectors.ant("/api/v1/**"))
                 .build()
                 .apiInfo(this.infoApi().build())
                 .useDefaultResponseMessages(false);

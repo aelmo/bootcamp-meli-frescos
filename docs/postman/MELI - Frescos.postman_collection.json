@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "25636a85-ab81-4f4c-a88f-4c6b0c099d73",
+		"_postman_id": "55fe5153-f1a3-4445-89ee-75171bf9f04d",
 		"name": "MELI - Frescos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -526,6 +526,55 @@
 										{
 											"key": "category",
 											"value": "FZ"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "US06",
+					"item": [
+						{
+							"name": "Products - Get Products By Seller",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "buyeruser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/list/seller?sellerId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"list",
+										"seller"
+									],
+									"query": [
+										{
+											"key": "sellerId",
+											"value": "1"
 										}
 									]
 								}
@@ -1477,6 +1526,55 @@
 										{
 											"key": "category",
 											"value": "FZ"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "US06",
+					"item": [
+						{
+							"name": "Products - Get Products By Seller (Invalid Seller)",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "buyeruser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/list/seller?sellerId=100",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"list",
+										"seller"
+									],
+									"query": [
+										{
+											"key": "sellerId",
+											"value": "100"
 										}
 									]
 								}
