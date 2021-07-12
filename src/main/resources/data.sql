@@ -85,3 +85,13 @@ VALUES (18.0,8.5,10,8,8,"2021-06-27","2021-06-27 5:00:00","2021-06-30",2, 2),
        (18.0,8.5,10,18, 18,"2021-06-27","2021-06-27 1:00:00","2021-08-30",2, 1),
        (20.2,10.2,10,28,28,"2021-06-25","2021-06-25 16:00:00","2021-09-02",1, 1),
        (20.2,10.2,10,28,28,"2021-06-25","2021-06-25 16:00:00","2021-01-02",1, 4);
+
+INSERT INTO meli_fresh_products.purchase_order (id, date, buyer_id, status_id) VALUES (1, '2021-01-01', 1, 1);
+INSERT INTO meli_fresh_products.purchase_order (id, date, buyer_id, status_id) VALUES (2, '2021-01-01', 1, 1);
+
+INSERT INTO meli_fresh_products.purchase_products (id, batch_id, quantity, product_id, purchase_order_id) VALUES (1, 15, 1, 1, 1);
+INSERT INTO meli_fresh_products.purchase_products (id, batch_id, quantity, product_id, purchase_order_id) VALUES (2, 3, 10, 2, 1);
+INSERT INTO meli_fresh_products.purchase_products (id, batch_id, quantity, product_id, purchase_order_id) VALUES (3, 9, 20, 3, 1);
+INSERT INTO meli_fresh_products.purchase_products (id, batch_id, quantity, product_id, purchase_order_id) VALUES (4, 21, 1, 1, 2);
+INSERT INTO meli_fresh_products.purchase_products (id, batch_id, quantity, product_id, purchase_order_id) VALUES (5, 6, 15, 2, 2);
+INSERT INTO meli_fresh_products.purchase_products (id, batch_id, quantity, product_id, purchase_order_id) VALUES (6, 18, 20, 3, 2);
