@@ -4,7 +4,13 @@ import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderRequest;
 import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderStatusRequest;
 import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseRequestProductsRequest;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseAmountResponse;
-
+import com.mercadolibre.bootcampmelifrescos.dtos.request.GetDashBoardDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderStatusDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseRequestProductsDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.response.DashboardDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.response.MostSoldProduct;
+import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseAmountDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.PurchaseOrderProductsResponse;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.NotFoundApiException;

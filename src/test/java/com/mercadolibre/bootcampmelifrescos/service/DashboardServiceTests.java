@@ -1,6 +1,7 @@
 package com.mercadolibre.bootcampmelifrescos.service;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.request.GetDashBoardDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.DashboardDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.response.MostSoldProduct;
 import com.mercadolibre.bootcampmelifrescos.model.Buyer;
