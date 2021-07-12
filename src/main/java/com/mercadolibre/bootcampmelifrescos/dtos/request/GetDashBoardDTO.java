@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
@@ -12,8 +13,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class GetDashBoardDTO {
 
-    @NotBlank(message="The start date cannot be null")
+    @NotNull(message="The start date cannot be null")
     private LocalDate startDate;
 
+    @NotNull(message="The end date cannot be null")
     private LocalDate endDate;
 }

@@ -55,6 +55,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public MostSoldProduct getMostSoldProduct(LocalDate startDate, LocalDate endDate) throws Exception {
         Map<String, Integer> mostSoldProduct = purchaseProductsRepository.getMostSoldProductIdAndQuantity(startDate, endDate);
+        if(mostSoldProduct.isEmpty()) {
+            throw new Exception("Nenhum produto vendido");
+        }
         MostSoldProduct response = new MostSoldProduct();
         Product product = productRepository.findById(Long.parseLong(String.valueOf(mostSoldProduct.get("productId")))).orElseThrow(() -> new Exception("Product not founded"));
 

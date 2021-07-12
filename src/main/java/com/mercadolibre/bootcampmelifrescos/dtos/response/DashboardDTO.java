@@ -1,6 +1,5 @@
 package com.mercadolibre.bootcampmelifrescos.dtos.response;
 
-import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderDTO;
 import com.mercadolibre.bootcampmelifrescos.model.Buyer;
 import com.mercadolibre.bootcampmelifrescos.model.PurchaseOrder;
 import lombok.AllArgsConstructor;
