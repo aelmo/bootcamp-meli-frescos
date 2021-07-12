@@ -1,5 +1,6 @@
 package com.mercadolibre.bootcampmelifrescos.service.impl;
 
+import com.mercadolibre.bootcampmelifrescos.dtos.BestSellerDTO;
 import com.mercadolibre.bootcampmelifrescos.dtos.ProductDTO;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.NotFoundApiException;
@@ -44,6 +45,10 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDTO> productResponseList = convertProductListToResponseList(products);
 
         return productResponseList;
+    }
+
+    public List<BestSellerDTO> getBestSellers(int numberOfProducts) {
+        return productRepository.findBestSellers(numberOfProducts);
     }
 
     private List<ProductDTO> convertProductListToResponseList(List<Product> productList) {

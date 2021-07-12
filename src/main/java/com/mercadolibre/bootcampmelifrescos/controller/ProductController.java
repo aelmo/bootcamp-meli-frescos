@@ -47,4 +47,12 @@ public class ProductController {
     ) throws ApiException {
         return new ResponseEntity<>(batchService.getByDaysBeforeDueDateAndCategory(days, category, orderByDueDate), HttpStatus.OK);
     }
+
+    @GetMapping("/best-sellers")
+    @PreAuthorize("hasRole('ROLE_AGENT')")
+    public ResponseEntity getBestSellers(
+            @RequestParam(required = false, defaultValue = "3") int numberOfProducts
+    ) throws ApiException {
+        return new ResponseEntity<>(productService.getBestSellers(numberOfProducts), HttpStatus.OK);
+    }
 }
