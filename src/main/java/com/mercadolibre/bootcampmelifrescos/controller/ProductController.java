@@ -1,7 +1,10 @@
 package com.mercadolibre.bootcampmelifrescos.controller;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.ProductDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.response.TopProductResponse;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
+import com.mercadolibre.bootcampmelifrescos.model.Product;
+import com.mercadolibre.bootcampmelifrescos.model.PurchaseOrderProducts;
 import com.mercadolibre.bootcampmelifrescos.service.BatchService;
 import com.mercadolibre.bootcampmelifrescos.service.ProductService;
 import lombok.AllArgsConstructor;
@@ -46,5 +49,11 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "asc") String orderByDueDate
     ) throws ApiException {
         return new ResponseEntity<>(batchService.getByDaysBeforeDueDateAndCategory(days, category, orderByDueDate), HttpStatus.OK);
+    }
+
+    @GetMapping("/top")
+    @PreAuthorize("hasRole('ROLE_AGENT')")
+    public ResponseEntity<List<TopProductResponse>> getProductsBatch(@RequestParam int topQuantity) throws ApiException {
+        return new ResponseEntity<>(productService.getTopProducts(topQuantity), HttpStatus.OK);
     }
 }
