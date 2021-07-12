@@ -1,6 +1,7 @@
 package com.mercadolibre.bootcampmelifrescos.service;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.ProductDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.response.TopProductResponse;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Product;
 import org.springframework.http.ResponseEntity;
@@ -12,4 +13,6 @@ public interface ProductService {
     List<ProductDTO> getAllProducts() throws ApiException;
 
     List<ProductDTO> getProductsByCategory(String categoryCode) throws ApiException;
+
+    List<TopProductResponse> getTopProducts(int topQuantity) throws ApiException;
 }

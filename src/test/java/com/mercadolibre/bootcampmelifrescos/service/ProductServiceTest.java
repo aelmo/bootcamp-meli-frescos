@@ -1,6 +1,7 @@
 package com.mercadolibre.bootcampmelifrescos.service;
 
 import com.mercadolibre.bootcampmelifrescos.dtos.ProductDTO;
+import com.mercadolibre.bootcampmelifrescos.dtos.response.TopProductResponse;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.ApiException;
 import com.mercadolibre.bootcampmelifrescos.exceptions.api.NotFoundApiException;
 import com.mercadolibre.bootcampmelifrescos.model.Category;
@@ -86,6 +87,29 @@ public class ProductServiceTest {
     void shouldThrowExceptionWhenCategoryNotFound(){
         when(categoryRepository.findByCode("FRD")).thenReturn(empty());
         assertThrows(NotFoundApiException.class,()-> productService.getProductsByCategory("FRD"));
+    }
+
+    @Test
+    void shouldReturnTop2Products() throws ApiException {
+
+        //given
+        TopProductResponse expectedFirstProduct = new TopProductResponse("Uva",5l);
+        TopProductResponse expectedSecondProduct = new TopProductResponse("Pessego",10l);
+
+        //act
+        when(productRepository.findTopByQuantitySold()).thenReturn(List.of(expectedFirstProduct,expectedSecondProduct));
+        List<TopProductResponse> result = productService.getTopProducts(2);
+
+        //assert
+        assertThat(result).contains(expectedFirstProduct);
+        assertThat(result).contains(expectedSecondProduct);
+        assertThat(result.size()).isEqualTo(2);
+    }
+
+    @Test
+    void shouldThrowNotFoundExceptionWhenThereIsNoProductsSold(){
+        when(productRepository.findTopByQuantitySold()).thenReturn(List.of());
+        assertThrows(NotFoundApiException.class,()->productService.getTopProducts(2));
     }
 
     private List<Product> createListOfProducts(){
