@@ -166,6 +166,7 @@ public class PurchaseOrderServiceTest {
 
     }
 
+
     @Test
     public void shouldReturnAPurchaseOrderTotalPrice() throws Exception {
         PurchaseAmountResponse expectedResult = new PurchaseAmountResponse(300.0);
@@ -206,5 +207,4 @@ public class PurchaseOrderServiceTest {
         when(purchaseOrderRepository.findById(any())).thenReturn(Optional.empty());
         assertThrows(NotFoundApiException.class,()-> purchaseOrderService.getPurchaseOrderProducts(1L));
     }
-
 }
