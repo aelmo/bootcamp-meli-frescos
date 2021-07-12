@@ -16,3 +16,4 @@
 ## Docs
 
 - [Postman Collection](docs/postman/MELI%20-%20Frescos.postman_collection.json)
+- [User Story 06](docs/US-06/User-Story.md)
