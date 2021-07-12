@@ -43,4 +43,12 @@ public class Product {
         this.seller = seller;
         this.category = category;
     }
+
+    public Product(long id, String name, Seller seller, Category category, Float amount) {
+        this.id = id;
+        this.name =name;
+        this.seller = seller;
+        this.category = category;
+        this.amount = amount;
+    }
 }
