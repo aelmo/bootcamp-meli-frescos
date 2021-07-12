@@ -1,5 +1,6 @@
 package com.mercadolibre.bootcampmelifrescos.repository;
 
+import com.mercadolibre.bootcampmelifrescos.dtos.request.PurchaseOrderDTO;
 import com.mercadolibre.bootcampmelifrescos.model.PurchaseOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
