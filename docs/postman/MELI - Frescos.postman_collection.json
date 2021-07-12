@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "25636a85-ab81-4f4c-a88f-4c6b0c099d73",
+		"_postman_id": "0d7c37fb-2a9c-4a24-8982-b1e0e4d0d030",
 		"name": "MELI - Frescos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -526,6 +526,54 @@
 										{
 											"key": "category",
 											"value": "FZ"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "US06",
+					"item": [
+						{
+							"name": "Products - Get Best-sellers",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "agentuser",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "12345678",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/best-sellers?numberOfProducts=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"best-sellers"
+									],
+									"query": [
+										{
+											"key": "numberOfProducts",
+											"value": "2"
 										}
 									]
 								}
